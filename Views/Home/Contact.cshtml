@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "Kontakt Oss";
+}
+<div class="container">
+    <h1>Kontakt Oss</h1>
+    <p>Lurer du på noe, eller har en id&eacute; til FerieCountdown?</p>
+    <form asp-area="" asp-controller="Home" asp-action="SubmitContactForm" class="needs-validation" novalidate id="contact-form">
+        <div class="form-group">
+            <label for="nameInput">Fullt navn</label>
+            <input type="text" class="form-control" id="nameInput" placeholder="Ola Nordmann" name="name" required>
+            <div class="invalid-feedback">
+                Vennligst fyll inn et gyldig navn
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nameInput">E-postadresse</label>
+            <input type="email" class="form-control" id="nameInput" placeholder="ola@example.com" name="email" required>
+            <div class="invalid-feedback">
+                Vennligst fyll inn en gyldig E-postadresse
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="subjectInput">Emne</label>
+            <input type="text" class="form-control" id="subjectInput" placeholder="Emne" name="subject" required>
+            <div class="invalid-feedback">
+                Vennligst fyll inn et emne
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="messageInput">Melding</label>
+            <textarea class="form-control" id="messageInput" name="message" required></textarea>
+            <div class="invalid-feedback">
+                Vennligst fyll inn en melding
+            </div>
+        </div>
+
+        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
+
+        <button type="submit" class="btn btn-primary" style="margin-left: auto;margin-right: auto;display: block;font-size: 16pt;">Send</button>
+    </form>
+</div>
+
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0"></script>
+<script>
+grecaptcha.ready(function() {
+    grecaptcha.execute('6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0', { action: 'contact' }).then(function (token) {
+        document.getElementById("g-recaptcha-response").value = token;
+    });
+});
+</script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+

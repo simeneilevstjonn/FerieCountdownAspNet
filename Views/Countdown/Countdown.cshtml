@@ -1,0 +1,195 @@
+﻿@model CountdownViewModel
+<script src="~/js/flipclock.js"></script>
+<link rel="stylesheet" href="~/css/flipclock.css" />
+<meta property="og:url" content="@ViewData["FullUrl"]" />
+<meta property="og:title" content="@ViewData["Title"]" />
+<link rel="canonical" href="@ViewData["FullUrl"]" />
+
+@{
+    //Get countdown difference
+    TimeSpan diff = Model.CountdownTime.Subtract(DateTime.UtcNow);
+    int diffsecs = (int)Math.Floor(diff.TotalSeconds);
+
+    //Define face variables
+    string scale = "2.5";
+    string face = "DailyCounter";
+
+    //check if difference is less than one day
+    if (diffsecs < 24 * 60 * 60)
+    {
+        scale = "3.5";
+        face = "HourlyCounter";
+    }
+}
+
+<style>
+    /*Set background*/
+    body {
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(@Model.BackgroundPath);
+        overflow-x: hidden;
+    }
+    @if (Model.UseCCCText)
+    {
+        <text>
+        #above-text, #done-text, .flip-clock-label, #btnpanel {
+            color: #ccc!important
+        }
+        </Text>
+    }
+    .clock {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #above-text {
+        font-size: 5vw;
+        text-align: center;
+        margin-bottom: 130px;
+    }
+    #done-container {
+        text-align: center;
+    }
+    #done-text {
+        font-size: 7vw;
+    }
+    .share-icon {
+        width: 75%
+    }
+    @Model.CssAppend
+</style>
+
+<script>
+
+    //define copy text function
+    function copyUrl() {
+        var copyText = document.getElementById("linkInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        document.getElementById("copiedText").innerHTML = "Link kopiert til utklipstavlen";
+    }
+
+    //Toggle head/foot
+    function thf() {
+        if (document.getElementsByTagName("header")[0].style.display == "none") {
+            document.getElementsByTagName("header")[0].style.display = "initial";
+            document.getElementsByTagName("footer")[0].style.display = "initial";
+            document.getElementById("thficon").className = "fas fa-expand";
+            document.getElementById("btnpanel").style.top = "64px";
+        }
+        else {
+            document.getElementsByTagName("header")[0].style.display = "none";
+            document.getElementsByTagName("footer")[0].style.display = "none";
+            document.getElementById("thficon").className = "fas fa-compress";
+            document.getElementById("btnpanel").style.top = "16px";
+        }
+    }
+
+    //Set key listener
+    document.addEventListener('keypress', (e) => {
+        if (e.code === "KeyF") thf();
+    });
+
+
+    //Init our countdown using data from Model
+    //Init the clock
+var clock;
+    $(document).ready(function () {
+    //Display a message when the countdown has finished
+    var diff = @diffsecs;
+    @{
+        if (Model.UseLocalTime)
+        {
+            <Text>
+                var now = new Date();
+                diff += now.getTimezoneOffset() * 60;
+            </Text>
+        }
+    }
+    if (diff <= 0) {
+        document.getElementById("above-text").style.display = "none";
+        document.getElementById("clock").style.display = "none";
+        document.getElementById("done-container").style.display = "initial";
+    }
+
+    // Instantiate a coutdown FlipClock
+    clock = $('.clock').FlipClock(diff, {
+        clockFace: '@face',
+        countdown: true,
+        language: 'no',
+        responsiveScale: @scale,
+        stop: function() {
+            document.getElementById("above-text").style.display = "none";
+            document.getElementById("clock").style.display = "none";
+            document.getElementById("done-container").style.display = "initial";
+        }
+    });
+});
+</script>
+
+<!--Modals-->
+<!--Share-->
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareModalTitle">Del</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--Button row-->
+                <div class="row">
+                    <a class="btn col" title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=@ViewData["FullUrl"]&t=@ViewData["Title"]" target="_blank">
+                        <img src="https://static.feriecountdown.com/resources/icon/facebook.svg" class="share-icon" />
+                    </a>
+                    <a class="btn col" title="Twitter" href="https://twitter.com/compose/tweet?url=@ViewData["FullUrl"]&text=@ViewData["Title"]&via=feriecd" target="_blank">
+                        <img src="https://static.feriecountdown.com/resources/icon/twitter.svg" class="share-icon" />
+                    </a>
+                    <a class="btn col" title="Reddit" href="https://www.reddit.com/submit?url=@ViewData["FullUrl"]&title=@ViewData["Title"]" target="_blank">
+                        <img src="https://static.feriecountdown.com/resources/icon/reddit.svg" class="share-icon" />
+                    </a>
+                    <a class="btn col" title="Email" href="mailto:?to=&body=@ViewData["FullUrl"],&subject=@ViewData["Title"]">
+                        <img src="https://static.feriecountdown.com/resources/icon/envelope.svg" class="share-icon" />
+                    </a>
+                </div>
+
+                <!--Link copying-->
+                <div class="form-inline mt-4" style="width:100%">
+                    <div class="form-group mx-sm-3 mb-2" style="width:75%">
+                        <input type="text" class="form-control" id="linkInput" style="width:100%" value="@ViewData["FullUrl"]">
+                    </div>
+                    <button onclick="copyUrl()" class="btn btn-primary mb-2" style="width:15%">Kopier</button>
+                </div>
+                <div id="copiedText" class="text-center text-secondary">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+<!--Button Row-->
+<div style="position:absolute; top: 64px; right: 16px;" id="btnpanel">
+    <button title="Del" data-toggle="modal" data-target="#shareModal" class="btn ic hoverwhite">
+        <i class="fas fa-share"></i>
+    </button>
+    <button onclick="" class="btn ic hoverwhite">
+        <i class="far fa-star"></i>
+    </button>
+    <button title="Maksimer (f)" onclick="thf()" class="btn ic hoverwhite">
+        <i class="fas fa-expand" id="thficon"></i>
+    </button>
+</div>
+
+<!--Clock-->
+<p id="above-text">@Model.CountdownText</p>ff
+<div class="clock" style="margin:2em;" id="clock"></div>
+<div id="done-container" class="valign" style="display: none;"><p id="done-text">@Model.CountdownEndText</p></div>
+@Html.Raw(Model.HtmlAppend)
