@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FerieCountdown.Classes;
+using FerieCountdownWithAuth.Classes;
 
 namespace FerieCountdownWithAuth
 {
@@ -49,6 +50,9 @@ namespace FerieCountdownWithAuth
             IConfigurationSection googleRecaptchaNSession =
                         Configuration.GetSection("Google:Recaptcha");
             IoMaster.GRCSecret = googleRecaptchaNSession["Secret"];
+
+            //Configure Conn string
+            DbMaster.ConnString = Configuration.GetConnectionString("DefaultConnection");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using FerieCountdown.Classes;
 using FerieCountdown.Models;
+using FerieCountdownWithAuth.Classes;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace FerieCountdown.Controllers
 {
@@ -45,12 +47,21 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Juleferien";
-            if (!TimeMaster.ValiDateBool(DateTime.Parse("2019-12-21T09:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind))) return Redirect("/");
+            CountdownLocale Locale;
+            try
+            {
+                Locale = DbMaster.GetUserLocale();
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+            if (!TimeMaster.ValiDateBool(Locale.LocaleData.ChristmasHoliday/*DateTime.Parse("2019-12-21T09:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind)*/)) return Redirect("/");
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
             {
-                CountdownTime = DateTime.Parse("2019-12-21T09:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                CountdownTime = Locale.LocaleData.ChristmasHoliday/*DateTime.Parse("2019-12-21T09:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind)*/,
                 CountdownText = "Nedtelling til Juleferien",
                 CountdownEndText = "Juleferie nå!",
                 BackgroundPath = "https://static.feriecountdown.com/resources/background/c19/static.jpg",
@@ -235,5 +246,11 @@ namespace FerieCountdown.Controllers
                 UseLocalTime = true
             }); ;
         }
+
+        public IActionResult TestUserData()
+        {
+            return Error(JsonConvert.SerializeObject(DbMaster.GetUserLocale()));
+        }
+
     }
 }
