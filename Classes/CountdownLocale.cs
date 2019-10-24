@@ -11,65 +11,32 @@ namespace FerieCountdownWithAuth.Classes
         public int Id { get; set; }
         public string Municipality { get; set; }
         public string School { get; set; }
-        
-        public CountdownLocaleData LocaleData { get; private set; }
-        /*public string Data { get { return Data; } set
+        public CountdownLocaleData LocaleData { get; set; }
+        public string Data { set
             {
-                Data = value;
-                ObjectData = JObject.Parse(value);
-                try
-                {
-                    LocaleData = new CountdownLocaleData
-                    {
-                        MondayEnd = new Time((int)ObjectData.GetValue("MondayEnd.Minutes"), (int)ObjectData.GetValue("MondayEnd.Hours")),
-                        TuesdayEnd = new Time((int)ObjectData.GetValue("TuesdayEnd.Minutes"), (int)ObjectData.GetValue("TuesdayEnd.Hours")),
-                        WednesdayEnd = new Time((int)ObjectData.GetValue("WednesdayEnd.Minutes"), (int)ObjectData.GetValue("WednesdayEnd.Hours")),
-                        ThursdayEnd = new Time((int)ObjectData.GetValue("ThursdayEnd.Minutes"), (int)ObjectData.GetValue("ThursdayEnd.Hours")),
-                        FridayEnd = new Time((int)ObjectData.GetValue("FridayEnd.Minutes"), (int)ObjectData.GetValue("FridayEnd.Hours")),
-                        AutumnHoliday = DateTime.Parse((string)ObjectData.GetValue("AutumnHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind),
-                        ChristmasHoliday = DateTime.Parse((string)ObjectData.GetValue("ChristmasHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind),
-                        WinterHoliday = DateTime.Parse((string)ObjectData.GetValue("WinterHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind),
-                        EasterHoliday = DateTime.Parse((string)ObjectData.GetValue("EasterHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind),
-                        SummerHoliday = DateTime.Parse((string)ObjectData.GetValue("SummerHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind)
-                    };
-                }
-                catch (InvalidCastException e)
-                {
-                    throw new Exception("Exception in CountdownLocale: " + e);
-                }
-
-
-            }
-        }*/
-        public string Data { get { return Data; } set
-            {
-                Data = value;
-                SetData();
+                SetData(value);
             } }
 
-        private void SetData()
+        private void SetData(string data)
         {
-           //JObject ObjectData = JObject.Parse(Data);
-            /*try
+            JObject ObjectData = JObject.Parse(data);
+            try
             {
                 LocaleData = new CountdownLocaleData
                 {
-                    MondayEnd = new Time((int)ObjectData.GetValue("MondayEnd.Minutes"), (int)ObjectData.GetValue("MondayEnd.Hours")),
-                    TuesdayEnd = new Time((int)ObjectData.GetValue("TuesdayEnd.Minutes"), (int)ObjectData.GetValue("TuesdayEnd.Hours")),
-                    WednesdayEnd = new Time((int)ObjectData.GetValue("WednesdayEnd.Minutes"), (int)ObjectData.GetValue("WednesdayEnd.Hours")),
-                    ThursdayEnd = new Time((int)ObjectData.GetValue("ThursdayEnd.Minutes"), (int)ObjectData.GetValue("ThursdayEnd.Hours")),
-                    FridayEnd = new Time((int)ObjectData.GetValue("FridayEnd.Minutes"), (int)ObjectData.GetValue("FridayEnd.Hours")),
-                    AutumnHoliday = DateTime.Parse((string)ObjectData.GetValue("AutumnHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    ChristmasHoliday = DateTime.Parse((string)ObjectData.GetValue("ChristmasHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    WinterHoliday = DateTime.Parse((string)ObjectData.GetValue("WinterHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    EasterHoliday = DateTime.Parse((string)ObjectData.GetValue("EasterHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind),
-                    SummerHoliday = DateTime.Parse((string)ObjectData.GetValue("SummerHoliday"), null, System.Globalization.DateTimeStyles.RoundtripKind)
+                    MondayEnd = new Time((int)ObjectData["MondayEnd"]["Hours"], (int)ObjectData["MondayEnd"]["Minutes"]),
+                    TuesdayEnd = new Time((int)ObjectData["TuesdayEnd"]["Hours"], (int)ObjectData["TuesdayEnd"]["Minutes"]),
+                    WednesdayEnd = new Time((int)ObjectData["WednesdayEnd"]["Hours"], (int)ObjectData["WednesdayEnd"]["Minutes"]),
+                    ThursdayEnd = new Time((int)ObjectData["ThursdayEnd"]["Hours"], (int)ObjectData["ThursdayEnd"]["Minutes"]),
+                    FridayEnd = new Time((int)ObjectData["FridayEnd"]["Hours"], (int)ObjectData["FridayEnd"]["Minutes"]),
+                    AutumnHoliday = (DateTime)ObjectData.GetValue("AutumnHoliday"),
+                    ChristmasHoliday = (DateTime)ObjectData.GetValue("ChristmasHoliday"),
+                    WinterHoliday = (DateTime)ObjectData.GetValue("WinterHoliday"),
+                    EasterHoliday = (DateTime)ObjectData.GetValue("EasterHoliday"),
+                    SummerHoliday = (DateTime)ObjectData.GetValue("SummerHoliday")
                 };
             }
-            catch (InvalidCastException e)
-            {
-                throw new Exception("Exception in CountdownLocale: " + e);
-            }*/
+            catch { }
         }
     }
 }

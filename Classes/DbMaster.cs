@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,12 @@ namespace FerieCountdownWithAuth.Classes
 
             // TODO: Implement method for checking what users prefferred locale is. 
 
-            CountdownLocale locale = new CountdownLocale();
+            CountdownLocale locale = new CountdownLocale
+            { 
+                Id = 500, 
+                Municipality = "Error"
+            };
+
             //Get locale from SQL
             try
             {
@@ -58,6 +64,7 @@ namespace FerieCountdownWithAuth.Classes
             {
                 //display error message
                 Console.WriteLine("Exception: " + ex.Message);
+                locale.Data = JsonConvert.SerializeObject(ex);
             }
 
             return locale;

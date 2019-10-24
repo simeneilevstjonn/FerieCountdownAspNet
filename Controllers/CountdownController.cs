@@ -30,12 +30,21 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Høstferien";
-            if (!TimeMaster.ValiDateBool(DateTime.Parse("2019-10-04T11:15:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind))) return Redirect("/");
+            CountdownLocale Locale;
+            try
+            {
+                Locale = DbMaster.GetUserLocale();
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+            if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel 
             {
-                CountdownTime = DateTime.Parse("2019-10-04T11:15:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                CountdownTime = Locale.LocaleData.AutumnHoliday,
                 CountdownText = "Nedtelling til Høstferien",
                 CountdownEndText = "Høstferie nå!",
                 BackgroundPath = "https://static.feriecountdown.com/resources/background/a19/static.jpg",
@@ -56,12 +65,12 @@ namespace FerieCountdown.Controllers
             {
                 return Error(e.Message);
             }
-            if (!TimeMaster.ValiDateBool(Locale.LocaleData.ChristmasHoliday/*DateTime.Parse("2019-12-21T09:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind)*/)) return Redirect("/");
+            if (!TimeMaster.ValiDateBool(Locale.LocaleData.ChristmasHoliday)) return Redirect("/");
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
             {
-                CountdownTime = Locale.LocaleData.ChristmasHoliday/*DateTime.Parse("2019-12-21T09:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind)*/,
+                CountdownTime = Locale.LocaleData.ChristmasHoliday,
                 CountdownText = "Nedtelling til Juleferien",
                 CountdownEndText = "Juleferie nå!",
                 BackgroundPath = "https://static.feriecountdown.com/resources/background/c19/static.jpg",
@@ -74,12 +83,21 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Vinterferien";
-            if (!TimeMaster.ValiDateBool(DateTime.Parse("2020-02-21T12:15:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind))) return Redirect("/");
+            CountdownLocale Locale;
+            try
+            {
+                Locale = DbMaster.GetUserLocale();
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+            if (!TimeMaster.ValiDateBool(Locale.LocaleData.WinterHoliday)) return Redirect("/");
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
             {
-                CountdownTime = DateTime.Parse("2020-02-21T12:15:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                CountdownTime = Locale.LocaleData.WinterHoliday,
                 CountdownText = "Nedtelling til Vinterferien",
                 CountdownEndText = "Vinterferie nå!",
                 BackgroundPath = "https://static.feriecountdown.com/resources/background/w20/animbg.jpg",
@@ -92,12 +110,21 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Påskeferien";
-            if (!TimeMaster.ValiDateBool(DateTime.Parse("2020-04-03T11:15:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind))) return Redirect("/");
+            CountdownLocale Locale;
+            try
+            {
+                Locale = DbMaster.GetUserLocale();
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+            if (!TimeMaster.ValiDateBool(Locale.LocaleData.EasterHoliday)) return Redirect("/");
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
             {
-                CountdownTime = DateTime.Parse("2020-04-03T11:15:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                CountdownTime = Locale.LocaleData.EasterHoliday,
                 CountdownText = "Nedtelling til Påskeferien",
                 CountdownEndText = "Påskeferie nå!",
                 BackgroundPath = "https://static.feriecountdown.com/resources/background/e20/static.jpg",
@@ -108,12 +135,21 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Sommerferien";
-            if (!TimeMaster.ValiDateBool(DateTime.Parse("2020-06-19T08:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind))) return Redirect("/");
+            CountdownLocale Locale;
+            try
+            {
+                Locale = DbMaster.GetUserLocale();
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+            if (!TimeMaster.ValiDateBool(Locale.LocaleData.SummerHoliday)) return Redirect("/");
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
             {
-                CountdownTime = DateTime.Parse("2020-06-19T08:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                CountdownTime = Locale.LocaleData.SummerHoliday,
                 CountdownText = "Nedtelling til Sommerferien",
                 CountdownEndText = "Sommerferie nå!",
                 BackgroundPath = "https://static.feriecountdown.com/resources/background/s20/static.jpg",
