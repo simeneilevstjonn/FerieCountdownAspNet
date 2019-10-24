@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FerieCountdownWithAuth.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,6 +33,12 @@ namespace FerieCountdown.Classes
         static DateTime SetYear(DateTime t, int y)
         {
             return t.AddYears(y - t.Year);
+        }
+
+        public static DateTime GenerateDayEndCountdown(Time t)
+        { 
+            DateTime d = DateTime.UtcNow;
+            return new DateTime(d.Year, d.Month, d.Day, t.Hours, t.Minutes, 0);
         }
     }
 }

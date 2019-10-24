@@ -26,14 +26,16 @@ namespace FerieCountdown.Controllers
         }
 
         //Define holiday countdowns
-        public IActionResult Autumn()
+        public IActionResult Autumn(string id)
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Høstferien";
             CountdownLocale Locale;
             try
             {
-                Locale = DbMaster.GetUserLocale();
+                //Check if a locale override has been provided
+                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                else Locale = DbMaster.GetUserLocale();
             }
             catch (Exception e)
             {
@@ -52,14 +54,16 @@ namespace FerieCountdown.Controllers
             });
 
         }
-        public IActionResult Christmas()
+        public IActionResult Christmas(string id)
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Juleferien";
             CountdownLocale Locale;
             try
             {
-                Locale = DbMaster.GetUserLocale();
+                //Check if a locale override has been provided
+                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                else Locale = DbMaster.GetUserLocale();
             }
             catch (Exception e)
             {
@@ -79,14 +83,16 @@ namespace FerieCountdown.Controllers
                 CssAppend = ".snow-container{position:absolute;left:0;height:80%;width:100%;max-width:100%;top:0;overflow:hidden;z-index:2;pointer-events:none}.snow{display:block;position:absolute;z-index:2;top:0;right:0;bottom:0;left:0;pointer-events:none;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);-webkit-animation:snow linear infinite;animation:snow linear infinite}.snow.foreground{background-image:url(https://static.feriecountdown.com/resources/snow/snow-large.png);-webkit-animation-duration:15s;animation-duration:15s}.snow.foreground.layered{-webkit-animation-delay:7.5s;animation-delay:7.5s}.snow.middleground{background-image:image-url(https://static.feriecountdown.com/resources/snow/snow-medium.png);-webkit-animation-duration:20s;animation-duration:20s}.snow.middleground.layered{-webkit-animation-delay:10s;animation-delay:10s}.snow.background{background-image:image-url(https://static.feriecountdown.com/resources/snow/snow-small.png);-webkit-animation-duration:30s;animation-duration:30s}.snow.background.layered{-webkit-animation-delay:15s;animation-delay:15s}@-webkit-keyframes snow{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{-webkit-transform:translate3d(15%,100%,0);transform:translate3d(15%,100%,0)}}@keyframes snow{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{-webkit-transform:translate3d(15%,100%,0);transform:translate3d(15%,100%,0)}}"
             });
         }
-        public IActionResult Winter()
+        public IActionResult Winter(string id)
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Vinterferien";
             CountdownLocale Locale;
             try
             {
-                Locale = DbMaster.GetUserLocale();
+                //Check if a locale override has been provided
+                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                else Locale = DbMaster.GetUserLocale();
             }
             catch (Exception e)
             {
@@ -106,14 +112,16 @@ namespace FerieCountdown.Controllers
                 CssAppend = ".snow-container{position:absolute;left:0;height:80%;width:100%;max-width:100%;top:0;overflow:hidden;z-index:2;pointer-events:none}.snow{display:block;position:absolute;z-index:2;top:0;right:0;bottom:0;left:0;pointer-events:none;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0);-webkit-animation:snow linear infinite;animation:snow linear infinite}.snow.foreground{background-image:url(https://static.feriecountdown.com/resources/snow/snow-large.png);-webkit-animation-duration:15s;animation-duration:15s}.snow.foreground.layered{-webkit-animation-delay:7.5s;animation-delay:7.5s}.snow.middleground{background-image:image-url(https://static.feriecountdown.com/resources/snow/snow-medium.png);-webkit-animation-duration:20s;animation-duration:20s}.snow.middleground.layered{-webkit-animation-delay:10s;animation-delay:10s}.snow.background{background-image:image-url(https://static.feriecountdown.com/resources/snow/snow-small.png);-webkit-animation-duration:30s;animation-duration:30s}.snow.background.layered{-webkit-animation-delay:15s;animation-delay:15s}@-webkit-keyframes snow{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{-webkit-transform:translate3d(15%,100%,0);transform:translate3d(15%,100%,0)}}@keyframes snow{0%{-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{-webkit-transform:translate3d(15%,100%,0);transform:translate3d(15%,100%,0)}}"
             });
         }
-        public IActionResult Easter()
+        public IActionResult Easter(string id)
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Påskeferien";
             CountdownLocale Locale;
             try
             {
-                Locale = DbMaster.GetUserLocale();
+                //Check if a locale override has been provided
+                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                else Locale = DbMaster.GetUserLocale();
             }
             catch (Exception e)
             {
@@ -131,14 +139,16 @@ namespace FerieCountdown.Controllers
                 UseCCCText = false
             });
         }
-        public IActionResult Summer()
+        public IActionResult Summer(string id)
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Sommerferien";
             CountdownLocale Locale;
             try
             {
-                Locale = DbMaster.GetUserLocale();
+                //Check if a locale override has been provided
+                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                else Locale = DbMaster.GetUserLocale();
             }
             catch (Exception e)
             {
@@ -153,6 +163,36 @@ namespace FerieCountdown.Controllers
                 CountdownText = "Nedtelling til Sommerferien",
                 CountdownEndText = "Sommerferie nå!",
                 BackgroundPath = "https://static.feriecountdown.com/resources/background/s20/static.jpg",
+                UseCCCText = false
+            });
+        }
+
+        //Define day end and weekend countdowns.
+        public IActionResult Dayend(string id)
+        {
+            ViewData["IsHolidayCountdown"] = "true";
+            ViewData["Title"] = "Nedtelling til skoledagens slutt";
+            CountdownLocale Locale;
+            try
+            {
+                //Check if a locale override has been provided
+                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                else Locale = DbMaster.GetUserLocale();
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+            InitSharedVars();
+
+
+
+            return View("Countdown", new CountdownViewModel
+            {
+                CountdownTime = TimeMaster.GenerateDayEndCountdown(Locale.LocaleData.MondayEnd),
+                CountdownText = "Skoledagen slutter om:",
+                CountdownEndText = "Skoledagen er slutt nå!",
+                BackgroundPath = "https://static.feriecountdown.com/resources/background/de/static.jpg",
                 UseCCCText = false
             });
         }
