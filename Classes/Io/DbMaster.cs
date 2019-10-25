@@ -78,7 +78,7 @@ namespace FerieCountdown.Classes.Io
             return locale;
         }
         /*
-         * Gets a countdown locale from a school name
+         * Gets a countdown locale from a school lookup name
          * */
         public static CountdownLocale GetLocale(string school)
         {
@@ -93,7 +93,7 @@ namespace FerieCountdown.Classes.Io
             {
                 SqlConnection conn = new SqlConnection(ConnString);
                 //retrieve the SQL Server instance version
-                string query = string.Format(@"select * from [dbo].[DefaultLocales] where School = {0};", school);
+                string query = string.Format(@"select * from [dbo].[DefaultLocales] where LookupName = N'{0}';", school);
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
