@@ -215,6 +215,36 @@ namespace FerieCountdown.Controllers
             }
         }
 
+        public IActionResult Weekend(string id)
+        {
+            ViewData["IsSchooldayCountdown"] = "true";
+            ViewData["Title"] = "Nedtelling til helg";
+            CountdownLocale Locale;
+            try
+            {
+                //Check if a locale override has been provided
+                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                else Locale = DbMaster.GetUserLocale();
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+            InitSharedVars();
+
+            DateTime cdtime = TimeMaster.GetWeekendCountdown(Locale.LocaleData);
+
+            return View("Countdown", new CountdownViewModel
+            {
+                CountdownTime = cdtime,
+                CountdownText = "Nedtelling til helg",
+                CountdownEndText = "Helg nå!",
+                BackgroundPath = "https://static.feriecountdown.com/resources/background/de/static.jpg",
+                UseCCCText = false,
+                UseLocalTime = true
+            });
+        }
+
         //Define personal celebrations
         public IActionResult Birthday()
         {

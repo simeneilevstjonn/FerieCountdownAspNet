@@ -1,0 +1,21 @@
+﻿User-agent: *
+Disallow: /
+
+
+User-agent: Googlebot
+Allow: /
+Disallow: /countdown/birthday
+Disallow: /countdown/confirmation
+Disallow: /countdown/Wedding
+Disallow: /config
+Disallow: /identity
+Disallow: /settings
+
+User-agent: Bingbot
+Allow: /
+Disallow: /countdown/birthday
+Disallow: /countdown/confirmation
+Disallow: /countdown/Wedding
+Disallow: /config
+Disallow: /identity
+Disallow: /settings
