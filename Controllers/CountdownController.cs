@@ -170,7 +170,7 @@ namespace FerieCountdown.Controllers
         //Define day end and weekend countdowns.
         public IActionResult Dayend(string id)
         {
-            ViewData["IsHolidayCountdown"] = "true";
+            ViewData["IsSchooldayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til skoledagens slutt";
             CountdownLocale Locale;
             try
@@ -185,16 +185,32 @@ namespace FerieCountdown.Controllers
             }
             InitSharedVars();
 
+            DateTime cdtime = TimeMaster.GetTodaysEndObj(Locale.LocaleData);
 
-
-            return View("Countdown", new CountdownViewModel
+            if (DateTime.UtcNow.DayOfWeek == DayOfWeek.Sunday || DateTime.UtcNow.DayOfWeek == DayOfWeek.Saturday)
             {
-                CountdownTime = TimeMaster.GenerateDayEndCountdown(Locale.LocaleData.MondayEnd),
-                CountdownText = "Skoledagen slutter om:",
-                CountdownEndText = "Skoledagen er slutt nå!",
-                BackgroundPath = "https://static.feriecountdown.com/resources/background/de/static.jpg",
-                UseCCCText = false
-            });
+                return View("Countdown", new CountdownViewModel
+                {
+                    CountdownTime = new DateTime(0),
+                    CountdownText = "",
+                    CountdownEndText = "Nå er det helg!",
+                    BackgroundPath = "https://static.feriecountdown.com/resources/background/de/static.jpg",
+                    UseCCCText = false,
+                    UseLocalTime = true
+                });
+            }
+            else
+            {
+                return View("Countdown", new CountdownViewModel
+                {
+                    CountdownTime = cdtime,
+                    CountdownText = "Skoledagen slutter om:",
+                    CountdownEndText = "Skoledagen er slutt!",
+                    BackgroundPath = "https://static.feriecountdown.com/resources/background/de/static.jpg",
+                    UseCCCText = false,
+                    UseLocalTime = true
+                });
+            }
         }
 
         //Define personal celebrations

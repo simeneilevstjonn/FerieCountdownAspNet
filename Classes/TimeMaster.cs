@@ -40,5 +40,18 @@ namespace FerieCountdown.Classes
             DateTime d = DateTime.UtcNow;
             return new DateTime(d.Year, d.Month, d.Day, t.Hours, t.Minutes, 0);
         }
+
+        public static DateTime GetTodaysEndObj(CountdownLocaleData cld)
+        {
+            return DateTime.UtcNow.DayOfWeek switch
+            {
+                DayOfWeek.Monday => GenerateDayEndCountdown(cld.MondayEnd),
+                DayOfWeek.Tuesday => GenerateDayEndCountdown(cld.TuesdayEnd),
+                DayOfWeek.Wednesday => GenerateDayEndCountdown(cld.WednesdayEnd),
+                DayOfWeek.Thursday => GenerateDayEndCountdown(cld.ThursdayEnd),
+                DayOfWeek.Friday => GenerateDayEndCountdown(cld.FridayEnd),
+                _ => new DateTime(0),
+            };
+        }
     }
 }
