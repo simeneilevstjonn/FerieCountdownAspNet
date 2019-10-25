@@ -1,10 +1,10 @@
-﻿using FerieCountdownWithAuth.Classes;
+﻿using FerieCountdown.Classes.Locale;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FerieCountdown.Classes
+namespace FerieCountdown.Classes.TimeHandler
 {
     public static class TimeMaster
     {

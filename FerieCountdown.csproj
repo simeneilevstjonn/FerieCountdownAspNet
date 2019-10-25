@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UserSecretsId>aspnet-FerieCountdownWithAuth-44A21EB8-65E7-4F90-B73A-8886AB4590D9</UserSecretsId>
+    <RootNamespace>FerieCountdown</RootNamespace>
+    <AssemblyName>FerieCountdown</AssemblyName>
   </PropertyGroup>
 
 

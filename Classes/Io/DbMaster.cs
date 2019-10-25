@@ -1,11 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using FerieCountdown.Classes.Locale;
+using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FerieCountdownWithAuth.Classes
+namespace FerieCountdown.Classes.Io
 {
 
     

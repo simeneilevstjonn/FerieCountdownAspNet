@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace FerieCountdown.Classes
+namespace FerieCountdown.Classes.Io
 {
     public static class IoMaster
     {

@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using FerieCountdown.Classes.TimeHandler;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FerieCountdownWithAuth.Classes
+namespace FerieCountdown.Classes.Locale
 {
     public class CountdownLocale
     {

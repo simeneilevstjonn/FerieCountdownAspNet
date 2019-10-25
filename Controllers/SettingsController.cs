@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FerieCountdownWithAuth.Classes;
+using FerieCountdown.Classes.Locale;
+using FerieCountdown.Classes.TimeHandler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

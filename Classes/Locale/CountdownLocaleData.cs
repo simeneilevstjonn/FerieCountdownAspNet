@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FerieCountdown.Classes.TimeHandler;
 
-namespace FerieCountdownWithAuth.Classes
+namespace FerieCountdown.Classes.Locale
 {
     public class CountdownLocaleData
     {
