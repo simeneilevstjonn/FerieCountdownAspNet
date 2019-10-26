@@ -25,18 +25,7 @@ namespace FerieCountdown.Classes.Io
             client.Dispose();
         }
 
-        public static void SendMail(string email, string subject, string message)
-        {
-            SendMail(new MailMessage
-            {
-                Subject = subject,
-                From = new MailAddress("noreply@feriecountdown.com"),
-                To = { new MailAddress(email) },
-                IsBodyHtml = true,
-                BodyEncoding = System.Text.Encoding.UTF8,
-                Body = message
-            });
-        }
+        
 
         public static async Task<string> HttpPostRequest(Dictionary<string, string> formdata, string uri)
         {

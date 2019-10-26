@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FerieCountdown.Classes;
 using FerieCountdown.Classes.Io;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace FerieCountdownWithAuth
 {
@@ -46,6 +47,8 @@ namespace FerieCountdownWithAuth
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
 
+            services.AddTransient<IEmailSender, EmailSender>();
+
             //Configure GRC secret
             IConfigurationSection googleRecaptchaNSession =
                         Configuration.GetSection("Google:Recaptcha");
@@ -53,6 +56,8 @@ namespace FerieCountdownWithAuth
 
             //Configure Conn string
             DbMaster.ConnString = Configuration.GetConnectionString("DefaultConnection");
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

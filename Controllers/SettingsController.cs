@@ -38,6 +38,7 @@ namespace FerieCountdownWithAuth.Controllers
             };
             */
 
+            /*
             //SKEIANE
             CountdownLocaleData locale = new CountdownLocaleData
             {
@@ -52,9 +53,14 @@ namespace FerieCountdownWithAuth.Controllers
                 EasterHoliday = DateTime.Parse("2020-04-03T12:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
                 SummerHoliday = DateTime.Parse("2020-06-19T11:55:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind)
             };
+            */
 
+            /*
             ViewData["json"] = JsonConvert.SerializeObject(locale);
             return View();
+            */
+
+            return Forbid();
         }
     }
 }

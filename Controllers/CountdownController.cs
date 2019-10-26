@@ -325,7 +325,7 @@ namespace FerieCountdown.Controllers
             ViewData["Title"] = "Nedtelling til Nyttår";
             DateTime cdtime = TimeMaster.ValiDate(DateTime.Parse("2020-01-01T00:00:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind));
             InitSharedVars();
-
+            
             return View("Countdown", new CountdownViewModel
             {
                 CountdownTime = cdtime,
