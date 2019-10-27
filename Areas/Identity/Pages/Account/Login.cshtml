@@ -50,7 +50,7 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h4>Logg inn med eksterne tjenester<br /></h4>
+            <h4>&nbsp;<br />Logg inn med eksterne tjenester</h4>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
@@ -63,8 +63,22 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    @*<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>*@
+                                    if (provider.Name == "Google")
+                                    {
+                                        <button type="submit" class="btn" name="provider" value="@provider.Name" title="Logg inn med din @provider.DisplayName account" >
+                                            <img src="https://static.feriecountdown.com/resources/signin-assets/btn_google_signin_dark_normal_web%402x.png" style="width:215px"/>
+                                        </button><br />
+                                    }
+                                    else if (provider.Name == "Microsoft")
+                                    {
+                                        <button type="submit" class="btn" name="provider" value="@provider.Name" title="Logg inn med din @provider.DisplayName account">
+                                            <img src="https://static.feriecountdown.com/resources/signin-assets/ms-symbollockup_signin_dark.svg" />
+                                        </button>
+                                    }
                                 }
+                                <style>
+                                </style>
                             </p>
                         </div>
                     </form>
