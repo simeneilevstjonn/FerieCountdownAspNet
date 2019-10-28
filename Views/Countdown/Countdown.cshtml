@@ -65,6 +65,8 @@
 
 <script>
 
+    
+
     //define copy text function
     function copyUrl() {
         var copyText = document.getElementById("linkInput");
@@ -131,6 +133,12 @@ var clock;
             document.getElementById("done-container").style.display = "initial";
         }
     });
+
+    //set fullscreen if url parameter has been provided
+    var url = new URL(window.location);
+    if (url.searchParams.has("fullscreen")) {
+        thf()
+    };
 });
 </script>
 
@@ -157,7 +165,7 @@ var clock;
                     <a class="btn col" title="Reddit" href="https://www.reddit.com/submit?url=@ViewData["FullUrl"]&title=@ViewData["Title"]" target="_blank">
                         <img src="https://static.feriecountdown.com/resources/icon/reddit.svg" class="share-icon" />
                     </a>
-                    <a class="btn col" title="Email" href="mailto:?to=&body=@ViewData["FullUrl"],&subject=@ViewData["Title"]">
+                    <a class="btn col" title="Email" href="mailto:?to=&body=@ViewData["FullUrl"]&subject=@ViewData["Title"]">
                         <img src="https://static.feriecountdown.com/resources/icon/envelope.svg" class="share-icon" />
                     </a>
                 </div>
