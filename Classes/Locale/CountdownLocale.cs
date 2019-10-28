@@ -9,7 +9,6 @@ namespace FerieCountdown.Classes.Locale
 {
     public class CountdownLocale
     {
-        public int Id { get; set; }
         public string Municipality { get; set; }
         public string School { get; set; }
         public CountdownLocaleData LocaleData { get; set; }

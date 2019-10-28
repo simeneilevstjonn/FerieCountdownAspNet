@@ -21,63 +21,6 @@ namespace FerieCountdown.Classes.Io
         }
 
         /*
-         * Gets a countdown locale from an ID
-         * */
-        public static CountdownLocale GetLocale(int id)
-        {
-            CountdownLocale locale = new CountdownLocale
-            { 
-                Id = 500, 
-                Municipality = "Error"
-            };
-
-            //Get locale from SQL
-            try
-            {
-                SqlConnection conn = new SqlConnection(ConnString);
-                //retrieve the SQL Server instance version
-                string query = string.Format(@"select * from [dbo].[DefaultLocales] where Id = {0};", id);
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                //open connection
-                conn.Open();
-
-                //execute the SQLCommand
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                //check if there are records
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        locale = new CountdownLocale
-                        {
-                            Id = dr.GetInt32(0),
-                            Municipality = dr.GetString(1),
-                            School = dr.GetString(2),
-                            Data = dr.GetString(3),
-                        };
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No data found.");
-                }
-                dr.Close();
-                cmd.Dispose();
-
-            }
-            catch (Exception ex)
-            {
-                //display error message
-                Console.WriteLine("Exception: " + ex.Message);
-                locale.Data = JsonConvert.SerializeObject(ex);
-            }
-
-            return locale;
-        }
-        /*
          * Gets a countdown locale from a school lookup name
          * */
         public static CountdownLocale GetLocale(string school)
@@ -110,10 +53,9 @@ namespace FerieCountdown.Classes.Io
                     {
                         locale = new CountdownLocale
                         {
-                            Id = dr.GetInt32(0),
-                            Municipality = dr.GetString(1),
-                            School = dr.GetString(2),
-                            Data = dr.GetString(3),
+                            Municipality = dr.GetString(0),
+                            School = dr.GetString(1),
+                            Data = dr.GetString(2),
                         };
                     }
                 }
