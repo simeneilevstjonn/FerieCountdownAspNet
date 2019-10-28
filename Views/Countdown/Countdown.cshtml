@@ -5,6 +5,8 @@
 <meta property="og:title" content="@ViewData["Title"]" />
 <link rel="canonical" href="@ViewData["FullUrl"]" />
 
+<partial name="_LocaleSetterPartial" />
+
 @{
     //Get countdown difference
     TimeSpan diff = Model.CountdownTime.Subtract(DateTime.UtcNow);

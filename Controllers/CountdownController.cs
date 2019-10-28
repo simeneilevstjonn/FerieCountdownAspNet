@@ -25,6 +25,7 @@ namespace FerieCountdown.Controllers
         private void InitSharedVars()
         {
             ViewData["FullUrl"] = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host, Request.Path);
+            ViewBag.Request = Request;
         }
 
         //Define holiday countdowns

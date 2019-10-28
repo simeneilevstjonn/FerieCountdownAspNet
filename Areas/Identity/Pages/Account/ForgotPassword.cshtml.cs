@@ -58,8 +58,8 @@ namespace FerieCountdown.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Tilbakestill passord",
+                    $"Vennlist tilbakestill passordet ditt ved å <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikke her</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

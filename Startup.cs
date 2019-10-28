@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using FerieCountdown.Classes;
 using FerieCountdown.Classes.Io;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace FerieCountdownWithAuth
 {
@@ -51,6 +52,14 @@ namespace FerieCountdownWithAuth
             //Configure Conn string
             DbMaster.ConnString = Configuration.GetConnectionString("DefaultConnection");
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential 
+                // cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                // requires using Microsoft.AspNetCore.Http;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
         }
 
@@ -70,6 +79,7 @@ namespace FerieCountdownWithAuth
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
             app.UseAuthentication();
