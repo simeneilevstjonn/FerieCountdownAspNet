@@ -16,6 +16,7 @@ using FerieCountdown.Classes;
 using FerieCountdown.Classes.Io;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace FerieCountdownWithAuth
 {
@@ -80,6 +81,12 @@ namespace FerieCountdownWithAuth
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
 
             app.UseRouting();
             app.UseAuthentication();
