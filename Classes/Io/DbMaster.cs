@@ -1,4 +1,5 @@
 ﻿using FerieCountdown.Classes.Locale;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System;
@@ -14,10 +15,9 @@ namespace FerieCountdown.Classes.Io
     {
         public static string ConnString { get; set; }
 
-        public static CountdownLocale GetUserLocale()
+        public static CountdownLocale GetUserLocale(HttpRequest Request)
         {
-            //TODO implement checking of user's preferred locale
-            return GetLocale("Lundehaugen");
+            return GetLocale(Request.Cookies["locale"]);
         }
 
         /*

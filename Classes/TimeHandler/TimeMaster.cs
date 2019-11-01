@@ -44,58 +44,43 @@ namespace FerieCountdown.Classes.TimeHandler
 
         public static DateTime GetTodaysEndObj(CountdownLocaleData cld)
         {
-            try
+            return DateTime.UtcNow.DayOfWeek switch
             {
-                return DateTime.UtcNow.DayOfWeek switch
-                {
-                    DayOfWeek.Monday => GenerateDayEndCountdown(cld.MondayEnd),
-                    DayOfWeek.Tuesday => GenerateDayEndCountdown(cld.TuesdayEnd),
-                    DayOfWeek.Wednesday => GenerateDayEndCountdown(cld.WednesdayEnd),
-                    DayOfWeek.Thursday => GenerateDayEndCountdown(cld.ThursdayEnd),
-                    DayOfWeek.Friday => GenerateDayEndCountdown(cld.FridayEnd),
-                    _ => new DateTime(0),
-                };
-            }
-            catch (NullReferenceException)
-            {
-                return GetTodaysEndObj(DbMaster.GetUserLocale().LocaleData);
-            }
+                DayOfWeek.Monday => GenerateDayEndCountdown(cld.MondayEnd),
+                DayOfWeek.Tuesday => GenerateDayEndCountdown(cld.TuesdayEnd),
+                DayOfWeek.Wednesday => GenerateDayEndCountdown(cld.WednesdayEnd),
+                DayOfWeek.Thursday => GenerateDayEndCountdown(cld.ThursdayEnd),
+                DayOfWeek.Friday => GenerateDayEndCountdown(cld.FridayEnd),
+                _ => new DateTime(0),
+            };
         }
 
         public static DateTime GetWeekendCountdown(CountdownLocaleData cld)
         {
-            try
+            DateTime now = DateTime.UtcNow;
+            DateTime ret = now;
+            switch (now.DayOfWeek)
             {
-                DateTime now = DateTime.UtcNow;
-                DateTime ret = now;
-                switch (now.DayOfWeek)
-                {
-                    case DayOfWeek.Monday:
-                        ret = now.AddDays(4);
-                        break;
-                    case DayOfWeek.Tuesday:
-                        ret = now.AddDays(3);
-                        break;
-                    case DayOfWeek.Wednesday:
-                        ret = now.AddDays(2);
-                        break;
-                    case DayOfWeek.Thursday:
-                        ret = now.AddDays(1);
-                        break;
-                    case DayOfWeek.Saturday:
-                        ret = now.AddDays(-1);
-                        break;
-                    case DayOfWeek.Sunday:
-                        ret = now.AddDays(-2);
-                        break;
-                }
-                return new DateTime(ret.Year, ret.Month, ret.Day, cld.FridayEnd.Hours, cld.FridayEnd.Minutes, 0);
-                
+                case DayOfWeek.Monday:
+                    ret = now.AddDays(4);
+                    break;
+                case DayOfWeek.Tuesday:
+                    ret = now.AddDays(3);
+                    break;
+                case DayOfWeek.Wednesday:
+                    ret = now.AddDays(2);
+                    break;
+                case DayOfWeek.Thursday:
+                    ret = now.AddDays(1);
+                    break;
+                case DayOfWeek.Saturday:
+                    ret = now.AddDays(-1);
+                    break;
+                case DayOfWeek.Sunday:
+                    ret = now.AddDays(-2);
+                    break;
             }
-            catch (NullReferenceException)
-            {
-                return GetWeekendCountdown(DbMaster.GetUserLocale().LocaleData);
-            }
+            return new DateTime(ret.Year, ret.Month, ret.Day, cld.FridayEnd.Hours, cld.FridayEnd.Minutes, 0);
         }
     }
 }

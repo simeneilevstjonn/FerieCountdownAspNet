@@ -25,7 +25,6 @@ namespace FerieCountdown.Controllers
         private void InitSharedVars()
         {
             ViewData["FullUrl"] = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host, Request.Path);
-            ViewBag.Request = Request;
         }
 
         //Define holiday countdowns
@@ -38,13 +37,20 @@ namespace FerieCountdown.Controllers
             {
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
-                else Locale = DbMaster.GetUserLocale();
+                else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
             {
                 return Error(e.Message);
             }
-            if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+            try
+            {
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+            }
+            catch (NullReferenceException)
+            {
+                return View("SetLocale");
+            }
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel 
@@ -66,13 +72,20 @@ namespace FerieCountdown.Controllers
             {
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
-                else Locale = DbMaster.GetUserLocale();
+                else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
             {
                 return Error(e.Message);
             }
-            if (!TimeMaster.ValiDateBool(Locale.LocaleData.ChristmasHoliday)) return Redirect("/");
+            try
+            {
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+            }
+            catch (NullReferenceException)
+            {
+                return View("SetLocale");
+            }
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
@@ -95,13 +108,20 @@ namespace FerieCountdown.Controllers
             {
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
-                else Locale = DbMaster.GetUserLocale();
+                else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
             {
                 return Error(e.Message);
             }
-            if (!TimeMaster.ValiDateBool(Locale.LocaleData.WinterHoliday)) return Redirect("/");
+            try
+            {
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+            }
+            catch (NullReferenceException)
+            {
+                return View("SetLocale");
+            }
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
@@ -124,13 +144,20 @@ namespace FerieCountdown.Controllers
             {
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
-                else Locale = DbMaster.GetUserLocale();
+                else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
             {
                 return Error(e.Message);
             }
-            if (!TimeMaster.ValiDateBool(Locale.LocaleData.EasterHoliday)) return Redirect("/");
+            try
+            {
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+            }
+            catch (NullReferenceException)
+            {
+                return View("SetLocale");
+            }
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
@@ -151,13 +178,20 @@ namespace FerieCountdown.Controllers
             {
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
-                else Locale = DbMaster.GetUserLocale();
+                else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
             {
                 return Error(e.Message);
             }
-            if (!TimeMaster.ValiDateBool(Locale.LocaleData.SummerHoliday)) return Redirect("/");
+            try
+            {
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+            }
+            catch (NullReferenceException)
+            {
+                return View("SetLocale");
+            }
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
@@ -180,15 +214,23 @@ namespace FerieCountdown.Controllers
             {
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
-                else Locale = DbMaster.GetUserLocale();
+                else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
             {
                 return Error(e.Message);
             }
             InitSharedVars();
-
-            DateTime cdtime = TimeMaster.GetTodaysEndObj(Locale.LocaleData);
+            DateTime cdtime;
+            try
+            {
+                cdtime = TimeMaster.GetTodaysEndObj(Locale.LocaleData);
+            }
+            catch (NullReferenceException)
+            {
+                return View("SetLocale");
+            }
+            
 
             if (DateTime.UtcNow.DayOfWeek == DayOfWeek.Sunday || DateTime.UtcNow.DayOfWeek == DayOfWeek.Saturday)
             {
@@ -225,15 +267,23 @@ namespace FerieCountdown.Controllers
             {
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
-                else Locale = DbMaster.GetUserLocale();
+                else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
             {
                 return Error(e.Message);
             }
             InitSharedVars();
-
-            DateTime cdtime = TimeMaster.GetWeekendCountdown(Locale.LocaleData);
+            DateTime cdtime;
+            try
+            {
+                cdtime = TimeMaster.GetWeekendCountdown(Locale.LocaleData);
+            }
+            catch (NullReferenceException)
+            {
+                return View("SetLocale");
+            }
+            
 
             return View("Countdown", new CountdownViewModel
             {
@@ -326,7 +376,7 @@ namespace FerieCountdown.Controllers
             ViewData["Title"] = "Nedtelling til Nyttår";
             DateTime cdtime = TimeMaster.ValiDate(DateTime.Parse("2020-01-01T00:00:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind));
             InitSharedVars();
-            
+
             return View("Countdown", new CountdownViewModel
             {
                 CountdownTime = cdtime,
@@ -374,12 +424,7 @@ namespace FerieCountdown.Controllers
 
         public IActionResult TestUserData()
         {
-            return Error(JsonConvert.SerializeObject(DbMaster.GetUserLocale()));
-        }
-
-        public IActionResult LocaleSetterTest()
-        {
-            return View();
+            return Error(JsonConvert.SerializeObject(DbMaster.GetUserLocale(Request)));
         }
 
         public IActionResult TestAllLocales()
