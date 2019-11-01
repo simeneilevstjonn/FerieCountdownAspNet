@@ -1,6 +1,79 @@
-﻿@{ 
+﻿@using FerieCountdown.Classes.Locale;
+@using FerieCountdown.Classes.Io;
+@{
     Layout = "_Container";
-    ViewData["title"] = "Sett ditt sted";
+    ViewData["title"] = "Velg ditt sted";
+    List<SimpleMunicipality> municipalities = DbMaster.GetAllLocales();
 }
 
-<partial name="_LocaleSetterPartial" />
+<script>
+        $(document).ready(function () {
+        ChangeSchoolWork("school");
+    });
+
+
+    function ChangeSchoolWork(sw) {
+        var newhtml = "<p>Not implemented</p>";
+        if (sw === "school") {
+            //school thing
+            newhtml = "<div class=\"form-group\"><label for=\"munSelect\">Kommune / Fylke</label><select class=\"form-control\" id=\"munSelect\" onchange=\"SetMunicipality(this.value)\"><option selected disabled>Vennligst velg...</option>";
+
+            @foreach (SimpleMunicipality m in municipalities)
+            {
+
+                <text>newhtml += '<option value="@m.Name">@m.Name</option>';</text>
+            }
+            newhtml += "</select></div>";
+        } else if (sw === "work") {
+            //work thing
+            document.getElementById("schoolselect").innerHTML = "";
+        }
+        document.getElementById("municipalityselect").innerHTML = newhtml;
+    }
+
+    function SetMunicipality(municipality) {
+        console.log("SetMunicipality() function called");
+        var newhtml = "<div class=\"form-group\"><label for=\"schSelect\">Skole</label><select class=\"form-control\" id=\"schSelect\"><option selected disabled>Vennligst velg...</option>";
+        switch (municipality) {
+            @foreach (SimpleMunicipality m in municipalities)
+            {
+            <text>case "@m.Name":</text>
+            foreach (SimpleLocale l in m.Schools)
+            {
+                <text>newhtml += '<option value="@l.LookupName">@l.Name</option>';</text>
+            }
+            <text>break;</text>
+            }
+        }
+        newhtml += "</select></div>";
+        document.getElementById("schoolselect").innerHTML = newhtml;
+    }
+
+    function SetLocale(locale) {
+        var now = new Date();
+        var exp = new Date(now.getFullYear() + 10, now.getMonth(), 1, 0, 0, 0, 0);
+        document.cookie = "locale=" + locale + "; expires=" + exp + "; path=/";
+        window.location = "@ViewData["FullUrl"]";
+    }
+</script>
+
+<h2>Velg ditt sted</h2>
+<p>For å kunne fortsette til denne nedtellingen må du velge en skole eller sette arbeidstider.</p>
+<hr />
+
+<div class="form-group">
+    <label for="swSelect">Skole eller Jobb</label>
+    <select class="form-control" id="swSelect" onchange="ChangeSchoolWork(this.value)">
+        <option selected value="school">Skole</option>
+        <option value="work">Jobb</option>
+    </select>
+</div>
+<div id="municipalityselect"></div>
+<div id="schoolselect"></div>
+
+<hr />
+<div class="text-right">
+    <button type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)">Lagre</button>
+</div>
+
+@*<partial name="_LocaleSetterPartial" />*@

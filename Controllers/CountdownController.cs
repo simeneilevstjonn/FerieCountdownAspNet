@@ -422,6 +422,11 @@ namespace FerieCountdown.Controllers
             }); ;
         }
 
+        public IActionResult SetLocale()
+        {
+            return View();
+        }
+
         public IActionResult TestUserData()
         {
             return Error(JsonConvert.SerializeObject(DbMaster.GetUserLocale(Request)));
