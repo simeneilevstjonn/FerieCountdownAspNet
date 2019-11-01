@@ -17,7 +17,7 @@ namespace FerieCountdown.Classes.Io
         public static CountdownLocale GetUserLocale()
         {
             //TODO implement checking of user's preferred locale
-            return GetLocale(1);
+            return GetLocale("Lundehaugen");
         }
 
         /*
@@ -27,7 +27,6 @@ namespace FerieCountdown.Classes.Io
         {
             CountdownLocale locale = new CountdownLocale
             {
-                Id = 500,
                 Municipality = "Error"
             };
 
@@ -75,6 +74,70 @@ namespace FerieCountdown.Classes.Io
             }
 
             return locale;
+        }
+
+        public static List<SimpleMunicipality> GetAllLocales()
+        {
+            List<SimpleMunicipality> ReturnList = new List<SimpleMunicipality>();
+            //Get locale from SQL
+            /*try
+            {*/
+                SqlConnection conn = new SqlConnection(ConnString);
+                //retrieve the SQL Server instance version
+                string query = string.Format(@"select LookupName, School, Municipality from [dbo].[DefaultLocales] ORDER BY Municipality, School ASC;");
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                //open connection
+                conn.Open();
+
+                //execute the SQLCommand
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                SimpleMunicipality currentMunicipality = new SimpleMunicipality();
+                string currentName = string.Empty;
+                bool firstrun = true;
+
+                //check if there are records
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        if (firstrun)
+                        {
+                            currentName = dr.GetString(2);
+                            currentMunicipality.Name = currentName;
+                            firstrun = false;
+                        }
+                    if (dr.GetString(2) != currentName)
+                    {
+                        ReturnList.Add(currentMunicipality);
+                        currentMunicipality = new SimpleMunicipality();
+                        currentName = dr.GetString(2);
+                        currentMunicipality.Name = currentName;
+                    }
+                    currentMunicipality.Schools.Add(new SimpleLocale
+                        {
+                            LookupName = dr.GetString(0),
+                            Name = dr.GetString(1)
+                        });
+                    }
+                    ReturnList.Add(currentMunicipality);
+                }
+                else
+                {
+                    Console.WriteLine("No data found.");
+                }
+                dr.Close();
+                cmd.Dispose();
+
+            /*}
+            catch (Exception ex)
+            {
+                //display error message
+                Console.WriteLine("Exception: " + ex.Message);
+            }*/
+            return ReturnList;
         }
     }
 }

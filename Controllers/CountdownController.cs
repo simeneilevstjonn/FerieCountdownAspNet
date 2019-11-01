@@ -377,5 +377,15 @@ namespace FerieCountdown.Controllers
             return Error(JsonConvert.SerializeObject(DbMaster.GetUserLocale()));
         }
 
+        public IActionResult LocaleSetterTest()
+        {
+            return View();
+        }
+
+        public IActionResult TestAllLocales()
+        {
+            return Error(JsonConvert.SerializeObject(DbMaster.GetAllLocales()));
+        }
+
     }
 }
