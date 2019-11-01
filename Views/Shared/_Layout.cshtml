@@ -81,9 +81,27 @@
 
     <footer class="footer text-muted bg-333">
         <div class="container bg-333">
-
-            &copy; 2019 - FerieCountdown - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a>
+            &copy; 2019 - FerieCountdown - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-action="SetLocale" asp-area="" asp-controller="Countdown">Endre sted</a>
         </div>
+        <script>
+            function getCookie(cname) {
+              var name = cname + "=";
+              var decodedCookie = decodeURIComponent(document.cookie);
+              var ca = decodedCookie.split(';');
+              for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+                }
+              }
+              return "Ingen";
+            }
+
+            document.getElementById("localespan").innerHTML = getCookie("locale");
+        </script>
     </footer>
     
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
