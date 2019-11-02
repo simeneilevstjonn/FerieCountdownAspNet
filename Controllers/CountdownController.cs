@@ -424,6 +424,7 @@ namespace FerieCountdown.Controllers
 
         public IActionResult SetLocale()
         {
+            ViewData["FullUrl"] = string.Format("{0}://{1}/", Request.Scheme, Request.Host);
             return View();
         }
 

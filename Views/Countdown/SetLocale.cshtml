@@ -5,7 +5,6 @@
     ViewData["title"] = "Velg ditt sted";
     List<SimpleMunicipality> municipalities = DbMaster.GetAllLocales();
 }
-
 <script>
         $(document).ready(function () {
         ChangeSchoolWork("school");
@@ -53,7 +52,8 @@
         var now = new Date();
         var exp = new Date(now.getFullYear() + 10, now.getMonth(), 1, 0, 0, 0, 0);
         document.cookie = "locale=" + locale + "; expires=" + exp + "; path=/";
-        window.location = "@ViewData["FullUrl"]";
+
+        window.location = "@ViewData["FullUrl"]";;
     }
 </script>
 
@@ -75,5 +75,3 @@
 <div class="text-right">
     <button type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)">Lagre</button>
 </div>
-
-@*<partial name="_LocaleSetterPartial" />*@
