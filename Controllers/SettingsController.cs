@@ -21,7 +21,7 @@ namespace FerieCountdownWithAuth.Controllers
 
         public IActionResult Jsongenerator()
         {
-             
+
             //LUNDEHAUGEN
             /*CountdownLocaleData locale = new CountdownLocaleData
             {
@@ -36,7 +36,7 @@ namespace FerieCountdownWithAuth.Controllers
                 EasterHoliday = DateTime.Parse("2020-04-03T11:15:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
                 SummerHoliday = DateTime.Parse("2020-06-19T08:25:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind)
             };*/
-            
+
 
             /*
             //SKEIANE
@@ -55,10 +55,27 @@ namespace FerieCountdownWithAuth.Controllers
             };
             */
 
-            
-            /*ViewData["json"] = JsonConvert.SerializeObject(locale);
-            return View();*/
-            
+            /*
+            //SØRBØ
+            CountdownLocaleData locale = new CountdownLocaleData
+            {
+                MondayEnd = new Time(13, 45),
+                TuesdayEnd = new Time(13, 45),
+                WednesdayEnd = new Time(13, 45),
+                ThursdayEnd = new Time(13, 45),
+                FridayEnd = new Time(13, 45),
+                AutumnHoliday = DateTime.Parse("2020-10-02T11:45:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                ChristmasHoliday = DateTime.Parse("2019-12-21T11:30:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                WinterHoliday = DateTime.Parse("2020-02-21T12:45:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                EasterHoliday = DateTime.Parse("2020-04-03T11:45:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind),
+                SummerHoliday = DateTime.Parse("2020-06-19T10:30:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind)
+            };
+            */
+
+            /*
+            ViewData["json"] = JsonConvert.SerializeObject(locale);
+            return View();
+            */
 
             return Forbid();
         }
