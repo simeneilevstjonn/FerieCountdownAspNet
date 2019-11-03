@@ -10,6 +10,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+    <!--Meta tags-->
+    <meta property="og:url" content="@ViewData["FullUrl"]" />
+    <link rel="canonical" href="@ViewData["FullUrl"]" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta name="author" content="Simen Eilevstjønn" />
+    @{ 
+        string metadesc = (string)ViewData["MetaDescription"];
+        if (string.IsNullOrEmpty(metadesc)) metadesc = (string)ViewData["Title"];
+    }
+    <meta name="description" content="@metadesc" />
+    <meta name="keywords" content="Ferie, Nedtelling, Countdown" />
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138743911-5"></script>
     <script>

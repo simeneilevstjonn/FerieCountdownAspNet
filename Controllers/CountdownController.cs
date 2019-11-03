@@ -38,11 +38,16 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Høstferien";
+            ViewData["MetaDescription"] = "Nedtelling til Høstferien";
             CountdownLocale Locale;
             try
             {
                 //Check if a locale override has been provided
-                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                if (!string.IsNullOrEmpty(id)) 
+                {
+                    Locale = DbMaster.GetLocale(id);
+                    ViewData["MetaDescription"] += " på " + Locale.School;
+                }
                 else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
@@ -73,11 +78,16 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Juleferien";
+            ViewData["MetaDescription"] = "Nedtelling til Juleferien";
             CountdownLocale Locale;
             try
             {
                 //Check if a locale override has been provided
-                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                if (!string.IsNullOrEmpty(id))
+                {
+                    Locale = DbMaster.GetLocale(id);
+                    ViewData["MetaDescription"] += " på " + Locale.School;
+                }
                 else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
@@ -109,11 +119,16 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Vinterferien";
+            ViewData["MetaDescription"] = "Nedtelling til Vinterferien";
             CountdownLocale Locale;
             try
             {
                 //Check if a locale override has been provided
-                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                if (!string.IsNullOrEmpty(id))
+                {
+                    Locale = DbMaster.GetLocale(id);
+                    ViewData["MetaDescription"] += " på " + Locale.School;
+                }
                 else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
@@ -145,11 +160,16 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Påskeferien";
+            ViewData["MetaDescription"] = "Nedtelling til Påskeferien";
             CountdownLocale Locale;
             try
             {
                 //Check if a locale override has been provided
-                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                if (!string.IsNullOrEmpty(id))
+                {
+                    Locale = DbMaster.GetLocale(id);
+                    ViewData["MetaDescription"] += " på " + Locale.School;
+                }
                 else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
@@ -179,11 +199,16 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Sommerferien";
+            ViewData["MetaDescription"] = "Nedtelling til Sommerferien";
             CountdownLocale Locale;
             try
             {
                 //Check if a locale override has been provided
-                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                if (!string.IsNullOrEmpty(id))
+                {
+                    Locale = DbMaster.GetLocale(id);
+                    ViewData["MetaDescription"] += " på " + Locale.School;
+                }
                 else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
@@ -219,7 +244,11 @@ namespace FerieCountdown.Controllers
             try
             {
                 //Check if a locale override has been provided
-                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                if (!string.IsNullOrEmpty(id))
+                {
+                    Locale = DbMaster.GetLocale(id);
+                    ViewData["MetaDescription"] += " på " + Locale.School;
+                }
                 else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
@@ -272,7 +301,11 @@ namespace FerieCountdown.Controllers
             try
             {
                 //Check if a locale override has been provided
-                if (!string.IsNullOrEmpty(id)) Locale = DbMaster.GetLocale(id);
+                if (!string.IsNullOrEmpty(id))
+                {
+                    Locale = DbMaster.GetLocale(id);
+                    ViewData["MetaDescription"] += " på " + Locale.School;
+                }
                 else Locale = DbMaster.GetUserLocale(Request);
             }
             catch (Exception e)
