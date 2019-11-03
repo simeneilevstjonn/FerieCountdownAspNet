@@ -427,6 +427,23 @@ namespace FerieCountdown.Controllers
                 UseLocalTime = true
             }); ;
         }
+        public IActionResult Christmaseve()
+        {
+            ViewData["IsOtherCountdown"] = "true";
+            ViewData["Title"] = "Nedtelling til Julaften";
+            DateTime cdtime = TimeMaster.ValiDate(DateTime.Parse("2019-12-24T00:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind));
+            InitSharedVars();
+
+            return View("Countdown", new CountdownViewModel
+            {
+                CountdownTime = cdtime,
+                CountdownText = "Nedtelling til Julaften",
+                CountdownEndText = "Julaften i dag!",
+                BackgroundPath = "https://static.feriecountdown.com/resources/background/christmaslivingroom.jpg",
+                UseCCCText = true,
+                UseLocalTime = true
+            }); ;
+        }
 
         public IActionResult SetLocale()
         {
