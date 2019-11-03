@@ -24,7 +24,7 @@ namespace FerieCountdown.Controllers
 
         private IActionResult CustomError(string message)
         {
-            return View("Error", new CountdownErrorViewModel
+            return View("CustomError", new CountdownErrorViewModel
             {
                 Message = message
             });
