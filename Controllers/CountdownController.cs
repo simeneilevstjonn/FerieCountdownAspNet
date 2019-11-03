@@ -20,7 +20,13 @@ namespace FerieCountdown.Controllers
             {
                 Message = message
             });
-        } 
+        }
+        
+        private IActionResult TimePassed()
+        {
+            TempData["WarningAlert"] = "Nedtellingen du forsøkte å besøke er allerede ferdig.";
+            return Redirect("/");
+        }
 
         private void InitSharedVars()
         {
@@ -45,7 +51,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
@@ -80,7 +86,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
@@ -116,7 +122,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
@@ -152,7 +158,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
@@ -186,7 +192,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return Redirect("/");
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
@@ -329,7 +335,7 @@ namespace FerieCountdown.Controllers
             if (pn.ToCharArray()[pn.Length - 1] != 's') cdname += "s";
             ViewData["Title"] = string.Format("Nedtelling til {0} konfirmasjon", cdname);
             DateTime cdtime = DateTime.Parse(Request.Query["d"] + "z", null, System.Globalization.DateTimeStyles.RoundtripKind);
-            if (!TimeMaster.ValiDateBool(cdtime)) return Redirect("/");
+            if (!TimeMaster.ValiDateBool(cdtime)) return TimePassed();
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
@@ -353,7 +359,7 @@ namespace FerieCountdown.Controllers
             if (p1n.ToCharArray()[p1n.Length - 1] != 's') cdname1 += "s";
             ViewData["Title"] = string.Format("Nedtelling til {0} og {1} bryllup", p0n, cdname1);
             DateTime cdtime = DateTime.Parse(Request.Query["d"] + "z", null, System.Globalization.DateTimeStyles.RoundtripKind);
-            if (!TimeMaster.ValiDateBool(cdtime)) return Redirect("/");
+            if (!TimeMaster.ValiDateBool(cdtime)) return TimePassed();
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
