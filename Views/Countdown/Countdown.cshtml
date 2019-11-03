@@ -63,6 +63,8 @@
 
 <script>
 
+    
+
     //define copy text function
     function copyUrl() {
         var copyText = document.getElementById("linkInput");
@@ -78,12 +80,14 @@
             document.getElementsByTagName("header")[0].style.display = "initial";
             document.getElementsByTagName("footer")[0].style.display = "initial";
             document.getElementById("thficon").className = "fas fa-expand";
+            document.getElementById("thfbtn").title = "Maksimer (f)";
             document.getElementById("btnpanel").style.top = "64px";
         }
         else {
             document.getElementsByTagName("header")[0].style.display = "none";
             document.getElementsByTagName("footer")[0].style.display = "none";
             document.getElementById("thficon").className = "fas fa-compress";
+            document.getElementById("thfbtn").title = "Minimer (f)";
             document.getElementById("btnpanel").style.top = "16px";
         }
     }
@@ -127,6 +131,12 @@ var clock;
             document.getElementById("done-container").style.display = "initial";
         }
     });
+
+    //set fullscreen if url parameter has been provided
+    var url = new URL(window.location);
+    if (url.searchParams.has("fullscreen")) {
+        thf()
+    };
 });
 </script>
 
@@ -153,7 +163,7 @@ var clock;
                     <a class="btn col" title="Reddit" href="https://www.reddit.com/submit?url=@ViewData["FullUrl"]&title=@ViewData["Title"]" target="_blank">
                         <img src="https://static.feriecountdown.com/resources/icon/reddit.svg" class="share-icon" />
                     </a>
-                    <a class="btn col" title="Email" href="mailto:?to=&body=@ViewData["FullUrl"],&subject=@ViewData["Title"]">
+                    <a class="btn col" title="Email" href="mailto:?to=&body=@ViewData["FullUrl"]&subject=@ViewData["Title"]">
                         <img src="https://static.feriecountdown.com/resources/icon/envelope.svg" class="share-icon" />
                     </a>
                 </div>
@@ -180,10 +190,12 @@ var clock;
     <button title="Del" data-toggle="modal" data-target="#shareModal" class="btn ic hoverwhite">
         <i class="fas fa-share"></i>
     </button>
-    <button onclick="" class="btn ic hoverwhite">
+    <!--
+        <button onclick="" class="btn ic hoverwhite">
         <i class="far fa-star"></i>
     </button>
-    <button title="Maksimer (f)" onclick="thf()" class="btn ic hoverwhite">
+    -->
+    <button title="Maksimer (f)" onclick="thf()" class="btn ic hoverwhite" id="thfbtn">
         <i class="fas fa-expand" id="thficon"></i>
     </button>
 </div>

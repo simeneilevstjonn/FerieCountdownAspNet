@@ -10,6 +10,7 @@ using System.Net.Mail;
 using FerieCountdown.Classes;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using FerieCountdown.Classes.Io;
 
 namespace FerieCountdown.Controllers
 {
@@ -63,7 +64,8 @@ namespace FerieCountdown.Controllers
             MailMessage mail = new MailMessage
             {
                 Subject = string.Format("FerieCountdown.com contact form: {0}", subject),
-                From = new MailAddress(email),
+                From = new MailAddress("noreply@feriecountdown.com"),
+                ReplyToList = { new MailAddress(email) },
                 To = { new MailAddress("simen@feriecountdown.com") },
                 IsBodyHtml = true,
                 BodyEncoding = System.Text.Encoding.UTF8,

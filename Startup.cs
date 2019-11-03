@@ -13,6 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FerieCountdown.Classes;
+using FerieCountdown.Classes.Io;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace FerieCountdownWithAuth
 {
@@ -29,26 +33,35 @@ namespace FerieCountdownWithAuth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
             services.AddAuthentication()
-                .AddGoogle(options =>
-                {
-                    IConfigurationSection googleAuthNSection =
-                        Configuration.GetSection("Authentication:Google");
+                .AddGoogle(options => { IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google"); options.ClientId = googleAuthNSection["ClientId"]; options.ClientSecret = googleAuthNSection["ClientSecret"]; })
+                .AddMicrosoftAccount(microsoftOptions => { microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"]; microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"]; });
 
-                    options.ClientId = googleAuthNSection["ClientId"];
-                    options.ClientSecret = googleAuthNSection["ClientSecret"];
-                });
+            services.AddTransient<IEmailSender, EmailSender>();
 
             //Configure GRC secret
             IConfigurationSection googleRecaptchaNSession =
                         Configuration.GetSection("Google:Recaptcha");
             IoMaster.GRCSecret = googleRecaptchaNSession["Secret"];
+
+            //Configure Conn string
+            DbMaster.ConnString = Configuration.GetConnectionString("AzureConnection");
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential 
+                // cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                // requires using Microsoft.AspNetCore.Http;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +80,13 @@ namespace FerieCountdownWithAuth
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
 
             app.UseRouting();
             app.UseAuthentication();

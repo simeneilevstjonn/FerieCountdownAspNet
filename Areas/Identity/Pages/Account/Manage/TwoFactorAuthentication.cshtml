@@ -1,0 +1,56 @@
+﻿@page
+@model TwoFactorAuthenticationModel
+@{
+    ViewData["Title"] = "Tofaktorautentisering (2FA)";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h4>@ViewData["Title"]</h4>
+@if (Model.Is2faEnabled)
+{
+    if (Model.RecoveryCodesLeft == 0)
+    {
+        <div class="alert alert-danger">
+            <strong>Du har ingen gjenopprettingskoder igjen.</strong>
+            <p>Du må <a asp-page="./GenerateRecoveryCodes">generere nye koder</a> før du kan logge inn ved hjelp av en gjenopprettingskode.</p>
+        </div>
+    }
+    else if (Model.RecoveryCodesLeft == 1)
+    {
+        <div class="alert alert-danger">
+            <strong>Du har 1 gjenopprettingskode igjen.</strong>
+            <p>Du kan <a asp-page="./GenerateRecoveryCodes">generere nye koder</a>.</p>
+        </div>
+    }
+    else if (Model.RecoveryCodesLeft <= 3)
+    {
+        <div class="alert alert-warning">
+            <strong>Du har @Model.RecoveryCodesLeft gjenopprettingskoder igjen.</strong>
+            <p>Du kan <a asp-page="./GenerateRecoveryCodes">generere nye koder</a>.</p>
+        </div>
+    }
+
+    if (Model.IsMachineRemembered)
+    {
+        <form method="post" style="display: inline-block">
+            <button type="submit" class="btn btn-primary">Glem denne maskinen</button>
+        </form>
+    }
+    <a asp-page="./Disable2fa" class="btn btn-primary">Slå av 2FA</a>
+    <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">Lag nye gjenopprettignskoder</a>
+}
+
+@if (!Model.HasAuthenticator)
+{
+    <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Legg til autentiserings-app</a>
+}
+else
+{
+    <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Sett opp autentiserings-app</a>
+    <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">Reset autentiserings-app</a>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

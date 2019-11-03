@@ -88,3 +88,10 @@ body {
 .hoverwhite:hover {
     color: #FFF
 }
+
+@media (min-width: 600px) {
+    .login-nav {
+        position: absolute;
+        right: 16px
+    }
+}
