@@ -1,16 +1,16 @@
-﻿@model ErrorViewModel
+﻿@model HttpErrorViewModel
 @{
-    ViewData["Title"] = "500 Internal Server Error";
+    ViewData["Title"] = Model.StatusCode + " " + Model.ErrorTitle;
     Layout = "_Container";
 
-    char digit1 = 5;
-    char digit2 = 0;
-    char digit3 = 0;
+    char digit1 = Model.StatusCode.ToString()[0];
+    char digit2 = Model.StatusCode.ToString()[1];
+    char digit3 = Model.StatusCode.ToString()[2];
 }
 
 <link rel="stylesheet" href="~/css/flipclock.css" />
 <div style="text-align: center">
-    <h1>Internal Server Error</h1>
+    <h1>@Model.ErrorTitle</h1>
 
     <div class="flip-clock-wrapper" style="transform: scale(2); display: flex; align-items: center; justify-content: center; margin: 2em; padding: 4em">
         <ul class="flip">
@@ -93,5 +93,5 @@
         </ul>
     </div>
 
-    <p>The server encountered an internal error or misconfiguration and was unable to complete your request.</p>
+    <p>@Model.ErrorDescription</p>
 </div>

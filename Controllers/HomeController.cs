@@ -46,6 +46,43 @@ namespace FerieCountdown.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public IActionResult HttpError(int id)
+        {
+            HttpErrorViewModel model = new HttpErrorViewModel { StatusCode = id };
+            switch (id)
+            {
+                case 400:
+                    model.ErrorTitle = "Bad Request";
+                    model.ErrorDescription = "Your browser sent a request that this server could not understand.";
+                    break;
+                case 401:
+                    model.ErrorTitle = "Unauthorized";
+                    model.ErrorDescription = "This server could not verify that you are authorized to access the document requested. Either you supplied the wrong credentials (e.g., bad password), or your browser doesn't understand how to supply the credentials required.";
+                    break;
+                case 403:
+                    model.ErrorTitle = "Forbidden";
+                    model.ErrorDescription = "You don't have permission to access this resource.";
+                    break;
+                case 404:
+                    model.ErrorTitle = "Not Found";
+                    model.ErrorDescription = "The requested URL was not found on this server.";
+                    break;
+                case 405:
+                    model.ErrorTitle = "Method Not Allowed";
+                    model.ErrorDescription = "The target resource does not support the presented method.";
+                    break;
+                case 500:
+                    model.ErrorTitle = "Internal Server Error";
+                    model.ErrorDescription = "The server encountered an internal error or misconfiguration and was unable to complete your request.";
+                    break;
+                default:
+                    model.ErrorTitle = "HTTP error " + id;
+                    model.ErrorDescription = "HTTP error " + id;
+                    break;
+            }
+            return View(model);
+        }
+
         public IActionResult Contact()
         {
             return View();
