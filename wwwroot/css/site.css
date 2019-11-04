@@ -94,4 +94,21 @@ body {
         position: absolute;
         right: 16px
     }
+    .hide-large {
+        display:none!important;
+    }
+}
+
+@media (max-width: 600px) {
+    .hide-mob {
+        display: none !important;
+    }
+}
+
+.em-1-h {
+    height: 1em;
+}
+
+.mb-8px {
+    margin-bottom: 8px;
 }
