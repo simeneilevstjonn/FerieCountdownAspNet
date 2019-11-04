@@ -23,8 +23,7 @@ namespace FerieCountdown.Classes.Io
 
             SmtpClient client = new SmtpClient
             {
-                //change smtp to ipsum.trok.no
-                Host = "smtp.altibox.no",
+                Host = "ipsum.trok.no",
                 Port = 25,
                 UseDefaultCredentials = false,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
