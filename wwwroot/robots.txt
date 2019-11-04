@@ -7,15 +7,15 @@ Allow: /
 Disallow: /countdown/birthday
 Disallow: /countdown/confirmation
 Disallow: /countdown/Wedding
+Disallow: /countdown/setlocale
 Disallow: /config
 Disallow: /identity
-Disallow: /settings
 
 User-agent: Bingbot
 Allow: /
 Disallow: /countdown/birthday
 Disallow: /countdown/confirmation
 Disallow: /countdown/Wedding
+Disallow: /countdown/setlocale
 Disallow: /config
 Disallow: /identity
-Disallow: /settings

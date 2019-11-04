@@ -1,9 +1,7 @@
 ﻿@model CountdownViewModel
 <script src="~/js/flipclock.js"></script>
 <link rel="stylesheet" href="~/css/flipclock.css" />
-<meta property="og:url" content="@ViewData["FullUrl"]" />
-<meta property="og:title" content="@ViewData["Title"]" />
-<link rel="canonical" href="@ViewData["FullUrl"]" />
+
 
 @{
     //Get countdown difference
@@ -45,7 +43,7 @@
         justify-content: center;
     }
     #above-text {
-        font-size: 5vw;
+        font-size: 64pt;
         text-align: center;
         margin-bottom: 130px;
     }
@@ -53,7 +51,7 @@
         text-align: center;
     }
     #done-text {
-        font-size: 7vw;
+        font-size: 72pt;
     }
     .share-icon {
         width: 75%
@@ -81,14 +79,12 @@
             document.getElementsByTagName("footer")[0].style.display = "initial";
             document.getElementById("thficon").className = "fas fa-expand";
             document.getElementById("thfbtn").title = "Maksimer (f)";
-            document.getElementById("btnpanel").style.top = "64px";
         }
         else {
             document.getElementsByTagName("header")[0].style.display = "none";
             document.getElementsByTagName("footer")[0].style.display = "none";
             document.getElementById("thficon").className = "fas fa-compress";
             document.getElementById("thfbtn").title = "Minimer (f)";
-            document.getElementById("btnpanel").style.top = "16px";
         }
     }
 
@@ -186,22 +182,17 @@ var clock;
     </div>
 </div>
 <!--Button Row-->
-<div style="position:absolute; top: 64px; right: 16px;" id="btnpanel">
+<div style="text-align:right; margin-right: 16px; margin-top: 16px" id="btnpanel">
     <button title="Del" data-toggle="modal" data-target="#shareModal" class="btn ic hoverwhite">
         <i class="fas fa-share"></i>
     </button>
-    <!--
-        <button onclick="" class="btn ic hoverwhite">
-        <i class="far fa-star"></i>
-    </button>
-    -->
     <button title="Maksimer (f)" onclick="thf()" class="btn ic hoverwhite" id="thfbtn">
         <i class="fas fa-expand" id="thficon"></i>
     </button>
 </div>
 
 <!--Clock-->
-<p id="above-text">@Model.CountdownText</p>ff
+<p id="above-text">@Model.CountdownText</p>
 <div class="clock" style="margin:2em;" id="clock"></div>
 <div id="done-container" class="valign" style="display: none;"><p id="done-text">@Model.CountdownEndText</p></div>
 @Html.Raw(Model.HtmlAppend)
