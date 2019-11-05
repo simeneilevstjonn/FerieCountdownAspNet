@@ -11,21 +11,6 @@ namespace FerieCountdown.Classes.Io
     public static class IoMaster
     {
         public static string GRCSecret { private get; set; } 
-        public static void SendMail(MailMessage Message)
-        {
-            SmtpClient client = new SmtpClient
-            {
-                Host = "ipsum.trok.no",
-                Port = 25,
-                UseDefaultCredentials = false,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                EnableSsl = true
-            };
-            client.Send(Message);
-            client.Dispose();
-        }
-
-        
 
         public static async Task<string> HttpPostRequest(Dictionary<string, string> formdata, string uri)
         {
