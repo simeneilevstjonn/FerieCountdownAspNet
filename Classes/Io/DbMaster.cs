@@ -1,4 +1,7 @@
-﻿using FerieCountdown.Classes.Locale;
+﻿using FerieCountdown.Classes.Countdowns;
+using FerieCountdown.Classes.Exceptions;
+using FerieCountdown.Classes.Locale;
+using FerieCountdown.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
@@ -14,6 +17,13 @@ namespace FerieCountdown.Classes.Io
     public static class DbMaster
     {
         public static string ConnString { get; set; }
+
+        public static string ValidateSql(string input)
+        {
+            if (input.IndexOfAny(new char[] { ';', '\'', '*', '/', '-', '_' }) > -1) throw new BadSqlException(string.Format("Illegal user input: {0}", input));
+            else return input;
+        }
+         
 
         public static CountdownLocale GetUserLocale(HttpRequest Request)
         {
@@ -35,7 +45,7 @@ namespace FerieCountdown.Classes.Io
             {
                 SqlConnection conn = new SqlConnection(ConnString);
                 //retrieve the SQL Server instance version
-                string query = string.Format(@"select * from [dbo].[DefaultLocales] where LookupName = N'{0}';", school);
+                string query = string.Format(@"select * from [dbo].[DefaultLocales] where LookupName = N'{0}';", ValidateSql(school));
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -58,10 +68,7 @@ namespace FerieCountdown.Classes.Io
                         };
                     }
                 }
-                else
-                {
-                    Console.WriteLine("No data found.");
-                }
+                else throw new InvalidLocaleException(string.Format("Invalid default countdownlocale {0}", school));
                 dr.Close();
                 cmd.Dispose();
 
@@ -82,62 +89,88 @@ namespace FerieCountdown.Classes.Io
             //Get locale from SQL
             /*try
             {*/
-                SqlConnection conn = new SqlConnection(ConnString);
-                //retrieve the SQL Server instance version
-                string query = string.Format(@"select LookupName, School, Municipality from [dbo].[DefaultLocales] ORDER BY Municipality, School ASC;");
+            SqlConnection conn = new SqlConnection(ConnString);
+            //retrieve the SQL Server instance version
+            string query = string.Format(@"select LookupName, School, Municipality from [dbo].[DefaultLocales] ORDER BY Municipality, School ASC;");
 
-                SqlCommand cmd = new SqlCommand(query, conn);
+            SqlCommand cmd = new SqlCommand(query, conn);
 
-                //open connection
-                conn.Open();
+            //open connection
+            conn.Open();
 
-                //execute the SQLCommand
-                SqlDataReader dr = cmd.ExecuteReader();
+            //execute the SQLCommand
+            SqlDataReader dr = cmd.ExecuteReader();
 
-                SimpleMunicipality currentMunicipality = new SimpleMunicipality();
-                string currentName = string.Empty;
-                bool firstrun = true;
+            SimpleMunicipality currentMunicipality = new SimpleMunicipality();
+            string currentName = string.Empty;
+            bool firstrun = true;
 
-                //check if there are records
-                if (dr.HasRows)
+            //check if there are records
+            if (dr.HasRows)
+            {
+                while (dr.Read())
                 {
-                    while (dr.Read())
+                    if (firstrun)
                     {
-                        if (firstrun)
-                        {
-                            currentName = dr.GetString(2);
-                            currentMunicipality.Name = currentName;
-                            firstrun = false;
-                        }
-                    if (dr.GetString(2) != currentName)
-                    {
-                        ReturnList.Add(currentMunicipality);
-                        currentMunicipality = new SimpleMunicipality();
                         currentName = dr.GetString(2);
                         currentMunicipality.Name = currentName;
+                        firstrun = false;
                     }
-                    currentMunicipality.Schools.Add(new SimpleLocale
-                        {
-                            LookupName = dr.GetString(0),
-                            Name = dr.GetString(1)
-                        });
-                    }
-                    ReturnList.Add(currentMunicipality);
-                }
-                else
+                if (dr.GetString(2) != currentName)
                 {
-                    Console.WriteLine("No data found.");
+                    ReturnList.Add(currentMunicipality);
+                    currentMunicipality = new SimpleMunicipality();
+                    currentName = dr.GetString(2);
+                    currentMunicipality.Name = currentName;
                 }
-                dr.Close();
-                cmd.Dispose();
-
-            /*}
-            catch (Exception ex)
-            {
-                //display error message
-                Console.WriteLine("Exception: " + ex.Message);
-            }*/
+                currentMunicipality.Schools.Add(new SimpleLocale
+                    {
+                        LookupName = dr.GetString(0),
+                        Name = dr.GetString(1)
+                    });
+                }
+                ReturnList.Add(currentMunicipality);
+            }
+            dr.Close();
+            cmd.Dispose();
             return ReturnList;
+        }
+
+        //Custom countdown methods
+        public static CustomCountdown GetCustomCountdown(string id)
+        {
+            throw new NotImplementedException();
+            // TODO fix this
+            CustomCountdown returner = new CustomCountdown();
+
+            SqlConnection conn = new SqlConnection(ConnString);
+            //retrieve the SQL Server instance version
+            string query = string.Format(@"select CountdownTy, Municipality from [dbo].[CustomCountdowns] where Id = N'{0}';", id);
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+
+            //open connection
+            conn.Open();
+
+            //execute the SQLCommand
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            //check if there are records
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+
+                }
+            }
+            else
+            {
+                Console.WriteLine("No data found.");
+            }
+            dr.Close();
+            cmd.Dispose();
+
+            return returner;
         }
     }
 }

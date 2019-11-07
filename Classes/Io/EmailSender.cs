@@ -24,12 +24,11 @@ namespace FerieCountdown.Classes.Io
 
             SmtpClient client = new SmtpClient
             {
-                Host = "ipsum.trok.no",
-                Port = 587,
-                Credentials = new System.Net.NetworkCredential(Environment.GetEnvironmentVariable("SMTP_USERNAME"), Environment.GetEnvironmentVariable("SMTP_PASSWORD")),
+                Host = "localhost",
+                Port = 25,
                 UseDefaultCredentials = false,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                EnableSsl = true
+                EnableSsl = false
             };
             await client.SendMailAsync(message);
             client.Dispose();
