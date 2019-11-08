@@ -24,6 +24,18 @@ namespace FerieCountdown.Classes.Io
             else return input;
         }
          
+        public static void SqlQuery(string query)
+        {
+            SqlConnection conn = new SqlConnection(ConnString);
+            //retrieve the SQL Server instance version
+            SqlCommand cmd = new SqlCommand(query, conn);
+            //open connection
+            conn.Open();
+            //execute the SQLCommand
+            SqlDataReader dr = cmd.ExecuteReader();
+            dr.Close();
+            cmd.Dispose();
+        }
 
         public static CountdownLocale GetUserLocale(HttpRequest Request)
         {
@@ -64,7 +76,7 @@ namespace FerieCountdown.Classes.Io
                         {
                             Municipality = dr.GetString(0),
                             School = dr.GetString(1),
-                            Data = dr.GetString(2),
+                            Data = dr.GetString(2)
                         };
                     }
                 }
@@ -139,13 +151,12 @@ namespace FerieCountdown.Classes.Io
         //Custom countdown methods
         public static CustomCountdown GetCustomCountdown(string id)
         {
-            throw new NotImplementedException();
             // TODO fix this
             CustomCountdown returner = new CustomCountdown();
 
             SqlConnection conn = new SqlConnection(ConnString);
             //retrieve the SQL Server instance version
-            string query = string.Format(@"select CountdownTy, Municipality from [dbo].[CustomCountdowns] where Id = N'{0}';", id);
+            string query = string.Format(@"select Id, CountdownType, CountdownTime, CountdownText, CountdownEndText, BackgroundPath, UseCCCText, UseLocalTime, CssAppend, HtmlAppend, Owner from [dbo].[CustomCountdowns] where Id = N'{0}';", ValidateSql(id));
 
             SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -160,7 +171,20 @@ namespace FerieCountdown.Classes.Io
             {
                 while (dr.Read())
                 {
-
+                    returner = new CustomCountdown
+                    {
+                        Id = dr.GetString(0),
+                        CountdownType = dr.GetString(1),
+                        CountdownTime = dr.GetDateTime(2), 
+                        CountdownText = dr.GetString(3),
+                        CountdownEndText = dr.GetString(4),
+                        BackgroundPath = dr.GetString(5),
+                        UseCCCText = dr.GetBoolean(6),
+                        UseLocalTime = dr.GetBoolean(7),
+                        CssAppend = dr.GetString(8),
+                        HtmlAppend = dr.GetString(9),
+                        Owner = dr.GetString(10)
+                    };
                 }
             }
             else

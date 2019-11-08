@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FerieCountdown.Classes;
+using FerieCountdown.Classes.Countdowns;
 using FerieCountdown.Classes.Io;
 using FerieCountdown.Classes.Locale;
 using FerieCountdown.Classes.TimeHandler;
@@ -420,6 +421,28 @@ namespace FerieCountdown.Controllers
             }); ;
         }
 
+        //IActionresult() for custom countdown
+        public IActionResult Custom(string id)
+        {
+            //TODO add checking if user is allowed to view countdown
+
+            if (string.IsNullOrEmpty(id)) return Redirect("/");
+            CustomCountdown countdowndata = DbMaster.GetCustomCountdown(id);
+            ViewData["Title"] = countdowndata.CountdownText;
+            InitSharedVars();
+
+            return View("Countdown", new CountdownViewModel
+            {
+                CountdownTime = countdowndata.CountdownTime,
+                CountdownText = countdowndata.CountdownText,
+                CountdownEndText = countdowndata.CountdownEndText,
+                BackgroundPath = countdowndata.BackgroundPath,
+                UseCCCText = countdowndata.UseCCCText,
+                UseLocalTime = countdowndata.UseLocalTime,
+                CssAppend = countdowndata.CssAppend,
+                HtmlAppend = countdowndata.HtmlAppend
+            }); ;
+        }
 
 
         //Define other countdowns
