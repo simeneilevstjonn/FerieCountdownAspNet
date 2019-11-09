@@ -37,6 +37,25 @@ namespace FerieCountdown.Classes.Io
             cmd.Dispose();
         }
 
+        public static bool CheckId(string id)
+        {
+            SqlConnection conn = new SqlConnection(ConnString);
+            //retrieve the SQL Server instance version
+            string query = string.Format(@"select Id from [dbo].[CustomCountdowns] where Id = N'{0}';", id);
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+
+            //open connection
+            conn.Open();
+
+            //execute the SQLCommand
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            //check if there are records
+            if (dr.HasRows) return false;
+            else return true;
+        }
+
         public static CountdownLocale GetUserLocale(HttpRequest Request)
         {
             return GetLocale(Request.Cookies["locale"]);

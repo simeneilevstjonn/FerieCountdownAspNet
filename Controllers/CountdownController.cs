@@ -531,5 +531,10 @@ namespace FerieCountdown.Controllers
             return Error(JsonConvert.SerializeObject(DbMaster.GetAllLocales()));
         }
 
+        public IActionResult TestCreate()
+        {
+            return Custom(CountdownSqlAgent.CreateCustomCountdown("me", "custom", DateTime.Parse("2019-12-24T00:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind), "https://static.feriecountdown.com/resources/background/christmaslivingroom.jpg", "Test countdown", "Finished test countdown", " ", " ", true, false));
+        }
+
     }
 }
