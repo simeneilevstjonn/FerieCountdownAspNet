@@ -1,0 +1,68 @@
+﻿@using FerieCountdown.Classes
+@{
+    Layout = "_Container";
+    ViewData["Title"] = "Opphavsrett";
+}
+
+<h1>Opphavsrett</h1>
+
+<p>
+    Nettsiden er &copy; FerieCountdown og Simen Eilevstjønn 2019. Biblioteker og bilder er &copy; deres eigere som beskrevet under.
+</p>
+
+@{
+    List<CopyrightItem> Libaries = new List<CopyrightItem>
+{
+        new CopyrightItem("FlipClock", "MIT Liscense", "Justin Kimbrell / Objective HTML", "http://flipclockjs.com/", string.Empty),
+        new CopyrightItem("jQuery", "MIT Liscense", "jQuery Foundation, Inc.", "https://jquery.org/", string.Empty),
+        new CopyrightItem("Bootstrap", "MIT Liscense", "The Bootstrap Authors / Twitter Inc.", "https://getbootstrap.com/", string.Empty),
+        new CopyrightItem("Newtonsoft.Json", "MIT Liscense", "James Newton-King / Newtonsoft", "https://www.newtonsoft.com/json", string.Empty),
+        new CopyrightItem("Microsoft Asp.Net Core", "All Rights Reserved", "Microsoft Corporation", "https://asp.net/", string.Empty),
+    };
+
+    List<CopyrightItem> Pictures = new List<CopyrightItem>
+{
+        new CopyrightItem("Høstfarger i fjellet", "All Rights Reserved", "Odd Skjæveland 2008", string.Empty, "https://static.feriecountdown.com/resources/background/autumn.jpg"),
+        new CopyrightItem("interior christmas. magic glowing tree, fireplace, gifts", "Adobe Stock Standard Liscense", "JenkoAtaman via Adobe Stock", "https://stock.adobe.com/no/images/interior-christmas-magic-glowing-tree-fireplace-gifts/180494020", "https://static.feriecountdown.com/resources/background/christmaslivingroom.jpg")
+    };
+}
+
+<h2>Biblioteker</h2>
+<div class="container">
+    @foreach (CopyrightItem lib in Libaries)
+    {
+        <h4>@lib.Name</h4>
+        <div class="row">
+            <div class="col-6">
+                &copy; @lib.CopyrightHolder<br />
+                @lib.Liscense<br />
+                <a href="@lib.Link">@lib.Link</a>
+            </div>
+            <div class="col-6">
+                <img src="@lib.Image" style="width:512px;" />
+            </div>
+        </div>
+        <hr />
+        <br />
+    }
+</div>
+
+<h2>Bilder</h2>
+<div class="container">
+    @foreach (CopyrightItem lib in Pictures)
+    {
+        <h4>@lib.Name</h4>
+        <div class="row">
+            <div class="col-6">
+                &copy; @lib.CopyrightHolder<br />
+                @lib.Liscense<br />
+                <a href="@lib.Link">@lib.Link</a>
+            </div>
+            <div class="col-6">
+                <img src="@lib.Image" style="width:512px;" />
+            </div>
+        </div>
+        <hr />
+        <br />
+    }
+</div>
