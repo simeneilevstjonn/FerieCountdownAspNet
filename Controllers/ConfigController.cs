@@ -247,5 +247,10 @@ namespace FerieCountdown.Controllers
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
+
+        public IActionResult MyCountdowns()
+        {
+            return View(new MyCountdownsViewModel { Countdowns = UserCountdownCollections.GetUserCountdowns(User.FindFirstValue(ClaimTypes.NameIdentifier)) });
+        }
     }
 }

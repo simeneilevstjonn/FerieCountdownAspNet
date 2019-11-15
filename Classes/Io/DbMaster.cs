@@ -218,5 +218,32 @@ namespace FerieCountdown.Classes.Io
 
             return returner;
         }
+
+        public static Dictionary<string, string> GetDictionaryFromSql(string sql)
+        {
+            Dictionary<string, string> ReturnList = new Dictionary<string, string>();
+            SqlConnection conn = new SqlConnection(ConnString);
+            //retrieve the SQL Server instance version
+
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            //open connection
+            conn.Open();
+
+            //execute the SQLCommand
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            //check if there are records
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    ReturnList.Add(dr.GetString(0), dr.GetString(1));
+                }
+            }
+            dr.Close();
+            cmd.Dispose();
+            return ReturnList;
+        }
     }
 }

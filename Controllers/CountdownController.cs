@@ -346,6 +346,8 @@ namespace FerieCountdown.Controllers
             if (string.IsNullOrEmpty(id)) return Redirect("/");
             CustomCountdown countdowndata = DbMaster.GetCustomCountdown(id);
             ViewData["Title"] = countdowndata.CountdownText;
+            if (countdowndata.CountdownType == "custom" || countdowndata.CountdownType == "custom-reccurring") ViewData["IsCustomCountdown"] = "true";
+            else ViewData["IsPersonalCelebration"] = "true";
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel
@@ -355,7 +357,7 @@ namespace FerieCountdown.Controllers
                 CountdownEndText = countdowndata.CountdownEndText,
                 UseLocalTime = countdowndata.UseLocalTime,
                 Background = countdowndata.Background
-            }); ;
+            });
         }
 
 
