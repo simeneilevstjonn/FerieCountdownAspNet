@@ -1,0 +1,59 @@
+﻿@model MyCountdownsViewModel
+@{
+    ViewData["Title"] = "Mine Nedtellinger";
+    Layout = "_container";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Countdowns.BirthdayCountdowns.Count > 0)
+{
+    <h2>Bursdag</h2>
+    foreach (KeyValuePair<string, string> val in Model.Countdowns.BirthdayCountdowns)
+    {
+        <a href="/countdown/custom/@val.Key">@val.Value</a>
+        <br />
+    }
+    <br />
+    <hr />
+    <br />
+}
+
+@if (Model.Countdowns.ConfirmationCountdows.Count > 0)
+{
+    <h2>Konfirmasjon</h2>
+    foreach (KeyValuePair<string, string> val in Model.Countdowns.ConfirmationCountdows)
+    {
+        <a href="/countdown/custom/@val.Key">@val.Value</a>
+        <br />
+    }
+    <br />
+    <hr />
+    <br />
+}
+
+@if (Model.Countdowns.WeddingCountdowns.Count > 0)
+{
+    <h2>Bryllup</h2>
+    foreach (KeyValuePair<string, string> val in Model.Countdowns.WeddingCountdowns)
+    {
+        <a href="/countdown/custom/@val.Key">@val.Value</a>
+        <br />
+    }
+    <br />
+    <hr />
+    <br />
+}
+
+@if (Model.Countdowns.CustomCountdown.Count > 0)
+{
+    <h2>Egendefinerte</h2>
+    foreach (KeyValuePair<string, string> val in Model.Countdowns.CustomCountdown)
+    {
+        <a href="/countdown/custom/@val.Key">@val.Value</a>
+        <br />
+    }
+}
+
+
+
