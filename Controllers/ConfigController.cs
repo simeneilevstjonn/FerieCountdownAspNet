@@ -8,9 +8,11 @@ using FerieCountdown.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FerieCountdown.Controllers
 {
+    [Authorize]
     public class ConfigController : Controller
     {
         public IActionResult Birthday()
