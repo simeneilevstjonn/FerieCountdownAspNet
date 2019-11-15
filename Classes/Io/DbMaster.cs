@@ -197,11 +197,14 @@ namespace FerieCountdown.Classes.Io
                         CountdownTime = dr.GetDateTime(2), 
                         CountdownText = dr.GetString(3),
                         CountdownEndText = dr.GetString(4),
-                        BackgroundPath = dr.GetString(5),
-                        UseCCCText = dr.GetBoolean(6),
+                        Background = new CountdownBackground 
+                        { 
+                            Path = dr.GetString(5),
+                            UseCCC = dr.GetBoolean(6),
+                            Css = dr.GetString(8),
+                            Html = dr.GetString(9)
+                        },
                         UseLocalTime = dr.GetBoolean(7),
-                        CssAppend = dr.GetString(8),
-                        HtmlAppend = dr.GetString(9),
                         Owner = dr.GetString(10)
                     };
                 }

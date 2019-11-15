@@ -26,10 +26,10 @@
         background-attachment: fixed;
         background-repeat: no-repeat;
         background-position: center;
-        background-image: url(@Model.BackgroundPath);
+        background-image: url(@Model.Background.Path);
         overflow-x: hidden;
     }
-    @if (Model.UseCCCText)
+    @if (Model.Background.UseCCC)
     {
         <text>
         #above-text, #done-text, .flip-clock-label, #btnpanel {
@@ -56,7 +56,7 @@
     .share-icon {
         width: 75%
     }
-    @Model.CssAppend
+    @Model.Background.Css
 </style>
 
 <script>
@@ -195,4 +195,4 @@ var clock;
 <p id="above-text">@Model.CountdownText</p>
 <div class="clock" style="margin:2em;" id="clock"></div>
 <div id="done-container" class="valign" style="display: none;"><p id="done-text">@Model.CountdownEndText</p></div>
-@Html.Raw(Model.HtmlAppend)
+@Html.Raw(Model.Background.Html)
