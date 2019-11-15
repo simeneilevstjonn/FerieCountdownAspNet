@@ -12,10 +12,11 @@ namespace FerieCountdown.Classes.Countdowns
         public string Path { get; set; }
         public string Css { get; set; }
         public string Html { get; set; }
+        public bool UseCCC { get; set; }
 
-        public static Dictionary<string, CountdownBackground> Backgrounds = new Dictionary<string, CountdownBackground> 
+        public static Dictionary<string, CountdownBackground> Backgrounds = new Dictionary<string, CountdownBackground>
         {
-            { 
+            {
                 "birthdaycake",
                 new CountdownBackground
                 {
@@ -23,7 +24,8 @@ namespace FerieCountdown.Classes.Countdowns
                     CommonName = "Bursdagskake",
                     Path = "https://static.feriecountdown.com/resources/background/bd/static.jpg",
                     Css = string.Empty,
-                    Html = string.Empty
+                    Html = string.Empty,
+                    UseCCC = true
                 }
             },
             {
@@ -34,7 +36,8 @@ namespace FerieCountdown.Classes.Countdowns
                     CommonName = "Fyrverkeri",
                     Path = "https://static.feriecountdown.com/resources/background/ny/static.png",
                     Css = string.Empty,
-                    Html = string.Empty
+                    Html = string.Empty,
+                    UseCCC = true
                 }
             }
         };
