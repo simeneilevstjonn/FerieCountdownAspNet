@@ -27,8 +27,6 @@ namespace FerieCountdown.Classes.Countdowns
             return id;
         }
 
-
-
         static string GenerateId()
         {
             Random random = new Random();
