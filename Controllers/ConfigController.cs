@@ -41,8 +41,7 @@ namespace FerieCountdown.Controllers
                 },
                 BackgroundOptions = new List<CountdownBackground>
                 {
-                    CountdownBackground.Backgrounds["birthdaycake"]/*,
-                    CountdownBackground.Backgrounds["fireworks"]*/
+                    CountdownBackground.Backgrounds["birthdaycake"]
                 }
             }); 
         }
@@ -73,8 +72,7 @@ namespace FerieCountdown.Controllers
                 },
                 BackgroundOptions = new List<CountdownBackground>
                 {
-                    CountdownBackground.Backgrounds["birthdaycake"]/*,
-                    CountdownBackground.Backgrounds["fireworks"]*/
+                    CountdownBackground.Backgrounds["birthdaycake"]
                 }
             });
         }
@@ -112,9 +110,25 @@ namespace FerieCountdown.Controllers
                 },
                 BackgroundOptions = new List<CountdownBackground>
                 {
-                    CountdownBackground.Backgrounds["birthdaycake"]/*,
-                    CountdownBackground.Backgrounds["fireworks"]*/
+                    CountdownBackground.Backgrounds["rose"]
                 }
+            });
+        }
+
+        public IActionResult Custom()
+        {
+            List<CountdownBackground> cbgs = new List<CountdownBackground>();
+            foreach (KeyValuePair<string, CountdownBackground> cb in CountdownBackground.Backgrounds) 
+            {
+                cbgs.Add(cb.Value);
+            }
+            //ViewData["IsPersonalCelebration"] = "true";
+            return View("Custom", new CustomBuilderViewModel
+            {
+                Title = "Egendefinert nedtelling",
+                Heading = "Lag en nedtelling",
+                Action = "CreateCustom",
+                BackgroundOptions = cbgs
             });
         }
 
@@ -139,8 +153,6 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            //Define identity class
-
             string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "birthday", date, bg.Path, $"Nedtelling til {nameproperty} bursdag", $"Gratulerer med dagen {name}", bg.Html, bg.Css, bg.UseCCC, true);
 
             return Redirect($"/Countdown/Custom/{countdownid}");
@@ -155,7 +167,7 @@ namespace FerieCountdown.Controllers
             //Retrieve form data
             string name = Request.Form["n"];
             string background = Request.Form["background"];
-            DateTime date = DateTime.Parse(Request.Form["d"], null, System.Globalization.DateTimeStyles.RoundtripKind);
+            DateTime date = DateTime.Parse(Request.Form["d"] + "Z", null, System.Globalization.DateTimeStyles.RoundtripKind);
 
             //Modify name input
             name = name.ToLower();
@@ -163,11 +175,10 @@ namespace FerieCountdown.Controllers
             string nameproperty = name;
             if (name[^1] != 's') nameproperty += 's';
 
-            //Get background
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            //Define identity class
+            //Get background
 
             string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "confirmation", date, bg.Path, $"Nedtelling til {nameproperty} konfirmasjon", $"{nameproperty} konfirmasjon i dag", bg.Html, bg.Css, bg.UseCCC, true);
 
@@ -184,7 +195,7 @@ namespace FerieCountdown.Controllers
             string name0 = Request.Form["n0"];
             string name1 = Request.Form["n1"];
             string background = Request.Form["background"];
-            DateTime date = DateTime.Parse(Request.Form["d"], null, System.Globalization.DateTimeStyles.RoundtripKind);
+            DateTime date = DateTime.Parse(Request.Form["d"] + "Z", null, System.Globalization.DateTimeStyles.RoundtripKind);
 
             //Modify name input
             name0 = name0.ToLower();
@@ -201,9 +212,38 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            //Define identity class
 
             string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "wedding", date, bg.Path, $"Nedtelling til {name0} og {nameproperty1} bryllup.", $"{name0} og {nameproperty1} bryllup i dag", bg.Html, bg.Css, bg.UseCCC, true);
+
+            return Redirect($"/Countdown/Custom/{countdownid}");
+        }
+
+        [HttpPost]
+        public IActionResult CreateCustom()
+        {
+            //Check that form data is provided
+            if (string.IsNullOrEmpty(Request.Form["endtext"]) || string.IsNullOrEmpty(Request.Form["cdtext"]) || string.IsNullOrEmpty(Request.Form["background"]) || string.IsNullOrEmpty(Request.Form["time"]) || string.IsNullOrEmpty(Request.Form["recursion"]) || string.IsNullOrEmpty(Request.Form["timezone"])) return View("CustomError", new CountdownErrorViewModel { Message = "Missing one or more required parameters." });
+
+            //Retrieve form data
+            string cdtext = Request.Form["cdtext"];
+            string endtext = Request.Form["cdtext"];
+            string type = (string)Request.Form["recursion"] switch
+            {
+                "yearly" => "custom-reccurring",
+                _ => "custom"
+            };
+            bool uselocal = (string)Request.Form["timezone"] switch
+            {
+                "local" => true,
+                _ => false
+            };
+            string background = Request.Form["background"];
+            DateTime date = DateTime.Parse(Request.Form["time"] + "Z", null, System.Globalization.DateTimeStyles.RoundtripKind);
+
+            //TODO implement a way to check if the provided background id is allowed in the selected countdown type
+            CountdownBackground bg = CountdownBackground.Backgrounds[background];
+
+            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), type, date, bg.Path, cdtext, endtext, bg.Html, bg.Css, bg.UseCCC, uselocal);
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
