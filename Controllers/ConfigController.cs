@@ -269,10 +269,17 @@ namespace FerieCountdown.Controllers
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
 
-
         public IActionResult MyCountdowns()
         {
             return View(new MyCountdownsViewModel { Countdowns = UserCountdownCollections.GetUserCountdowns(User.FindFirstValue(ClaimTypes.NameIdentifier)) });
         }
+
+        public IActionResult DeleteCountdown(string id)
+        {
+            DbMaster.SqlQuery($"DELETE from dbo.CustomCountdowns WHERE Id = N'{DbMaster.ValidateSql(id)}' and Owner = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}'");
+
+            return Redirect("/Config/MyCountdowns");
+        }
+
     }
 }
