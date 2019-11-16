@@ -198,6 +198,42 @@ namespace FerieCountdown.Classes.Countdowns
                     UseCCC = false
                 }
             },
+            {
+                "sunset",
+                new CountdownBackground
+                {
+                    Id = "sunset",
+                    CommonName = "Solnedgang ved Vistnes",
+                    Path = "https://static.feriecountdown.com/resources/background/sunset.jpg",
+                    Css = string.Empty,
+                    Html = string.Empty,
+                    UseCCC = true
+                }
+            },
+            {
+                "mspolarlys",
+                new CountdownBackground
+                {
+                    Id = "mspolarlys",
+                    CommonName = "M/S Polarlys og M/S Midnattsol nær kai",
+                    Path = "https://static.feriecountdown.com/resources/background/mspolarlys.jpg",
+                    Css = string.Empty,
+                    Html = string.Empty,
+                    UseCCC = false
+                }
+            },
+            {
+                "housesbysea",
+                new CountdownBackground
+                {
+                    Id = "housesbysea",
+                    CommonName = "Sjøhus speiles i vannet",
+                    Path = "https://static.feriecountdown.com/resources/background/housesbysea.jpg",
+                    Css = string.Empty,
+                    Html = string.Empty,
+                    UseCCC = false
+                }
+            },
             //Shutterstock Images
             {
                 "blueleaves",
