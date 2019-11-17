@@ -234,6 +234,31 @@ namespace FerieCountdown.Classes.Countdowns
                     UseCCC = false
                 }
             },
+            //Joar Eilevstjønn Images
+            {
+                "hongkongskyline",
+                new CountdownBackground
+                {
+                    Id = "hongkongskyline",
+                    CommonName = "Hong Kong Skyline",
+                    Path = "https://static.feriecountdown.com/resources/background/hongkongskyline.jpg",
+                    Css = string.Empty,
+                    Html = string.Empty,
+                    UseCCC = true
+                }
+            },
+            {
+                "palmleaves",
+                new CountdownBackground
+                {
+                    Id = "palmleaves",
+                    CommonName = "Palmeblader",
+                    Path = "https://static.feriecountdown.com/resources/background/palmleaves.jpg",
+                    Css = string.Empty,
+                    Html = string.Empty,
+                    UseCCC = false
+                }
+            },
             //Shutterstock Images
             {
                 "blueleaves",
