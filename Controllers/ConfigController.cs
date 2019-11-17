@@ -9,12 +9,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using FerieCountdown.Classes.Io;
 
 namespace FerieCountdown.Controllers
 {
     [Authorize]
     public class ConfigController : Controller
     {
+        private IActionResult CustomError(string message)
+        {
+            return View("CustomError", new CountdownErrorViewModel
+            {
+                Message = message
+            });
+        }
+
         public IActionResult Birthday()
         {
             ViewData["IsPersonalCelebration"] = "true";
@@ -135,6 +144,9 @@ namespace FerieCountdown.Controllers
         [HttpPost]
         public IActionResult CreateBirthday()
         {
+            //Verify Google reCAPTCHA
+            if (!IoMaster.VerifyRecaptcha(Request.Form["g-recaptcha-response"], Request.Headers["X-forwarded-for"])) return CustomError("reCAPTCHA validation failed");
+
             //Check that form data is provided
             if (string.IsNullOrEmpty(Request.Form["n"]) || string.IsNullOrEmpty(Request.Form["background"]) || string.IsNullOrEmpty(Request.Form["d"])) return View("CustomError", new CountdownErrorViewModel { Message = "Missing one or more required parameters." });
 
@@ -161,6 +173,9 @@ namespace FerieCountdown.Controllers
         [HttpPost]
         public IActionResult CreateConfirmation()
         {
+            //Verify Google reCAPTCHA
+            if (!IoMaster.VerifyRecaptcha(Request.Form["g-recaptcha-response"], Request.Headers["X-forwarded-for"])) return CustomError("reCAPTCHA validation failed");
+
             //Check that form data is provided
             if (string.IsNullOrEmpty(Request.Form["n"]) || string.IsNullOrEmpty(Request.Form["background"]) || string.IsNullOrEmpty(Request.Form["d"])) return View("CustomError", new CountdownErrorViewModel { Message = "Missing one or more required parameters." });
 
@@ -188,6 +203,9 @@ namespace FerieCountdown.Controllers
         [HttpPost]
         public IActionResult CreateWedding()
         {
+            //Verify Google reCAPTCHA
+            if (!IoMaster.VerifyRecaptcha(Request.Form["g-recaptcha-response"], Request.Headers["X-forwarded-for"])) return CustomError("reCAPTCHA validation failed");
+
             //Check that form data is provided
             if (string.IsNullOrEmpty(Request.Form["n0"]) || string.IsNullOrEmpty(Request.Form["n1"]) || string.IsNullOrEmpty(Request.Form["background"]) || string.IsNullOrEmpty(Request.Form["d"])) return View("CustomError", new CountdownErrorViewModel { Message = "Missing one or more required parameters." });
 
@@ -221,6 +239,9 @@ namespace FerieCountdown.Controllers
         [HttpPost]
         public IActionResult CreateCustom()
         {
+            //Verify Google reCAPTCHA
+            if (!IoMaster.VerifyRecaptcha(Request.Form["g-recaptcha-response"], Request.Headers["X-forwarded-for"])) return CustomError("reCAPTCHA validation failed");
+
             //Check that form data is provided
             if (string.IsNullOrEmpty(Request.Form["endtext"]) || string.IsNullOrEmpty(Request.Form["cdtext"]) || string.IsNullOrEmpty(Request.Form["background"]) || string.IsNullOrEmpty(Request.Form["time"]) || string.IsNullOrEmpty(Request.Form["recursion"]) || string.IsNullOrEmpty(Request.Form["timezone"])) return View("CustomError", new CountdownErrorViewModel { Message = "Missing one or more required parameters." });
 
@@ -252,5 +273,13 @@ namespace FerieCountdown.Controllers
         {
             return View(new MyCountdownsViewModel { Countdowns = UserCountdownCollections.GetUserCountdowns(User.FindFirstValue(ClaimTypes.NameIdentifier)) });
         }
+
+        public IActionResult DeleteCountdown(string id)
+        {
+            DbMaster.SqlQuery($"DELETE from dbo.CustomCountdowns WHERE Id = N'{DbMaster.ValidateSql(id)}' and Owner = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}'");
+
+            return Redirect("/Config/MyCountdowns");
+        }
+
     }
 }

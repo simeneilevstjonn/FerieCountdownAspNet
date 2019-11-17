@@ -11,6 +11,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     <!--Meta tags-->
+    <meta name="theme-color" content="#333333" />
     <meta property="og:url" content="@ViewData["FullUrl"]" />
     <link rel="canonical" href="@ViewData["FullUrl"]" />
     <meta property="og:title" content="@ViewData["Title"]" />
@@ -122,18 +123,9 @@
         </div>
 
         <footer class="footer text-muted bg-333">
-            <div class="container bg-333 hide-mob">
-                &copy; 2019 - FerieCountdown - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Copyright">Opphavsrett</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-action="SetLocale" asp-area="" asp-controller="Countdown">Endre sted</a>
-            </div>
-            <ul class="container bg-333 hide-large" style="list-style:none;">
-                <li class="em-1-h mb-8px">&copy; 2019 - FerieCountdown</li>
-                <li class="em-1-h mb-8px"><a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a></li>
-                <li class="em-1-h mb-8px"><a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a></li>
-                <li class="em-1-h mb-8px">Valgt sted:  <span id="localespan"></span></li>
-                <li class="em-1-h mb-8px"><a asp-action="SetLocale" asp-area="" asp-controller="Countdown">Endre sted</a></li>
-                <br />
-            </ul>
-            
+            <p class="container bg-333 d-inline-block text-center">
+                <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; 2019 FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-action="SetLocale" asp-area="" asp-controller="Countdown">Endre sted</a>
+            </p>
             <script>
                 function getCookie(cname) {
                     var name = cname + "=";

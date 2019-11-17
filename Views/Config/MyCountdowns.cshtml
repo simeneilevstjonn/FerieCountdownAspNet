@@ -2,58 +2,89 @@
 @{
     ViewData["Title"] = "Mine Nedtellinger";
     Layout = "_container";
+    Dictionary<string, Dictionary<string, string>> cds = new Dictionary<string, Dictionary<string, string>>
+    {
+        {
+            "Bursdag",
+            Model.Countdowns.BirthdayCountdowns
+        },
+        {
+            "Konfirmasjon",
+            Model.Countdowns.ConfirmationCountdows
+        },
+        {
+            "Bryllup",
+            Model.Countdowns.WeddingCountdowns
+        },
+        {
+            "Egendefinerte",
+            Model.Countdowns.CustomCountdown
+        }
+    };
+    int emptycats = 0;
 }
 
 <h1>@ViewData["Title"]</h1>
+<br />
 
-@if (Model.Countdowns.BirthdayCountdowns.Count > 0)
+@foreach (KeyValuePair<string, Dictionary<string, string>> cat in cds)
 {
-    <h2>Bursdag</h2>
-    foreach (KeyValuePair<string, string> val in Model.Countdowns.BirthdayCountdowns)
+    if (cat.Value.Count > 0)
     {
-        <a href="/countdown/custom/@val.Key">@val.Value</a>
+        <h3>@cat.Key</h3>
+        <br />
+        foreach (KeyValuePair<string, string> data in cat.Value)
+        {
+            string i = data.Key;
+            string name = data.Value;
+            string collapseid = string.Format("collapse{0}", i);
+            string delformid = "deleteform-" + i;
+            string delmodid = "delmod-" + i;
+
+            <!-- Deletemodal-->
+            <div class="modal fade" id="@delmodid" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Er du sikker på at du ønsker å slette @name?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Den vil bli permanent slettet
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
+                            <a class="btn btn-danger" href="/Config/DeleteCountdown/@i">Slett nedtelling</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <button class="btn btn-block text-center" type="button" data-toggle="collapse" data-target="#@collapseid" aria-expanded="false" aria-controls="@collapseid" style="font-size: 14pt">
+                    @name
+                </button>
+                <div class="row collapse p-4" id="@collapseid">
+                    @*<a class="btn btn-secondary col m-1" href="/Config/EditCountdown/@i" target="_blank">Rediger nedtelling</a>*@
+                    <a class="btn btn-primary col m-1" href="/Countdown/Custom/@i" target="_blank">Vis nedtelling</a>
+                    <button class="btn btn-danger col m-1" data-toggle="modal" data-target="#@delmodid">Slett nedtelling</button>
+                </div>
+            </div>
+        }
+        <br />
+        <hr />
         <br />
     }
-    <br />
-    <hr />
-    <br />
+    else emptycats++;
 }
 
-@if (Model.Countdowns.ConfirmationCountdows.Count > 0)
+@if (emptycats == 4)
 {
-    <h2>Konfirmasjon</h2>
-    foreach (KeyValuePair<string, string> val in Model.Countdowns.ConfirmationCountdows)
-    {
-        <a href="/countdown/custom/@val.Key">@val.Value</a>
-        <br />
-    }
-    <br />
-    <hr />
-    <br />
+<p>
+    Du har ingen nedtellinger. Lag en <a asp-area="" asp-action="Birthday" asp-controller="Config">bursdagsnedtelling</a>,
+    <a asp-area="" asp-action="Confirmation" asp-controller="Config">konfirmasjonsnedtelling</a>,
+    <a asp-area="" asp-action="Wedding" asp-controller="Config">bryllupsnedtelling</a>,
+    eller <a asp-area="" asp-action="Custom" asp-controller="Config">egendefinert nedtelling</a>.
+</p>
 }
-
-@if (Model.Countdowns.WeddingCountdowns.Count > 0)
-{
-    <h2>Bryllup</h2>
-    foreach (KeyValuePair<string, string> val in Model.Countdowns.WeddingCountdowns)
-    {
-        <a href="/countdown/custom/@val.Key">@val.Value</a>
-        <br />
-    }
-    <br />
-    <hr />
-    <br />
-}
-
-@if (Model.Countdowns.CustomCountdown.Count > 0)
-{
-    <h2>Egendefinerte</h2>
-    foreach (KeyValuePair<string, string> val in Model.Countdowns.CustomCountdown)
-    {
-        <a href="/countdown/custom/@val.Key">@val.Value</a>
-        <br />
-    }
-}
-
-
-

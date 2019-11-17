@@ -67,7 +67,7 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   line-height: 60px; /* Vertically center the text there */
 }
 
@@ -85,6 +85,30 @@ body {
     color:inherit;
 }
 
+.clock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#above-text {
+    font-size: 64pt;
+    text-align: center;
+    margin-bottom: 200px;
+}
+
+#done-container {
+    text-align: center;
+}
+
+#done-text {
+    font-size: 72pt;
+}
+
+.share-icon {
+    width: 75%
+}
+
 .hoverwhite:hover {
     color: #FFF
 }
@@ -97,12 +121,38 @@ body {
     .hide-large {
         display:none!important;
     }
+
 }
 
 @media (max-width: 600px) {
     .hide-mob {
         display: none !important;
     }
+    #above-text {
+        font-size: 24pt;
+        margin-bottom: 16px;
+    }
+    #done-text {
+        font-size: 32pt;
+    }
+    .clock {
+        transform: scale(1)!important;
+        margin: 0!important;
+        display: block!important;
+    }
+   /* .flip-clock-divider {
+        height: 120px !important;
+    }
+    .minutes {
+        display:none!important;
+    }
+    .minutes .flip-clock-label {
+        display: inline-block!important;
+    }*/
+   .footer {
+       line-height: initial;
+       padding-top: 0.5em;
+   }
 }
 
 .em-1-h {
@@ -112,3 +162,4 @@ body {
 .mb-8px {
     margin-bottom: 8px;
 }
+
