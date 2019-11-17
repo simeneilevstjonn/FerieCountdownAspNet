@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using FerieCountdown.Classes.Io;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -66,8 +67,12 @@ namespace FerieCountdown.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
+
+            _ = await DbMaster.SqlQueryAsync($"DELETE FROM dbo.CustomCountdowns WHERE Owner = N'{userId}'");
+
+            var result = await _userManager.DeleteAsync(user);
+            userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");

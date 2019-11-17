@@ -24,7 +24,7 @@ namespace FerieCountdown.Classes.Io
             else return input;
         }
          
-        public static void SqlQuery(string query)
+        public static int SqlQuery(string query)
         {
             SqlConnection conn = new SqlConnection(ConnString);
             //retrieve the SQL Server instance version
@@ -32,9 +32,18 @@ namespace FerieCountdown.Classes.Io
             //open connection
             conn.Open();
             //execute the SQLCommand
-            SqlDataReader dr = cmd.ExecuteReader();
-            dr.Close();
-            cmd.Dispose();
+            return cmd.ExecuteNonQuery();
+        }
+
+        public static async Task<int> SqlQueryAsync(string query)
+        {
+            SqlConnection conn = new SqlConnection(ConnString);
+            //retrieve the SQL Server instance version
+            SqlCommand cmd = new SqlCommand(query, conn);
+            //open connection
+            conn.Open();
+            //execute the SQLCommand
+            return await cmd.ExecuteNonQueryAsync();
         }
 
         public static bool CheckId(string id)
