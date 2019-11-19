@@ -43,8 +43,6 @@
 
 <script>
 
-    
-
     //define copy text function
     function copyUrl() {
         var copyText = document.getElementById("linkInput");
@@ -52,6 +50,28 @@
         copyText.setSelectionRange(0, 99999);
         document.execCommand("copy");
         document.getElementById("copiedText").innerHTML = "Link kopiert til utklipstavlen";
+    }
+
+    function switchLocaleShare() {
+        //Define DOM elements
+        var std = document.getElementById("stdsocial");
+        var loc = document.getElementById("locsocial");
+        var input = document.getElementById("linkInput");
+
+        //Define path things
+        var baseurl = "@ViewData["BaseUrl"]";
+        var locale = "@ViewData["Locale"]"; 
+
+        if (std.style.display != "none") {
+            std.style.display = "none";
+            loc.style.display = "flex";
+            input.value = baseurl + "/" + locale;
+        }
+        else {
+            std.style.display = "flex";
+            loc.style.display = "none";
+            input.value = baseurl;
+        }
     }
 
     //Toggle head/foot
@@ -130,32 +150,56 @@ var clock;
                 </button>
             </div>
             <div class="modal-body">
-                <!--Button row-->
-                <div class="row">
-                    <a class="btn col" title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=@ViewData["FullUrl"]&t=@ViewData["Title"]" target="_blank">
+                <!--Button row for standard-->
+                <div class="row" id="stdsocial" style="width: 100%">
+                    <a class="btn col" title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=@ViewData["BaseUrl"]&t=@ViewData["Title"]" target="_blank">
                         <img src="https://static.feriecountdown.com/resources/icon/facebook.svg" class="share-icon" />
                     </a>
-                    <a class="btn col" title="Twitter" href="https://twitter.com/compose/tweet?url=@ViewData["FullUrl"]&text=@ViewData["Title"]&via=feriecd" target="_blank">
+                    <a class="btn col" title="Twitter" href="https://twitter.com/compose/tweet?url=@ViewData["BaseUrl"]&text=@ViewData["Title"]&via=feriecd" target="_blank">
                         <img src="https://static.feriecountdown.com/resources/icon/twitter.svg" class="share-icon" />
                     </a>
-                    <a class="btn col" title="Reddit" href="https://www.reddit.com/submit?url=@ViewData["FullUrl"]&title=@ViewData["Title"]" target="_blank">
+                    <a class="btn col" title="Reddit" href="https://www.reddit.com/submit?url=@ViewData["BaseUrl"]&title=@ViewData["Title"]" target="_blank">
                         <img src="https://static.feriecountdown.com/resources/icon/reddit.svg" class="share-icon" />
                     </a>
-                    <a class="btn col" title="Email" href="mailto:?to=&body=@ViewData["FullUrl"]&subject=@ViewData["Title"]">
+                    <a class="btn col" title="Email" href="mailto:?to=&body=@ViewData["BaseUrl"]&subject=@ViewData["Title"]">
                         <img src="https://static.feriecountdown.com/resources/icon/envelope.svg" class="share-icon" />
                     </a>
                 </div>
+                @if ((string)ViewData["UseLocaleOption"] == "true")
+                {
+                    <!--Button row for locale-->
+                    <div class="row" id="locsocial" style="display: none; width: 100%">
+                        <a class="btn col" title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=@ViewData["BaseUrl"]/@ViewData["Locale"]&t=@ViewData["Title"]" target="_blank">
+                            <img src="https://static.feriecountdown.com/resources/icon/facebook.svg" class="share-icon" />
+                        </a>
+                        <a class="btn col" title="Twitter" href="https://twitter.com/compose/tweet?url=@ViewData["BaseUrl"]/@ViewData["Locale"]&text=@ViewData["Title"]&via=feriecd" target="_blank">
+                            <img src="https://static.feriecountdown.com/resources/icon/twitter.svg" class="share-icon" />
+                        </a>
+                        <a class="btn col" title="Reddit" href="https://www.reddit.com/submit?url=@ViewData["BaseUrl"]/@ViewData["Locale"]&title=@ViewData["Title"]" target="_blank">
+                            <img src="https://static.feriecountdown.com/resources/icon/reddit.svg" class="share-icon" />
+                        </a>
+                        <a class="btn col" title="Email" href="mailto:?to=&body=@ViewData["BaseUrl"]/@ViewData["Locale"]&subject=@ViewData["Title"]">
+                            <img src="https://static.feriecountdown.com/resources/icon/envelope.svg" class="share-icon" />
+                        </a>
+                    </div>
+                }
+
 
                 <!--Link copying-->
                 <div class="form-inline mt-4" style="width:100%">
                     <div class="form-group mx-sm-3 mb-2" style="width:75%">
-                        <input type="text" class="form-control" id="linkInput" style="width:100%" value="@ViewData["FullUrl"]">
+                        <input type="text" class="form-control" id="linkInput" style="width:100%" value="@ViewData["BaseUrl"]">
                     </div>
                     <button onclick="copyUrl()" class="btn btn-primary mb-2" style="width:15%">Kopier</button>
                 </div>
-                <div id="copiedText" class="text-center text-secondary">
-
-                </div>
+                <div id="copiedText" class="text-center text-secondary"></div>
+                @if ((string)ViewData["UseLocaleOption"] == "true")
+                {
+                    <div class="custom-control custom-switch mx-sm-3">
+                        <input type="checkbox" class="custom-control-input" id="includeLocaleSwitch" onchange="switchLocaleShare()">
+                        <label class="custom-control-label" for="includeLocaleSwitch">Inkluder sted</label>
+                    </div>
+                }
             </div>
             <div class="modal-footer">
                 &nbsp;
