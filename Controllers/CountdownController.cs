@@ -61,7 +61,6 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                TempData["WarningAlert"] = "Nedtellingsstedet du forsøkte å bruke eksisterer ikke.";
                 ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Autumn", Request.Scheme, Request.Host);
                 return View("SetLocale");
             }
@@ -102,7 +101,6 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                TempData["WarningAlert"] = "Nedtellingsstedet du forsøkte å bruke eksisterer ikke.";
                 ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Christmas", Request.Scheme, Request.Host);
                 return View("SetLocale");
             }
@@ -142,7 +140,6 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                TempData["WarningAlert"] = "Nedtellingsstedet du forsøkte å bruke eksisterer ikke.";
                 ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Winter", Request.Scheme, Request.Host);
                 return View("SetLocale");
             }
@@ -182,7 +179,6 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                TempData["WarningAlert"] = "Nedtellingsstedet du forsøkte å bruke eksisterer ikke.";
                 ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Easter", Request.Scheme, Request.Host);
                 return View("SetLocale");
             }
@@ -222,7 +218,6 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                TempData["WarningAlert"] = "Nedtellingsstedet du forsøkte å bruke eksisterer ikke.";
                 ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Summer", Request.Scheme, Request.Host);
                 return View("SetLocale");
             }
@@ -265,7 +260,6 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                TempData["WarningAlert"] = "Nedtellingsstedet du forsøkte å bruke eksisterer ikke.";
                 ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Dayend", Request.Scheme, Request.Host);
                 return View("SetLocale");
             }
@@ -322,7 +316,6 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                TempData["WarningAlert"] = "Nedtellingsstedet du forsøkte å bruke eksisterer ikke.";
                 ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Weekend", Request.Scheme, Request.Host);
                 return View("SetLocale");
             }
