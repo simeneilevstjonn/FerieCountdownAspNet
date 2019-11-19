@@ -32,7 +32,9 @@ namespace FerieCountdown.Classes.Io
             //open connection
             conn.Open();
             //execute the SQLCommand
-            return cmd.ExecuteNonQuery();
+            int ra = cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            return ra;
         }
 
         public static async Task<int> SqlQueryAsync(string query)
@@ -110,6 +112,7 @@ namespace FerieCountdown.Classes.Io
                 }
                 else throw new InvalidLocaleException(string.Format("Invalid default countdownlocale {0}", school));
                 dr.Close();
+                conn.Close();
                 cmd.Dispose();
 
             }
