@@ -7,14 +7,6 @@
 
 <h1>@Model.Heading</h1>
 <form asp-area="" asp-controller="Config" asp-action="@Model.Action">
-    @if (Model.UserUsed < Model.UserMax)
-    {
-        <div class="text-success">Du har @Model.UserUsed av @Model.UserMax av denne typen nedtelling.</div>
-    }
-    else
-    {
-        <div class="text-danger">Du har @Model.UserUsed av @Model.UserMax av denne typen nedtelling. Du må slette en eller oppgradere for å kunne lage en ny.</div>
-    }
     <br />
     <div class="form-group">
         <label for="cdtext">Nedtellingstekst</label>
