@@ -44,7 +44,7 @@ namespace FerieCountdown.Controllers
                     new FormInput
                     {
                         Name = "d",
-                        Type = "date",
+                        Type = $"date\" max=\"2038-01-19\"",
                         Description = "Bursdagsdato"
                     }
                 },
@@ -75,7 +75,7 @@ namespace FerieCountdown.Controllers
                     new FormInput
                     {
                         Name = "d",
-                        Type = "date",
+                        Type = $"date\" min=\"{DateTime.UtcNow.ToString("u").Substring(0, 9)}\" max=\"2038-01-19\"",
                         Description = "Dato"
                     }
                 },
@@ -113,7 +113,7 @@ namespace FerieCountdown.Controllers
                     new FormInput
                     {
                         Name = "d",
-                        Type = "date",
+                        Type = $"date\" min=\"{DateTime.UtcNow.ToString("u").Substring(0, 9)}\" max=\"2038-01-19\"",
                         Description = "Dato"
                     }
                 },
