@@ -16,8 +16,6 @@ namespace FerieCountdown.Controllers
     [Authorize]
     public class ConfigController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-
         private IActionResult CustomError(string message)
         {
             return View("CustomError", new CountdownErrorViewModel
@@ -167,7 +165,7 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(_userManager.GetUserId(User), "birthday", date, bg.Path, $"Nedtelling til {nameproperty} bursdag", $"Gratulerer med dagen {name}", bg.Html, bg.Css, bg.UseCCC, true);
+            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "birthday", date, bg.Path, $"Nedtelling til {nameproperty} bursdag", $"Gratulerer med dagen {name}", bg.Html, bg.Css, bg.UseCCC, true);
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -197,7 +195,7 @@ namespace FerieCountdown.Controllers
 
             //Get background
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(_userManager.GetUserId(User), "confirmation", date, bg.Path, $"Nedtelling til {nameproperty} konfirmasjon", $"{nameproperty} konfirmasjon i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "confirmation", date, bg.Path, $"Nedtelling til {nameproperty} konfirmasjon", $"{nameproperty} konfirmasjon i dag", bg.Html, bg.Css, bg.UseCCC, true);
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -233,7 +231,7 @@ namespace FerieCountdown.Controllers
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(_userManager.GetUserId(User), "wedding", date, bg.Path, $"Nedtelling til {name0} og {nameproperty1} bryllup.", $"{name0} og {nameproperty1} bryllup i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "wedding", date, bg.Path, $"Nedtelling til {name0} og {nameproperty1} bryllup.", $"{name0} og {nameproperty1} bryllup i dag", bg.Html, bg.Css, bg.UseCCC, true);
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -266,19 +264,19 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(_userManager.GetUserId(User), type, date, bg.Path, cdtext, endtext, bg.Html, bg.Css, bg.UseCCC, uselocal);
+            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), type, date, bg.Path, cdtext, endtext, bg.Html, bg.Css, bg.UseCCC, uselocal);
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
 
         public IActionResult MyCountdowns()
         {
-            return View(new MyCountdownsViewModel { Countdowns = UserCountdownCollections.GetUserCountdowns(_userManager.GetUserId(User)) });
+            return View(new MyCountdownsViewModel { Countdowns = UserCountdownCollections.GetUserCountdowns(User.FindFirstValue(ClaimTypes.NameIdentifier)) });
         }
 
         public IActionResult DeleteCountdown(string id)
         {
-            DbMaster.SqlQuery($"DELETE from dbo.CustomCountdowns WHERE Id = N'{DbMaster.ValidateSql(id)}' and Owner = N'{_userManager.GetUserId(User)}'");
+            DbMaster.SqlQuery($"DELETE from dbo.CustomCountdowns WHERE Id = N'{DbMaster.ValidateSql(id)}' and Owner = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}'");
 
             return Redirect("/Config/MyCountdowns");
         }
