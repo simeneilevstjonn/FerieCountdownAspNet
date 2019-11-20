@@ -146,6 +146,12 @@ body {
    }
 }
 
+@media (max-width:992px) and (min-width: 600px){
+    .not-medium {
+        display: none !important
+    }
+}
+
 .em-1-h {
     height: 1em;
 }
