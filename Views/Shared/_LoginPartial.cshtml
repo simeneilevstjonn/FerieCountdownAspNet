@@ -6,8 +6,17 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Brukerinnstillinger">@User.Identity.Name</a>
+        
+        <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsCustomCountdown"] == "true") {<Text>active</text>}}" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @User.Identity.Name
+        </a>
+        <div class="dropdown-menu" aria-labelledby="userDropdown">
+            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Brukerinnstillinger</a>
+            <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Custom">Lag nedtelling</a>
+            <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Mycountdowns">Mine nedtellinger</a>
+        </div>
     </li>
+
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button  type="submit" class="nav-link btn btn-link">Logg ut</button>

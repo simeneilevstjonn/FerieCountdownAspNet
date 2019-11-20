@@ -7,14 +7,6 @@
 
 <h1>@Model.Heading</h1>
 <form asp-area="" asp-controller="Config" asp-action="@Model.Action">
-    @if (Model.UserUsed < Model.UserMax)
-    {
-        <div class="text-success">Du har @Model.UserUsed av @Model.UserMax av denne typen nedtelling.</div>
-    }
-    else
-    {
-        <div class="text-danger">Du har @Model.UserUsed av @Model.UserMax av denne typen nedtelling. Du må slette en eller oppgradere for å kunne lage en ny.</div>
-    }
     <br />
     <div class="form-group">
         <label for="cdtext">Nedtellingstekst</label>
@@ -27,7 +19,8 @@
     <div class="row">
         <div class="form-group col">
             <label for="time">Nedtellingstidspunkt</label>
-            <input type="datetime-local" class="form-control" id="time" name="time" required>
+            <input type="datetime-local" class="form-control" id="time" name="time" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 17)" max="2038-01-19T03:14" required>
+            
         </div>
         <div class="form-group col">
             <label for="timezone">Tidssone</label>
@@ -77,7 +70,7 @@
     <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
 
     <div id="imgpreview" style="width: 512px; height: 288px; margin-left:auto;margin-right:auto; margin-bottom: 1em; background-position:center; background-repeat: no-repeat; background-size: 100% 100%;display:none;"></div>
-    <button type="submit" class="btn btn-primary">Lagre</button>
+    <button type="submit" class="btn btn-primary mb-2">Lagre</button>
 </form>
 
 <script src="https://www.google.com/recaptcha/api.js?render=6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0"></script>

@@ -14,7 +14,5 @@ namespace FerieCountdown.Models
         public List<CountdownBackground> BackgroundOptions { get; set; }
         public List<FormInput> FormInputs { get; set; }
         public string Action { get; set; }
-        public short UserMax { get; set; }
-        public short UserUsed { get; set; }
     }
 }

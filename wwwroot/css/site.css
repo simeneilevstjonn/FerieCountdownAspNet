@@ -94,7 +94,7 @@ body {
 #above-text {
     font-size: 64pt;
     text-align: center;
-    margin-bottom: 200px;
+    margin-bottom: 3em;
 }
 
 #done-container {
@@ -140,19 +140,16 @@ body {
         margin: 0!important;
         display: block!important;
     }
-   /* .flip-clock-divider {
-        height: 120px !important;
-    }
-    .minutes {
-        display:none!important;
-    }
-    .minutes .flip-clock-label {
-        display: inline-block!important;
-    }*/
    .footer {
        line-height: initial;
        padding-top: 0.5em;
    }
+}
+
+@media (max-width:992px) and (min-width: 600px){
+    .not-medium {
+        display: none !important
+    }
 }
 
 .em-1-h {
