@@ -36,7 +36,7 @@ namespace FerieCountdown.Classes.Io
             ).Result;
 
             JObject recaptcharesponse = JObject.Parse(httpresponse);
-            if (string.IsNullOrEmpty(recaptcharesponse["success"].ToString()) || string.IsNullOrEmpty(recaptcharesponse["action"].ToString())) return false;
+            if (recaptcharesponse["success"] == null|| recaptcharesponse["action"] == null) return false;
             else if (recaptcharesponse["success"].ToString() == "false" || recaptcharesponse["action"].ToString() != "contact") return false;
             else return true;
         }
