@@ -579,144 +579,144 @@ var FlipClock;
 	 * @param 	object  An object of properties to override the default	
 	 */
 	 	
-	FlipClock.Factory = FlipClock.Base.extend({
-		
+    FlipClock.Factory = FlipClock.Base.extend({
+
 		/**
 		 * The clock's animation rate.
 		 * 
 		 * Note, currently this property doesn't do anything.
 		 * This property is here to be used in the future to
 		 * programmaticaly set the clock's animation speed
-		 */		
+		 */
 
-		animationRate: 1000,
+        animationRate: 1000,
 
 		/**
 		 * Auto start the clock on page load (True|False)
-		 */	
-		 
-		autoStart: true,
-		
+		 */
+
+        autoStart: true,
+
 		/**
 		 * The callback methods
-		 */		
-		 
-		callbacks: {
-			destroy: false,
-			create: false,
-			init: false,
-			interval: false,
-			start: false,
-			stop: false,
-			reset: false
-		},
-		
+		 */
+
+        callbacks: {
+            destroy: false,
+            create: false,
+            init: false,
+            interval: false,
+            start: false,
+            stop: false,
+            reset: false
+        },
+
 		/**
 		 * The CSS classes
-		 */		
-		 
-		classes: {
-			active: 'flip-clock-active',
-			before: 'flip-clock-before',
-			divider: 'flip-clock-divider',
-			dot: 'flip-clock-dot',
-			label: 'flip-clock-label',
-			flip: 'flip',
-			play: 'play',
-			wrapper: 'flip-clock-wrapper'
-		},
-		
+		 */
+
+        classes: {
+            active: 'flip-clock-active',
+            before: 'flip-clock-before',
+            divider: 'flip-clock-divider',
+            dot: 'flip-clock-dot',
+            label: 'flip-clock-label',
+            flip: 'flip',
+            play: 'play',
+            wrapper: 'flip-clock-wrapper'
+        },
+
 		/**
 		 * The name of the clock face class in use
-		 */	
-		 
-		clockFace: 'HourlyCounter',
-		 
+		 */
+
+        clockFace: 'HourlyCounter',
+
 		/**
 		 * The name of the clock face class in use
-		 */	
-		 
-		countdown: false,
+		 */
+
+        countdown: false,
 
 		/**
 		 * Scale the clock responsively. This value is the scale preffered on a screen 1920*1080. -1 to disable
 		 */
 
-		responsiveScale: -1,
-		 
+        responsiveScale: -1,
+
 		/**
 		 * The name of the default clock face class to use if the defined
 		 * clockFace variable is not a valid FlipClock.Face object
-		 */	
-		 
-		defaultClockFace: 'HourlyCounter',
-		 
+		 */
+
+        defaultClockFace: 'HourlyCounter',
+
 		/**
 		 * The default language
-		 */	
-		 
-		defaultLanguage: 'english',
-		 
+		 */
+
+        defaultLanguage: 'english',
+
 		/**
 		 * The jQuery object
-		 */		
-		 
-		$el: false,
+		 */
+
+        $el: false,
 
 		/**
 		 * The FlipClock.Face object
-		 */	
-		 
-		face: true,
-		 
+		 */
+
+        face: true,
+
 		/**
 		 * The language object after it has been loaded
-		 */	
-		 
-		lang: false,
-		 
+		 */
+
+        lang: false,
+
 		/**
 		 * The language being used to display labels (string)
-		 */	
-		 
-		language: 'english',
-		 
+		 */
+
+        language: 'english',
+
 		/**
 		 * The minimum digits the clock must have
-		 */		
+		 */
 
-		minimumDigits: 0,
+        minimumDigits: 0,
 
 		/**
 		 * The original starting value of the clock. Used for the reset method.
-		 */		
-		 
-		original: false,
-		
+		 */
+
+        original: false,
+
 		/**
 		 * Is the clock running? (True|False)
-		 */		
-		 
-		running: false,
-		
+		 */
+
+        running: false,
+
 		/**
 		 * The FlipClock.Time object
-		 */		
-		 
-		time: false,
-		
+		 */
+
+        time: false,
+
 		/**
 		 * The FlipClock.Timer object
-		 */		
-		 
-		timer: false,
-		
+		 */
+
+        timer: false,
+
 		/**
 		 * The jQuery object (depcrecated)
-		 */		
-		 
-		$wrapper: false,
-		
+		 */
+
+        $wrapper: false,
+
 		/**
 		 * Constructor
 		 *
@@ -724,36 +724,40 @@ var FlipClock;
 		 * @param	object  Number of seconds used to start the clock
 		 * @param	object 	An object override options
 		 */
-		 
-		constructor: function(obj, digit, options) {
 
-			if(!options) {
-				options = {};
-			}
+        constructor: function (obj, digit, options) {
 
-			this.lists = [];
-			this.running = false;
-			this.base(options);	
+            if (!options) {
+                options = {};
+            }
 
-			this.$el = $(obj).addClass(this.classes.wrapper);
+            this.lists = [];
+            this.running = false;
+            this.base(options);
 
-			// Depcrated support of the $wrapper property.
-			this.$wrapper = this.$el;
+            this.$el = $(obj).addClass(this.classes.wrapper);
 
-			this.original = (digit instanceof Date) ? digit : (digit ? Math.round(digit) : 0);
+            // Depcrated support of the $wrapper property.
+            this.$wrapper = this.$el;
 
-			this.time = new FlipClock.Time(this, this.original, {
-				minimumDigits: this.minimumDigits,
-				animationRate: this.animationRate 
-			});
+            this.original = (digit instanceof Date) ? digit : (digit ? Math.round(digit) : 0);
 
-			this.timer = new FlipClock.Timer(this, options);
+            this.time = new FlipClock.Time(this, this.original, {
+                minimumDigits: this.minimumDigits,
+                animationRate: this.animationRate
+            });
 
-			this.loadLanguage(this.language);
-			
-			this.loadClockFace(this.clockFace, options);
+            this.timer = new FlipClock.Timer(this, options);
 
-			this.setResponsiveScale();
+            this.loadLanguage(this.language);
+
+            this.loadClockFace(this.clockFace, options);
+
+            this.setResponsiveScale();
+
+            window.addEventListener("resize", () => {
+                this.setResponsiveScale();
+            });
 
 			if(this.autoStart) {
 				this.start();
@@ -944,10 +948,9 @@ var FlipClock;
 		 */
 		setResponsiveScale: function() {
 			if (this.responsiveScale != -1) {
-				var c = document.getElementsByClassName(this.classes.wrapper);
 				var perpx = this.responsiveScale / 1920;
-				var s = perpx * window.screen.width;
-				c[0].style.transform = "scale(" + s + ")";
+				var s = perpx * document.body.clientWidth;
+                document.getElementsByClassName(this.classes.wrapper)[0].style.transform = "scale(" + s + ")";
 			}
 		}
 		
