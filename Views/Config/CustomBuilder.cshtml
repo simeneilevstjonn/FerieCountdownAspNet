@@ -12,7 +12,7 @@
     {
         <div class="form-group">
             <label for="@fi.Name">@fi.Description</label>
-            <input type="@fi.Type" class="form-control" id="@fi.Name" name="@fi.Name" placeholder="@fi.Placeholder" required>
+            <input type="@Html.Raw(fi.Type)" class="form-control" id="@fi.Name" name="@fi.Name" placeholder="@fi.Placeholder" required>
         </div>
     }
 
