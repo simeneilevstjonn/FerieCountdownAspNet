@@ -1,7 +1,7 @@
 ﻿@model CountdownViewModel
 <script src="~/js/flipclock.js"></script>
 <link rel="stylesheet" href="~/css/flipclock.css" />
-
+<meta meta name="viewport" content="width=device-width, user-scalable=no" />
 
 @{
     //Get countdown difference
@@ -19,7 +19,6 @@
         face = "HourlyCounter";
     }
 }
-
 <style>
     /*Set background*/
     body {
@@ -60,7 +59,7 @@
 
         //Define path things
         var baseurl = "@ViewData["BaseUrl"]";
-        var locale = "@ViewData["Locale"]"; 
+        var locale = "@ViewData["Locale"]";
 
         if (std.style.display != "none") {
             std.style.display = "none";
