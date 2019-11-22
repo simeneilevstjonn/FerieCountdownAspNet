@@ -136,9 +136,7 @@ body {
         font-size: 32pt;
     }
     .clock {
-        transform: scale(1)!important;
-        margin: 0!important;
-        display: block!important;
+        transform: scale(0.8)!important;
     }
    .footer {
        line-height: initial;
