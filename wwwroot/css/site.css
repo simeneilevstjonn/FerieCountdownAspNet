@@ -158,3 +158,8 @@ body {
     margin-bottom: 8px;
 }
 
+#imgpreview {
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+}
