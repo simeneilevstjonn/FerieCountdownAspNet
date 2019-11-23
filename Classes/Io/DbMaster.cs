@@ -257,5 +257,51 @@ namespace FerieCountdown.Classes.Io
             cmd.Dispose();
             return ReturnList;
         }
+
+        public static async Task<List<CustomCountdown>> GetAllUserCountdownDataJsonAsync(string user)
+        {
+            SqlConnection conn = new SqlConnection(ConnString);
+            //retrieve the SQL Server instance version
+
+            string query = string.Format(@"select Id, CountdownType, CountdownTime, CountdownText, CountdownEndText, BackgroundPath, UseCCCText, UseLocalTime, CssAppend, HtmlAppend, Owner from [dbo].[CustomCountdowns] where Owner = N'{0}';", user);
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+
+            //open connection
+            conn.Open();
+
+            //execute the SQLCommand
+            SqlDataReader dr = await cmd.ExecuteReaderAsync();
+
+            List<CustomCountdown> customCountdowns = new List<CustomCountdown>();
+
+            //check if there are records
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    customCountdowns.Add(new CustomCountdown
+                    {
+                        Id = dr.GetString(0),
+                        CountdownType = dr.GetString(1),
+                        CountdownTime = dr.GetDateTime(2),
+                        CountdownText = dr.GetString(3),
+                        CountdownEndText = dr.GetString(4),
+                        Background = new CountdownBackground
+                        {
+                            Path = dr.GetString(5),
+                            UseCCC = dr.GetBoolean(6),
+                            Css = dr.GetString(8),
+                            Html = dr.GetString(9)
+                        },
+                        UseLocalTime = dr.GetBoolean(7),
+                        Owner = dr.GetString(10)
+                    });
+                }
+            }
+            dr.Close();
+            cmd.Dispose();
+            return customCountdowns;
+        }
     }
 }

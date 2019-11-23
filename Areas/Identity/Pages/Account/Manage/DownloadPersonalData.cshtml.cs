@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FerieCountdown.Classes.Io;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,7 +45,7 @@ namespace FerieCountdown.Areas.Identity.Pages.Account.Manage
             }
 
             Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalData.json");
-            return new FileContentResult(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(personalData)), "text/json");
+            return new FileContentResult(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new Dictionary<string, object> { { "IdentityData", personalData }, { "CountdownData", await DbMaster.GetAllUserCountdownDataJsonAsync(_userManager.GetUserId(User)) } })), "text/json");
         }
     }
 }
