@@ -69,7 +69,11 @@ namespace FerieCountdown.Classes.Io
 
         public static CountdownLocale GetUserLocale(HttpRequest Request)
         {
-            return GetLocale(Request.Cookies["locale"]);
+            return Request.Cookies["locale"] switch 
+            {
+                "custom" => LocaleParser.ParseCookieLocale(Request),
+                _ => GetLocale(Request.Cookies["locale"])
+            };
         }
 
         /*
