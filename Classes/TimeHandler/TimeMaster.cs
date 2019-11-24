@@ -13,14 +13,8 @@ namespace FerieCountdown.Classes.TimeHandler
         {
             if (t.AddDays(1) < DateTime.UtcNow)
             {
-                if (t.Year + 1 < DateTime.UtcNow.Year)
-                {
-                    return ValiDate(SetYear(t, DateTime.UtcNow.Year));
-                }
-                else
-                {
-                    return ValiDate(SetYear(t, t.Year + 1));
-                }
+                if (t.Year + 1 < DateTime.UtcNow.Year) return ValiDate(SetYear(t, DateTime.UtcNow.Year));
+                else return ValiDate(SetYear(t, t.Year +1));
             }
             else return t;
         }
@@ -58,28 +52,18 @@ namespace FerieCountdown.Classes.TimeHandler
         public static DateTime GetWeekendCountdown(CountdownLocaleData cld)
         {
             DateTime now = DateTime.UtcNow;
-            DateTime ret = now;
-            switch (now.DayOfWeek)
+            DateTime ret = now.DayOfWeek switch
             {
-                case DayOfWeek.Monday:
-                    ret = now.AddDays(4);
-                    break;
-                case DayOfWeek.Tuesday:
-                    ret = now.AddDays(3);
-                    break;
-                case DayOfWeek.Wednesday:
-                    ret = now.AddDays(2);
-                    break;
-                case DayOfWeek.Thursday:
-                    ret = now.AddDays(1);
-                    break;
-                case DayOfWeek.Saturday:
-                    ret = now.AddDays(-1);
-                    break;
-                case DayOfWeek.Sunday:
-                    ret = now.AddDays(-2);
-                    break;
-            }
+                DayOfWeek.Monday => now.AddDays(4),
+                DayOfWeek.Tuesday => now.AddDays(3),
+                DayOfWeek.Wednesday => now.AddDays(2),
+                DayOfWeek.Thursday => now.AddDays(1),
+                DayOfWeek.Friday => now,
+                DayOfWeek.Saturday => now.AddDays(-1),
+                DayOfWeek.Sunday => now.AddDays(-2),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+ 
             return new DateTime(ret.Year, ret.Month, ret.Day, cld.FridayEnd.Hours, cld.FridayEnd.Minutes, 0);
         }
     }
