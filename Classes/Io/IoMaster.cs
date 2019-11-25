@@ -23,7 +23,7 @@ namespace FerieCountdown.Classes.Io
             return await response.Content.ReadAsStringAsync();
         }
 
-        public static bool VerifyRecaptcha(string userkey, string remoteip)
+        public static bool VerifyRecaptcha(string userkey, string remoteip, string action)
         {
             //ReCAPTCHA validation
             string httpresponse = HttpPostRequest(new Dictionary<string, string>
@@ -37,7 +37,7 @@ namespace FerieCountdown.Classes.Io
 
             JObject recaptcharesponse = JObject.Parse(httpresponse);
             if (recaptcharesponse["success"] == null|| recaptcharesponse["action"] == null) return false;
-            else if (recaptcharesponse["success"].ToString() == "false" || recaptcharesponse["action"].ToString() != "contact") return false;
+            else if (recaptcharesponse["success"].ToString() == "false" || recaptcharesponse["action"].ToString() != action) return false;
             else return true;
         }
 }

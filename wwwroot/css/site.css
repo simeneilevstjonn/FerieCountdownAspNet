@@ -94,7 +94,7 @@ body {
 #above-text {
     font-size: 64pt;
     text-align: center;
-    margin-bottom: 1em;
+    margin-bottom: 10%;
 }
 
 #done-container {
@@ -136,9 +136,7 @@ body {
         font-size: 32pt;
     }
     .clock {
-        transform: scale(1)!important;
-        margin: 0!important;
-        display: block!important;
+        transform: scale(0.8)!important;
     }
    .footer {
        line-height: initial;
@@ -160,3 +158,8 @@ body {
     margin-bottom: 8px;
 }
 
+#imgpreview {
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+}

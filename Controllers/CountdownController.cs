@@ -256,7 +256,7 @@ namespace FerieCountdown.Controllers
         public IActionResult Dayend(string id)
         {
             ViewData["IsSchooldayCountdown"] = "true";
-            ViewData["Title"] = "Nedtelling til skoledagens slutt";
+            
             CountdownLocale Locale;
             try
             {
@@ -283,7 +283,12 @@ namespace FerieCountdown.Controllers
                 ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Dayend", Request.Scheme, Request.Host);
                 return View("SetLocale");
             }
-            
+
+            ViewData["Title"] = Locale.IsWork switch
+            {
+                false => "Nedtelling til skoledagens slutt",
+                true => "Nedtelling til arbeidsdagens slutt"
+            };
 
             if (DateTime.UtcNow.DayOfWeek == DayOfWeek.Sunday || DateTime.UtcNow.DayOfWeek == DayOfWeek.Saturday)
             {
@@ -292,7 +297,11 @@ namespace FerieCountdown.Controllers
                     CountdownTime = new DateTime(0),
                     CountdownText = "",
                     CountdownEndText = "Nå er det helg!",
-                    Background = CountdownBackground.Backgrounds["classroom"],
+                    Background = Locale.IsWork switch 
+                    { 
+                        true => CountdownBackground.Backgrounds["office"],
+                        false => CountdownBackground.Backgrounds["classroom"]
+                    },
                     UseLocalTime = true
                 });
             }
@@ -301,9 +310,21 @@ namespace FerieCountdown.Controllers
                 return View("Countdown", new CountdownViewModel
                 {
                     CountdownTime = cdtime,
-                    CountdownText = "Skoledagen slutter om:",
-                    CountdownEndText = "Skoledagen er slutt!",
-                    Background = CountdownBackground.Backgrounds["classroom"],
+                    CountdownText = Locale.IsWork switch
+                    {
+                        false => "Skoledagen slutter om:",
+                        true => "Arbeidsdagen slutter om:"
+                    },
+                    CountdownEndText = Locale.IsWork switch
+                    {
+                        false => "Skoledagen er slutt!",
+                        true => "Arbeidsdagen er slutt!"
+                    },
+                    Background = Locale.IsWork switch
+                    {
+                        true => CountdownBackground.Backgrounds["office"],
+                        false => CountdownBackground.Backgrounds["classroom"]
+                    },
                     UseLocalTime = true
                 });
             }
@@ -346,7 +367,11 @@ namespace FerieCountdown.Controllers
                 CountdownTime = cdtime,
                 CountdownText = "Nedtelling til helg",
                 CountdownEndText = "Helg nå!",
-                Background = CountdownBackground.Backgrounds["classroom"],
+                Background = Locale.IsWork switch
+                {
+                    true => CountdownBackground.Backgrounds["office"],
+                    false => CountdownBackground.Backgrounds["classroom"]
+                },
                 UseLocalTime = true
             });
         }

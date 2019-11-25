@@ -29,7 +29,7 @@
                 </Text>
                 }
             }
-            document.getElementById("imgpreview").style.backgroundImage = "url(" + uri + ")";
+            document.getElementById("imgpreview").src = uri;
             document.getElementById("imgpreview").style.display = "block";
             }
     </script>
@@ -46,14 +46,14 @@
 
     <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
 
-    <div id="imgpreview" style="width: 512px; height: 288px; margin-left:auto;margin-right:auto; margin-bottom: 1em; background-position:center; background-repeat: no-repeat; background-size: 100% 100%;display:none;"></div>
+    <img id="imgpreview" class="img-fluid col-md-6" />
     <button type="submit" class="btn btn-primary mb-2">Lagre</button>
 </form>
 
 <script src="https://www.google.com/recaptcha/api.js?render=6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0"></script>
 <script>
     grecaptcha.ready(function () {
-        grecaptcha.execute('6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0', { action: 'contact' }).then(function (token) {
+        grecaptcha.execute('6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0', { action: 'createcelebration' }).then(function (token) {
             document.getElementById("g-recaptcha-response").value = token;
         });
     });
