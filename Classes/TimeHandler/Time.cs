@@ -14,6 +14,13 @@ namespace FerieCountdown.Classes.TimeHandler
             Minutes = m;
             Hours = h;
         }
+        
+        public Time(string time)
+        {
+            Hours = int.Parse(time.Substring(0, 2));
+            Minutes = int.Parse(time.Substring(3, 2));
+        }
+
         public void SetTime(int h, int m)
         {
             Minutes = m;

@@ -71,7 +71,16 @@ namespace FerieCountdown.Classes.Io
         {
             return Request.Cookies["locale"] switch 
             {
-                "custom" => LocaleParser.ParseCookieLocale(Request),
+                "custom" => throw new ArgumentOutOfRangeException("custom locale can only be used with (HttpRequest, String) overload"),
+                _ => GetLocale(Request.Cookies["locale"])
+            };
+        }
+
+        public static CountdownLocale GetUserLocale(HttpRequest Request, string UserID)
+        {
+            return Request.Cookies["locale"] switch
+            {
+                "custom" => GetCustomLocale(UserID),
                 _ => GetLocale(Request.Cookies["locale"])
             };
         }
@@ -129,6 +138,57 @@ namespace FerieCountdown.Classes.Io
 
             return locale;
         }
+
+        public static CountdownLocale GetCustomLocale(string UserId)
+        {
+            CountdownLocale locale = new CountdownLocale
+            {
+                Municipality = "Error"
+            };
+
+            //Get locale from SQL
+            try
+            {
+                SqlConnection conn = new SqlConnection(ConnString);
+                //retrieve the SQL Server instance version
+                string query = string.Format(@"select * from [dbo].[Customlocales] where UserId = N'{0}';", UserId);
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                //open connection
+                conn.Open();
+
+                //execute the SQLCommand
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                //check if there are records
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        locale = new CountdownLocale
+                        {
+                            Data = dr.GetString(2),
+                            IsWork = dr.GetBoolean(3)
+                        };
+                    }
+                }
+                else throw new InvalidLocaleException(string.Format("Invalid userid {0}", UserId));
+                dr.Close();
+                conn.Close();
+                cmd.Dispose();
+
+            }
+            catch (Exception ex)
+            {
+                //display error message
+                Console.WriteLine("Exception: " + ex.Message);
+                locale.Data = JsonConvert.SerializeObject(ex);
+            }
+
+            return locale;
+        }
+
 
         public static List<SimpleMunicipality> GetAllLocales()
         {
