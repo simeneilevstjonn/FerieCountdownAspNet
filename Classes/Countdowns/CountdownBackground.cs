@@ -146,7 +146,7 @@ namespace FerieCountdown.Classes.Countdowns
                     Path = "https://static.feriecountdown.com/resources/background/office.jpg",
                     Css = string.Empty,
                     Html = string.Empty,
-                    UseCCC = true
+                    UseCCC = false
                 }
             },
             //Odd skjæveland Images

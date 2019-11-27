@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FerieCountdown.Classes;
 using FerieCountdown.Classes.Countdowns;
@@ -69,7 +70,7 @@ namespace FerieCountdown.Controllers
                     Locale = DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request);
+                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -109,7 +110,7 @@ namespace FerieCountdown.Controllers
                     Locale = DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request);
+                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -148,7 +149,7 @@ namespace FerieCountdown.Controllers
                     Locale = DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request);
+                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -187,7 +188,7 @@ namespace FerieCountdown.Controllers
                     Locale = DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request);
+                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -226,7 +227,7 @@ namespace FerieCountdown.Controllers
                     Locale = DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request);
+                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -258,20 +259,20 @@ namespace FerieCountdown.Controllers
             ViewData["IsSchooldayCountdown"] = "true";
             
             CountdownLocale Locale;
-            try
-            {
+           /* try
+            {*/
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id))
                 {
                     Locale = DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request);
-            }
+                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            /*}
             catch (Exception e)
             {
                 return Error(e.Message);
-            }
+            }*/
             InitSharedVars(id);
             DateTime cdtime;
             try
@@ -343,7 +344,7 @@ namespace FerieCountdown.Controllers
                     Locale = DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request);
+                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
