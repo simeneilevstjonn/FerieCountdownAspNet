@@ -72,6 +72,7 @@ namespace FerieCountdown.Classes.Io
             return Request.Cookies["locale"] switch 
             {
                 "custom" => throw new ArgumentOutOfRangeException("custom locale can only be used with (HttpRequest, String) overload"),
+                "work" => throw new ArgumentOutOfRangeException("custom locale can only be used with (HttpRequest, String) overload"),
                 _ => GetLocale(Request.Cookies["locale"])
             };
         }
@@ -81,6 +82,7 @@ namespace FerieCountdown.Classes.Io
             return Request.Cookies["locale"] switch
             {
                 "custom" => GetCustomLocale(UserID),
+                "work" => GetCustomLocale(UserID),
                 _ => GetLocale(Request.Cookies["locale"])
             };
         }

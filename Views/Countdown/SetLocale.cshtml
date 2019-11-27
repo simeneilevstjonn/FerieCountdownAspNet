@@ -114,7 +114,8 @@
             form.innerHTML += '<input type="text" name="' + x + '" value="' + document.getElementById(x).value + '">';
         });
 
-        document.cookie = "locale=custom; expires=" + exp + "; path=/";
+        if (IsWork) document.cookie = "locale=work; expires=" + exp + "; path=/";
+        else if (IsWork) document.cookie = "locale=custom; expires=" + exp + "; path=/";
 
         document.getElementById("hoursform").submit();
         

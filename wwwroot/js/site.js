@@ -19,3 +19,9 @@ function getCookie(cname) {
 }
 
 document.getElementById("localespan").innerHTML = getCookie("locale");
+if (document.getElementById("localespan").innerHTML == "custom") document.getElementById("localespan").innerHTML = "Egendefinert";
+else if (document.getElementById("localespan").innerHTML == "work") {
+    document.getElementById("localespan").innerHTML = "Jobb";
+    document.getElementById("sdayCountdown").innerHTML = "Arbeidsdag";
+    document.getElementById("dendlink").innerHTML = "Arbeidsdagens slutt";
+}
