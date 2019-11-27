@@ -19,7 +19,7 @@
     <div class="row">
         <div class="form-group col">
             <label for="time">Nedtellingstidspunkt</label>
-            <input type="datetime-local" class="form-control" id="time" name="time" value="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 17)" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 17)" max="2038-01-19T03:14" required>
+            <input type="datetime-local" class="form-control" id="time" name="time" value="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" max="2038-01-19T03:14" required>
             
         </div>
         <div class="form-group col">

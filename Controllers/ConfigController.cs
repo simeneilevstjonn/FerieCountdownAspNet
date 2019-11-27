@@ -330,7 +330,7 @@ namespace FerieCountdown.Controllers
             DbMaster.SqlQuery(string.Format("INSERT INTO [dbo].[CustomLocales] ([UserId], [Data], [IsWork]) VALUES (N'{0}', N'{1}', 1);", User.FindFirstValue(ClaimTypes.NameIdentifier), JsonConvert.SerializeObject(cld)));
 
             if (Request.Query["redirecturi"].ToString() == null) return Redirect("/");
-            else return Redirect(Request.Query["redirecturi"]);
+            else return Redirect(Request.Form["RedirectUri"]);
         }
 
     }

@@ -10,11 +10,15 @@
         ChangeSchoolWork("school");
     });
 
+    var IsWork = false;
 
     function ChangeSchoolWork(sw) {
         var newhtml = "<p>Not implemented</p>";
         if (sw === "school") {
             //school thing
+            document.getElementById("schoolsave").style.display = "inline-block";
+            document.getElementById("worksave").style.display = "none";
+
             newhtml = "<div class=\"form-group\"><label for=\"munSelect\">Kommune / Fylke</label><select class=\"form-control\" id=\"munSelect\" onchange=\"SetMunicipality(this.value)\"><option selected disabled>Vennligst velg...</option>";
 
             @foreach (SimpleMunicipality m in municipalities)
@@ -23,8 +27,16 @@
                 <text>newhtml += '<option value="@m.Name">@m.Name</option>';</text>
             }
             newhtml += "</select></div>";
-        } else if (sw === "work") {
+        } else if (sw === "work" || sw === "school-custom") {
             //work thing
+            document.getElementById("schoolsave").style.display = "none";
+            document.getElementById("worksave").style.display = "inline-block";
+
+            newhtml = '<div class="form-row"><div class="form-group col"> <label for="mon">Mandag</label> <input type="time" id="mon" class="form-control" /></div><div class="form-group col"> <label for="tue">Tirsdag</label> <input type="time" id="tue" class="form-control" /></div><div class="form-group col"> <label for="wed">Onsdag</label> <input type="time" id="wed" class="form-control" /></div><div class="form-group col"> <label for="thu">Torsdag</label> <input type="time" id="thu" class="form-control" /></div><div class="form-group col"> <label for="fri">Fredag</label> <input type="time" id="fri" class="form-control" /></div></div><div class="form-row"><div class="form-inline col"><div class="custom-control custom-switch"> <input type="checkbox" class="custom-control-input" id="autumn-on" checked onchange="ToggleDisabled(\'autumn\')"> <label class="custom-control-label" for="autumn-on" id="autumn-label">Høstferie&nbsp;</label></div> <input class="form-control form-inline" id="autumn-time" type="datetime-local" value="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" max="2038-01-19T03:14" /></div><div class="form-inline col"><div class="custom-control custom-switch"> <input type="checkbox" class="custom-control-input" id="christmas-on" checked onchange="ToggleDisabled(\'christmas\')"> <label class="custom-control-label" for="christmas-on" id="christmas-label">Juleferie&nbsp;</label></div> <input class="form-control form-inline" id="christmas-time" type="datetime-local" value="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" max="2038-01-19T03:14" /></div><div class="form-inline col"><div class="custom-control custom-switch"> <input type="checkbox" class="custom-control-input" id="winter-on" checked onchange="ToggleDisabled(\'winter\')"> <label class="custom-control-label" for="winter-on" id="winter-label">Vinterferie&nbsp;</label></div> <input class="form-control form-inline" id="winter-time" type="datetime-local" value="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" max="2038-01-19T03:14" /></div><div class="form-inline col"><div class="custom-control custom-switch"> <input type="checkbox" class="custom-control-input" id="easter-on" checked onchange="ToggleDisabled(\'easter\')"> <label class="custom-control-label" for="easter-on" id="easter-label">Påskeferie&nbsp;</label></div> <input class="form-control form-inline" id="easter-time" type="datetime-local" value="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" max="2038-01-19T03:14" /></div><div class="form-inline col"><div class="custom-control custom-switch"> <input type="checkbox" class="custom-control-input" id="summer-on" checked onchange="ToggleDisabled(\'summer\')"> <label class="custom-control-label" for="summer-on" id="summer-label">Sommerferie&nbsp;</label></div> <input class="form-control form-inline" id="summer-time" type="datetime-local" value="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" max="2038-01-19T03:14" /></div></div>';
+
+            if (sw === "work") IsWork = true;
+            else IsWork = false;
+
             document.getElementById("schoolselect").innerHTML = "";
         }
         document.getElementById("municipalityselect").innerHTML = newhtml;
@@ -53,7 +65,59 @@
         var exp = new Date(now.getFullYear() + 10, now.getMonth(), 1, 0, 0, 0, 0);
         document.cookie = "locale=" + locale + "; expires=" + exp + "; path=/";
 
-        window.location = "@ViewData["FullUrl"]";;
+        window.location = "@ViewData["FullUrl"]";
+    }
+
+    function ToggleDisabled(holiday) {
+        var label = document.getElementById(holiday + "-label");
+        var time = document.getElementById(holiday + "-time");
+
+        if (label.disabled) {
+            label.disabled = false;
+            time.disabled = false;
+        }
+        else {
+            label.disabled = true;
+            time.disabled = true;
+        }
+    }
+
+    function SetCustomLocale() {
+        var now = new Date();
+        var exp = new Date(now.getFullYear() + 10, now.getMonth(), 1, 0, 0, 0, 0);
+        var form = document.getElementById("hoursform");
+
+        if (document.getElementById("autumn-label").disabled) form.innerHTML += '<input type="text" name="autumn-time" value="1970-01-01T00:00:00Z"';
+        else form.innerHTML += '<input name="autumn-time" type="text" value="' + new Date(document.getElementById("autumn-time").value).toISOString().substr(0, 19) + "Z" + '">'; 
+
+        if (document.getElementById("christmas-label").disabled) form.innerHTML += '<input type="text" name="christmas-time" value="1970-01-01T00:00:00Z"'
+        else form.innerHTML += '<input name="christmas-time" type="text" value="' + new Date(document.getElementById("christmas-time").value).toISOString().substr(0, 19) + "Z" + '">'; 
+
+        if (document.getElementById("winter-label").disabled) form.innerHTML += '<input type="text" name="winter-time" value="1970-01-01T00:00:00Z"'
+        else form.innerHTML += '<input name="winter-time" type="text" value="' + new Date(document.getElementById("winter-time").value).toISOString().substr(0, 19) + "Z" + '">'; 
+
+        if (document.getElementById("easter-label").disabled) form.innerHTML += '<input type="text" name="easter-time" value="1970-01-01T00:00:00Z"'
+        else form.innerHTML += '<input name="easter-time" type="text" value="' + new Date(document.getElementById("easter-time").value).toISOString().substr(0, 19) + "Z" + '">'; 
+
+        if (document.getElementById("summer-label").disabled) form.innerHTML += '<input type="text" name="summer-time" value="1970-01-01T00:00:00Z"'
+        else form.innerHTML += '<input name="summer-time" type="text" value="' + new Date(document.getElementById("summer-time").value).toISOString().substr(0, 19) + "Z" + '">'; 
+
+        var isworkint = 0;
+        if (IsWork) isworkint = 1;
+
+        form.innerHTML += '<input type="text" name="IsWork" value="' + isworkint + '">';
+        form.innerHTML += '<input type="text" name="RedirectUri" value="@ViewData["FullUrl"]">';
+
+        var days = ["mon", "tue", "wed", "thu", "fri"];
+
+        days.forEach(function (x) {
+            form.innerHTML += '<input type="text" name="' + x + '" value="' + document.getElementById(x).value + '">';
+        });
+
+        document.cookie = "locale=custom; expires=" + exp + "; path=/";
+
+        document.getElementById("hoursform").submit();
+        
     }
 </script>
 
@@ -65,6 +129,7 @@
     <label for="swSelect">Skole eller Jobb</label>
     <select class="form-control" id="swSelect" onchange="ChangeSchoolWork(this.value)">
         <option selected value="school">Skole</option>
+        <option value="school-custom">Skole (egendefinert)</option>
         <option value="work">Jobb</option>
     </select>
 </div>
@@ -73,5 +138,11 @@
 
 <hr />
 <div class="text-right">
-    <button type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)">Lagre</button>
+    <button type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)" id="schoolsave">Lagre</button>
+    <button type="button" class="btn btn-primary" onclick="SetCustomLocale()" id="worksave" style="display:none">Lagre</button>
 </div>
+
+<!--Hidden form for submitting custom hours-->
+<form class="d-none" id="hoursform" asp-area="" asp-action="UpdateUserLocale" asp-controller="Config">
+
+</form>
