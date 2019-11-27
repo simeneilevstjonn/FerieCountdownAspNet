@@ -327,7 +327,7 @@ namespace FerieCountdown.Controllers
                 }
             };
 
-            DbMaster.SqlQuery(string.Format("INSERT INTO [dbo].[CustomLocales] ([UserId], [Data], [IsWork]) VALUES (N'{0}', N'{1}', 1);", User.FindFirstValue(ClaimTypes.NameIdentifier), JsonConvert.SerializeObject(cld)));
+            DbMaster.SqlQuery(string.Format("DELETE FROM [dbo].[CustomLocales] WHERE UserId = N'{0}'; INSERT INTO [dbo].[CustomLocales] ([UserId], [Data], [IsWork]) VALUES (N'{0}', N'{1}', {2});", User.FindFirstValue(ClaimTypes.NameIdentifier), JsonConvert.SerializeObject(cld), IsWork));
 
             if (Request.Query["redirecturi"].ToString() == null) return Redirect("/");
             else return Redirect(Request.Form["RedirectUri"]);
