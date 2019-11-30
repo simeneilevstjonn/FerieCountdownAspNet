@@ -16,6 +16,20 @@ namespace FerieCountdown.Classes.Countdowns
 
         public static Dictionary<string, CountdownBackground> Backgrounds = new Dictionary<string, CountdownBackground>
         {
+            //special
+            { 
+                "blank",
+                new CountdownBackground
+                {
+                    Id = "blank",
+                    CommonName = "Hvit bakgrunn",
+                    Path = " ",
+                    Css = string.Empty,
+                    Html = string.Empty,
+                    UseCCC = false
+                }
+            },
+
             //Adobe Stock Images
             {
                 "christmasinterior",
