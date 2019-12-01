@@ -42,17 +42,18 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th>Innlogging</th>
-                                <td>Du kan nå <a asp-area="Identity" asp-page="/Account/Login">lage din egen</a> FerieCountdown-Bruker</td>
+                                <th class="text-left">Innlogging</th>
+                                <td class="text-left">Du kan nå <a asp-area="Identity" asp-page="/Account/Login">lage din egen</a> FerieCountdown-Bruker</td>
                             </tr>
                             <tr>
-                                <th>Egne nedtellinger</th>
-                                <td>Du kan nå <a asp-area="" asp-controller="Config" asp-action="Custom">lage helt egne</a> nedtellinger til hva som helst</td>
+                                <th class="text-left">Egne nedtellinger</th>
+                                <td class="text-left">Du kan nå <a asp-area="" asp-controller="Config" asp-action="Custom">lage helt egne</a> nedtellinger til hva som helst</td>
                             </tr>
                             <tr>
-                                <th>Støtte for andre skoler og jobb</th>
-                                <td>
-                                    Du kan nå <a asp-area="" asp-controller="Countdown" asp-action="SetLocale">velge din skole eller sette arbeidstider</a>. <a asp-area="" asp-controller="Home" asp-action="HowToIncludeSchool">Hvordan få med din skole.</a>
+                                <th class="text-left">Støtte for andre skoler og jobb</th>
+                                <td class="text-left">
+                                    Du kan nå <a asp-area="" asp-controller="Countdown" asp-action="SetLocale">velge din skole eller sette arbeidstider</a>. <br />
+                                    <a asp-area="" asp-controller="Home" asp-action="HowToIncludeSchool">Hvordan få med din skole.</a>
                                 </td>
                             </tr>
 
@@ -90,7 +91,7 @@
                         <h2>Neste egendefinerte nedtellinger</h2>
                         @foreach (KeyValuePair<string, string> data in ccdData)
                         {
-                            <a href="/Countdown/Custom/@data.Key">@data.Value</a>
+                            <a class="text-left" href="/Countdown/Custom/@data.Key">@data.Value</a>
                         }
                     </div>
                 </div>
