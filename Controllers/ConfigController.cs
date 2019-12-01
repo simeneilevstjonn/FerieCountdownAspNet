@@ -30,6 +30,11 @@ namespace FerieCountdown.Controllers
 
         public IActionResult Birthday()
         {
+            List<CountdownBackground> cbgs = new List<CountdownBackground>();
+            foreach (KeyValuePair<string, CountdownBackground> cb in CountdownBackground.Backgrounds)
+            {
+                cbgs.Add(cb.Value);
+            }
             ViewData["IsPersonalCelebration"] = "true";
             return View("CustomBuilder", new CustomBuilderViewModel
             {
@@ -52,15 +57,17 @@ namespace FerieCountdown.Controllers
                         Description = "Bursdagsdato"
                     }
                 },
-                BackgroundOptions = new List<CountdownBackground>
-                {
-                    CountdownBackground.Backgrounds["birthdaycake"]
-                }
+                BackgroundOptions = cbgs
             }); 
         }
 
         public IActionResult Confirmation()
         {
+            List<CountdownBackground> cbgs = new List<CountdownBackground>();
+            foreach (KeyValuePair<string, CountdownBackground> cb in CountdownBackground.Backgrounds)
+            {
+                cbgs.Add(cb.Value);
+            }
             ViewData["IsPersonalCelebration"] = "true";
             return View("CustomBuilder", new CustomBuilderViewModel
             {
@@ -83,15 +90,17 @@ namespace FerieCountdown.Controllers
                         Description = "Dato"
                     }
                 },
-                BackgroundOptions = new List<CountdownBackground>
-                {
-                    CountdownBackground.Backgrounds["birthdaycake"]
-                }
+                BackgroundOptions = cbgs
             });
         }
 
         public IActionResult Wedding()
         {
+            List<CountdownBackground> cbgs = new List<CountdownBackground>();
+            foreach (KeyValuePair<string, CountdownBackground> cb in CountdownBackground.Backgrounds)
+            {
+                cbgs.Add(cb.Value);
+            }
             ViewData["IsPersonalCelebration"] = "true";
             return View("CustomBuilder", new CustomBuilderViewModel
             {
@@ -121,10 +130,7 @@ namespace FerieCountdown.Controllers
                         Description = "Dato"
                     }
                 },
-                BackgroundOptions = new List<CountdownBackground>
-                {
-                    CountdownBackground.Backgrounds["rose"]
-                }
+                BackgroundOptions = cbgs
             });
         }
 
