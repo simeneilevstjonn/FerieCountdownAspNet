@@ -4,18 +4,22 @@ Disallow: /
 
 User-agent: Googlebot
 Allow: /
-Disallow: /countdown/birthday
-Disallow: /countdown/confirmation
-Disallow: /countdown/Wedding
+Disallow: /countdown/config
 Disallow: /countdown/setlocale
-Disallow: /config
+Disallow: /config/
 Disallow: /identity
+Allow: /config/birthday
+Allow: /config/wedding
+Allow: /config/confirmation
+Allow: /config/custom
 
 User-agent: Bingbot
 Allow: /
-Disallow: /countdown/birthday
-Disallow: /countdown/confirmation
-Disallow: /countdown/Wedding
+Disallow: /countdown/config
 Disallow: /countdown/setlocale
 Disallow: /config
 Disallow: /identity
+Allow: /config/birthday
+Allow: /config/wedding
+Allow: /config/confirmation
+Allow: /config/custom
