@@ -21,13 +21,14 @@
     <meta name="theme-color" content="#333333" />
     <meta property="og:url" content="@ViewData["FullUrl"]" />
     <link rel="canonical" href="@ViewData["FullUrl"]" />
-    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:title" content="@ViewData["Title"] - FerieCountdown" />
     <meta name="author" content="Simen Eilevstjønn" />
     @{
         string metadesc = (string)ViewData["MetaDescription"];
         if (string.IsNullOrEmpty(metadesc)) metadesc = (string)ViewData["Title"];
     }
     <meta name="description" content="@metadesc" />
+    <meta property="og:description" content="@metadesc" />
     <meta name="keywords" content="Ferie, Nedtelling, Countdown" />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
