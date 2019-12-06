@@ -45,7 +45,7 @@ namespace FerieCountdown.Areas.Identity.Pages.Account.Manage
             }
 
             Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalData.json");
-            return new FileContentResult(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new Dictionary<string, object> { { "IdentityData", personalData }, { "CountdownData", await DbMaster.GetAllUserCountdownDataJsonAsync(_userManager.GetUserId(User)) } })), "text/json");
+            return new FileContentResult(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new Dictionary<string, object> { { "IdentityData", personalData }, { "CountdownData", await DbMaster.GetAllUserCountdownDataJsonAsync(_userManager.GetUserId(User)) }, {"CustomLocaleData", DbMaster.GetCustomLocale(_userManager.GetUserId(User)) } })), "text/json");
         }
     }
 }
