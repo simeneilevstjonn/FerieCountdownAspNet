@@ -69,10 +69,10 @@
                     @if (DateTime.UtcNow.Day == 24)
                     {
                         <h2>Det er jul i dag!</h2>
+                        <img style="width: 30%;height: auto;margin-left: auto;margin-right: auto;" src="https://static.feriecountdown.com/resources/vector/secretlondon_red_present.svg"/>
                     }
                     else
                     {
-                        @*<h2>Det er @(24 - DateTime.UtcNow.Day) dager til jul.</h2>*@
                         <h2>Nedtelling til julaften</h2>
                         <h3>I dag er det @DateTime.UtcNow.Day. desember</h3>
                         <div class="clock" style="margin:2em;" id="clock"></div>
