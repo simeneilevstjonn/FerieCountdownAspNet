@@ -37,7 +37,7 @@
         </Text>
     }
 
-    @Model.Background.Css
+    @Html.Raw(Model.Background.Css)
 </style>
 
 <script>
@@ -126,6 +126,7 @@ var clock;
             document.getElementById("above-text").style.display = "none";
             document.getElementById("clock").style.display = "none";
             document.getElementById("done-container").style.display = "initial";
+            @Html.Raw(Model.ExtraStopJs)
         }
     });
 

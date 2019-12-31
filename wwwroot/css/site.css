@@ -121,7 +121,9 @@ body {
     .hide-large {
         display:none!important;
     }
-
+    #done-text {
+        font-size: 144pt;
+    }
 }
 
 @media (max-width: 600px) {
