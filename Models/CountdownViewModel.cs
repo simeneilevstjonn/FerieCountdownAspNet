@@ -14,5 +14,6 @@ namespace FerieCountdown.Models
         public string CountdownEndText { get; set; }
         public CountdownBackground Background { get; set; }
         public bool UseLocalTime { get; set; }
+        public string ExtraStopJs { get; set; }
     }
 }
