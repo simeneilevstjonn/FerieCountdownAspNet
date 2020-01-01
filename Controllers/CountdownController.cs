@@ -118,7 +118,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.ChristmasHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
@@ -157,7 +157,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.WinterHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
@@ -196,7 +196,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.EasterHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
@@ -235,7 +235,7 @@ namespace FerieCountdown.Controllers
             }
             try
             {
-                if (!TimeMaster.ValiDateBool(Locale.LocaleData.AutumnHoliday)) return TimePassed();
+                if (!TimeMaster.ValiDateBool(Locale.LocaleData.SummerHoliday)) return TimePassed();
             }
             catch (NullReferenceException)
             {
