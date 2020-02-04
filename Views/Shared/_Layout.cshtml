@@ -123,7 +123,7 @@
 
         <footer class="footer text-muted bg-333">
             <div class="container bg-333 d-inline-block text-center">
-                <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; 2019 FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-action="SetLocale" asp-area="" asp-controller="Countdown">Endre sted</a>
+                <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; @DateTime.UtcNow.Year FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-action="SetLocale" asp-area="" asp-controller="Countdown">Endre sted</a>
             </div>
         </footer>
 

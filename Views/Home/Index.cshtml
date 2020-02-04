@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using FerieCountdown.Classes.Io
 @using System.Security.Claims;
+@using FerieCountdown.Classes.TimeHandler;
+@model IndexViewModel
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
@@ -8,135 +10,35 @@
     ViewData["MetaDescription"] = "FerieCountdown er nettsiden der du kan telle ned til skoleferier, slutten på skoledager, helg, bursdager, nyttår og mye mer med dager, timer, minutter og sekunder!";
 }
 
-<script src="~/js/flipclock.js"></script>
-<link rel="stylesheet" href="~/css/flipclock.css" />
-<style>
-    body {
-        overflow-x: hidden;
-        @if (DateTime.UtcNow.Month == 12)
+<div class="text-center" style="height:80vh">
+    <h1 class="display-4 welcome-heading">Velkommen til FerieCountdown!</h1>
+    @*<div class="row p-2 mx-2">
+        @if (Model.HasLocale)
         {
-        <text>
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url(https://static.feriecountdown.com/resources/background/christmaslivingroom.jpg);
-        }
-        .welcome-heading {
-            color: #f0eddf;
-        }
-        .mainpagecard {
-            background-color: #f0eddf;
-        </text>
-        }
-    }
-</style>
-
-
-<div class="text-center">
-    <h1 class="display-4 welcome-heading">Velkommen til nye FerieCountdown!</h1>
-    <div class="row p-2 mx-2">
-        <div class="col col-sm-12 col-md-6 p-2">
-            <div class="card p-2 h-100 mainpagecard">
-                <h2>Hva er nytt</h2>
-                <p>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th class="text-left">Innlogging</th>
-                                <td class="text-left">Du kan nå <a asp-area="Identity" asp-page="/Account/Login">lage din egen</a> FerieCountdown-Bruker</td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">Egne nedtellinger</th>
-                                <td class="text-left">Du kan nå <a asp-area="" asp-controller="Config" asp-action="Custom">lage helt egne</a> nedtellinger til hva som helst</td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">Støtte for andre skoler og jobb</th>
-                                <td class="text-left">
-                                    Du kan nå <a asp-area="" asp-controller="Countdown" asp-action="SetLocale">velge din skole eller sette arbeidstider</a>. <br />
-                                    <a asp-area="" asp-controller="Home" asp-action="HowToIncludeSchool">Hvordan få med din skole.</a>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </p>
-            </div>
-        </div>
-        @if (DateTime.UtcNow.Month == 12 && DateTime.UtcNow.Day < 25)
-        {
+            KeyValuePair<string, DateTime> nexthol = TimeMaster.GetNextHoliday(Model.Locale);
             <div class="col col-sm-12 col-md-6 p-2">
                 <div class="card p-2 h-100 mainpagecard">
-                    @if (DateTime.UtcNow.Day == 24)
-                    {
-                        <h2>Det er jul i dag!</h2>
-                        <img style="width: 30%;height: auto;margin-left: auto;margin-right: auto;" src="https://static.feriecountdown.com/resources/vector/secretlondon_red_present.svg" />
+                    <h2 class="text-center">@nexthol.Key om:</h2>
+                    <div class="rounded-0 display-4 bg-333" style="color: #ccc; width: 90%">
+                        @TimeMaster.GetDaysToDate(nexthol.Value);
+                    </div> 
+                    <p class="text-center">Dager</p>
+                    @{
+                        string action = nexthol.Key switch
+                        {
+                            "Høstferie" => "Autumn",
+                            "Juleferie" => "Christmas",
+                            "Vinterferie" => "Winter",
+                            "Påskeferie" => "Easter",
+                            "Sommerferie" => "Summer",
+                            _ => "Error"
+                        };
                     }
-                    else
-                    {
-                        <h2>Nedtelling til julaften</h2>
-                        <h3>I dag er det @DateTime.UtcNow.Day. desember</h3>
-                        <div class="clock" style="margin:2em;" id="clock"></div>
-                        <a asp-action="Christmaseve" asp-controller="Countdown">Se nedtelling i full skjerm</a>
-                        @section Scripts {
-                            <script>
-                                $(document).ready(function () {
-                                    var now = new Date();
-                                    var future = new Date("2019-12-24");
-                                    var diff = future.getTime() / 1000 - now.getTime() / 1000;
-
-                                    // Instantiate a coutdown FlipClock
-                                    clock = $('.clock').FlipClock(diff, {
-                                        clockFace: 'DailyCounter',
-                                        countdown: true,
-                                        language: 'no',
-                                        stop: function () {
-                                            window.location.reload();
-                                        }
-                                    });
-                                });
-                            </script>
-                        }
-                    }
+                    <a asp-area="" asp-controller="Countdown" asp-action="@action">Se full nedtellig</a>
                 </div>
             </div>
         }
-        else if ((DateTime.UtcNow.Month == 12 && DateTime.UtcNow.Day > 24) || (DateTime.UtcNow.Month == 1 && DateTime.UtcNow.Day == 1))
-        {
-            <div class="col col-sm-12 col-md-6 p-2">
-                <div class="card p-2 h-100 mainpagecard">
-                    @if (DateTime.UtcNow.Day == 24)
-                    {
-                        <h2>2020 NÅ!</h2>
-                        <img style="width: 70%;height: auto;margin-left: auto;margin-right: auto;" src="https://static.feriecountdown.com/resources/vector/Gerald_G_Fireworks_2.svg" />
-                    }
-                    else
-                    {
-                        <h2>Nedtelling til nyttår</h2>
-                        <div class="clock" style="margin:2em;" id="clock"></div>
-                        <a asp-action="Newyear" asp-controller="Countdown">Se nedtelling i full skjerm</a>
-                        @section Scripts {
-                            <script>
-                                $(document).ready(function () {
-                                    var now = new Date();
-                                    var future = new Date("2020-01-01");
-                                    var diff = future.getTime() / 1000 - now.getTime() / 1000;
 
-                                    // Instantiate a coutdown FlipClock
-                                    clock = $('.clock').FlipClock(diff, {
-                                        clockFace: 'DailyCounter',
-                                        countdown: true,
-                                        language: 'no',
-                                        stop: function () {
-                                            window.location.reload();
-                                        }
-                                    });
-                                });
-                            </script>
-                        }
-                    }
-                </div>
-            </div>
-        }
         @if (SignInManager.IsSignedIn(User))
         {
             Dictionary<string, string> ccdData = DbMaster.GetDictionaryFromSql($"SELECT TOP (10) [Id], [CountdownText] FROM [dbo].[CustomCountdowns] WHERE [Owner] = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}' ORDER BY [CountdownTime] DESC;");
@@ -154,6 +56,9 @@
             }
         }
 
-    </div>
+    </div>*@
+    <iframe class="w-100 h-75 mt-sm-5" src="/countdown/winter?fullscreen&nobutton">
+        Nettleseren din støtter ikke iframe.
+    </iframe>
 </div>
 

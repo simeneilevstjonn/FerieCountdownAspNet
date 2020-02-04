@@ -66,5 +66,42 @@ namespace FerieCountdown.Classes.TimeHandler
  
             return new DateTime(ret.Year, ret.Month, ret.Day, cld.FridayEnd.Hours, cld.FridayEnd.Minutes, 0);
         }
+
+        public static KeyValuePair<string, DateTime> GetNextHoliday(CountdownLocale Locale)
+        {
+            try
+            {
+                string name = "Error";
+                DateTime date = DateTime.MaxValue;
+
+                DateTime[] dates = { Locale.LocaleData.AutumnHoliday, Locale.LocaleData.ChristmasHoliday, Locale.LocaleData.WinterHoliday, Locale.LocaleData.EasterHoliday, Locale.LocaleData.SummerHoliday };
+
+                byte i = 0;
+                foreach (DateTime d in dates)
+                {
+                    if (d.CompareTo(DateTime.UtcNow) > 0 && d.CompareTo(date) < 0)
+                    {
+                        date = d;
+                        name = i switch
+                        {
+                            0 => "Høstferie",
+                            1 => "Juleferie",
+                            2 => "Vinterferie",
+                            3 => "Påskeferie",
+                            4 => "Sommerferie",
+                            _ => "Error"
+                        };
+                    }
+
+                }
+                return new KeyValuePair<string, DateTime>(name, date);
+            }
+            catch
+            {
+                return new KeyValuePair<string, DateTime>("Error", DateTime.MaxValue);
+            }
+        }
+
+        public static int GetDaysToDate(DateTime Date) => (int)Math.Ceiling((Date - DateTime.UtcNow).TotalDays);
     }
 }
