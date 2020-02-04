@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using FerieCountdown.Classes.Io
 @using System.Security.Claims;
+@using FerieCountdown.Classes.TimeHandler;
+@model IndexViewModel
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
@@ -8,36 +10,35 @@
     ViewData["MetaDescription"] = "FerieCountdown er nettsiden der du kan telle ned til skoleferier, slutten på skoledager, helg, bursdager, nyttår og mye mer med dager, timer, minutter og sekunder!";
 }
 
-<div class="text-center">
-    <h1 class="display-4 welcome-heading">Velkommen til nye FerieCountdown!</h1>
-    <div class="row p-2 mx-2">
-        <div class="col col-sm-12 col-md-6 p-2">
-            <div class="card p-2 h-100 mainpagecard">
-                <h2>Hva er nytt</h2>
-                <p>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th class="text-left">Innlogging</th>
-                                <td class="text-left">Du kan nå <a asp-area="Identity" asp-page="/Account/Login">lage din egen</a> FerieCountdown-Bruker</td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">Egne nedtellinger</th>
-                                <td class="text-left">Du kan nå <a asp-area="" asp-controller="Config" asp-action="Custom">lage helt egne</a> nedtellinger til hva som helst</td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">Støtte for andre skoler og jobb</th>
-                                <td class="text-left">
-                                    Du kan nå <a asp-area="" asp-controller="Countdown" asp-action="SetLocale">velge din skole eller sette arbeidstider</a>. <br />
-                                    <a asp-area="" asp-controller="Home" asp-action="HowToIncludeSchool">Hvordan få med din skole.</a>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </p>
+<div class="text-center" style="height:80vh">
+    <h1 class="display-4 welcome-heading">Velkommen til FerieCountdown!</h1>
+    @*<div class="row p-2 mx-2">
+        @if (Model.HasLocale)
+        {
+            KeyValuePair<string, DateTime> nexthol = TimeMaster.GetNextHoliday(Model.Locale);
+            <div class="col col-sm-12 col-md-6 p-2">
+                <div class="card p-2 h-100 mainpagecard">
+                    <h2 class="text-center">@nexthol.Key om:</h2>
+                    <div class="rounded-0 display-4 bg-333" style="color: #ccc; width: 90%">
+                        @TimeMaster.GetDaysToDate(nexthol.Value);
+                    </div> 
+                    <p class="text-center">Dager</p>
+                    @{
+                        string action = nexthol.Key switch
+                        {
+                            "Høstferie" => "Autumn",
+                            "Juleferie" => "Christmas",
+                            "Vinterferie" => "Winter",
+                            "Påskeferie" => "Easter",
+                            "Sommerferie" => "Summer",
+                            _ => "Error"
+                        };
+                    }
+                    <a asp-area="" asp-controller="Countdown" asp-action="@action">Se full nedtellig</a>
+                </div>
             </div>
-        </div>
+        }
+
         @if (SignInManager.IsSignedIn(User))
         {
             Dictionary<string, string> ccdData = DbMaster.GetDictionaryFromSql($"SELECT TOP (10) [Id], [CountdownText] FROM [dbo].[CustomCountdowns] WHERE [Owner] = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}' ORDER BY [CountdownTime] DESC;");
@@ -55,6 +56,9 @@
             }
         }
 
-    </div>
+    </div>*@
+    <iframe class="w-100 h-75 mt-sm-5" src="/countdown/winter?fullscreen&nobutton">
+        Nettleseren din støtter ikke iframe.
+    </iframe>
 </div>
 

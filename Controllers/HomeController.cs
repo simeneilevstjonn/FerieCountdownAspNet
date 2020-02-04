@@ -11,6 +11,7 @@ using FerieCountdown.Classes;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using FerieCountdown.Classes.Io;
+using System.Security.Claims;
 
 namespace FerieCountdown.Controllers
 {
@@ -30,10 +31,7 @@ namespace FerieCountdown.Controllers
             });
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View(new IndexViewModel { Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier)) });
 
         public IActionResult Privacy()
         {

@@ -135,6 +135,9 @@ var clock;
     if (url.searchParams.has("fullscreen")) {
         thf()
     };
+    if (url.searchParams.has("nobutton")) {
+        document.getElementById("btnpanel").style.display = "none";
+    }; 
 });
 </script>
 
