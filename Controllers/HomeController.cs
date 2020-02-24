@@ -31,7 +31,7 @@ namespace FerieCountdown.Controllers
             });
         }
 
-        public IActionResult Index() => View(new IndexViewModel { Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier)) });
+        public IActionResult Index() => View();
 
         public IActionResult Privacy()
         {
