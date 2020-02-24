@@ -2,7 +2,6 @@
 @using FerieCountdown.Classes.Io
 @using System.Security.Claims;
 @using FerieCountdown.Classes.TimeHandler;
-@model IndexViewModel
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
@@ -12,33 +11,9 @@
 
 <div class="text-center" style="height:80vh">
     <h1 class="display-4 welcome-heading">Velkommen til FerieCountdown!</h1>
-    @*<div class="row p-2 mx-2">
-        @if (Model.HasLocale)
-        {
-            KeyValuePair<string, DateTime> nexthol = TimeMaster.GetNextHoliday(Model.Locale);
-            <div class="col col-sm-12 col-md-6 p-2">
-                <div class="card p-2 h-100 mainpagecard">
-                    <h2 class="text-center">@nexthol.Key om:</h2>
-                    <div class="rounded-0 display-4 bg-333" style="color: #ccc; width: 90%">
-                        @TimeMaster.GetDaysToDate(nexthol.Value);
-                    </div> 
-                    <p class="text-center">Dager</p>
-                    @{
-                        string action = nexthol.Key switch
-                        {
-                            "Høstferie" => "Autumn",
-                            "Juleferie" => "Christmas",
-                            "Vinterferie" => "Winter",
-                            "Påskeferie" => "Easter",
-                            "Sommerferie" => "Summer",
-                            _ => "Error"
-                        };
-                    }
-                    <a asp-area="" asp-controller="Countdown" asp-action="@action">Se full nedtellig</a>
-                </div>
-            </div>
-        }
+    <div class="row p-2 mx-2">
 
+        @*Custom countdowns*@
         @if (SignInManager.IsSignedIn(User))
         {
             Dictionary<string, string> ccdData = DbMaster.GetDictionaryFromSql($"SELECT TOP (10) [Id], [CountdownText] FROM [dbo].[CustomCountdowns] WHERE [Owner] = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}' ORDER BY [CountdownTime] DESC;");
@@ -56,9 +31,20 @@
             }
         }
 
-    </div>*@
-    <iframe class="w-100 h-75 mt-sm-5" src="/countdown/winter?fullscreen&nobutton">
-        Nettleseren din støtter ikke iframe.
-    </iframe>
+        @*WNE ad*@
+        <div class="col col-sm-12 col-md-6 p-2">
+            <div class="card p-2 h-100 mainpagecard">
+                <h2>Er du lei av lærere som bruker ukenumre?</h2>
+                <img class="mx-auto w-50" src="https://static.feriecountdown.com/resources/wne-logo.png" />
+                <br />
+                <p>
+                    Last ned Week Number Extension for <a href="https://chrome.google.com/webstore/detail/week-number-extension/fclcmbgakeahonjplbpinljmghfgnfog">Chrome</a>
+                    eller <a href="https://addons.mozilla.org/en-US/firefox/addon/week-number-extension/">Firefox</a>.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
