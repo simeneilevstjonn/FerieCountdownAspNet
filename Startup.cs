@@ -10,6 +10,7 @@ using FerieCountdown.Classes.Io;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using System;
 
 namespace FerieCountdownWithAuth
 {
@@ -27,25 +28,23 @@ namespace FerieCountdownWithAuth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
+                options.UseSqlServer(Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
             services.AddAuthentication()
-                .AddGoogle(options => { IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google"); options.ClientId = googleAuthNSection["ClientId"]; options.ClientSecret = googleAuthNSection["ClientSecret"]; })
-                .AddMicrosoftAccount(microsoftOptions => { microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"]; microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"]; });
+                .AddGoogle(options => {options.ClientId = Environment.GetEnvironmentVariable("AUTHENTICATION_GOOGLE_CLIENTID"); options.ClientSecret = Environment.GetEnvironmentVariable("AUTHENTICATION_GOOGLE_CLIENTSECRET"); })
+                .AddMicrosoftAccount(microsoftOptions => { microsoftOptions.ClientId = Environment.GetEnvironmentVariable("AUTHENTICATION_MICROSOFT_CLIENTID"); microsoftOptions.ClientSecret = Environment.GetEnvironmentVariable("AUTHENTICATION_MICROSOFT_CLIENTSECRET"); });
 
             services.AddTransient<IEmailSender, EmailSender>();
 
             //Configure GRC secret
-            IConfigurationSection googleRecaptchaNSession =
-                        Configuration.GetSection("Google:Recaptcha");
-            IoMaster.GRCSecret = googleRecaptchaNSession["Secret"];
+            IoMaster.GRCSecret = Environment.GetEnvironmentVariable("GOOGLE_RECAPTCHA_SECRET");
 
             //Configure Conn string
-            DbMaster.ConnString = Configuration.GetConnectionString("AzureConnection");
+            DbMaster.ConnString = Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -97,3 +96,4 @@ namespace FerieCountdownWithAuth
         }
     }
 }
+
