@@ -470,11 +470,5 @@ namespace FerieCountdown.Controllers
                 Background = CountdownBackground.Backgrounds["christmasinterior"]
             }); ;
         }
-
-        public IActionResult SetLocale()
-        {
-            ViewData["FullUrl"] = string.Format("{0}://{1}/", Request.Scheme, Request.Host);
-            return View();
-        }
     }
 }

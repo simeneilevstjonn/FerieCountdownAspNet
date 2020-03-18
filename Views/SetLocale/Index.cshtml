@@ -1,0 +1,11 @@
+﻿
+@{
+    Layout = "_SetLocaleLayout";
+    ViewData["title"] = "Velg ditt sted";
+}
+
+<p class="display-3 hide-mob">Går du på skole eller jobb?</p>
+<h2 class="hide-large">Går du på skole eller jobb?</h2>
+<a asp-controller="SetLocale" asp-area="" asp-action="School" class="btn w3-red w-100 text-left gigabutton gigabutton-top px-2"><i class="fas fa-graduation-cap"></i> Skole</a>
+<a asp-controller="SetLocale" asp-area="" asp-action="Work" class="btn w3-blue w-100 text-left gigabutton px-2"><i class="fas fa-briefcase"></i> Jobb</a>
+

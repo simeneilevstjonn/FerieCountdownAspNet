@@ -541,3 +541,31 @@ body {
 .w3-border-pale-blue, .w3-hover-border-pale-blue:hover {
     border-color: #e7ffff !important
 }
+
+.gigabutton {
+    line-height: 256px;
+    font-size: 10rem;
+    font-weight: 1.2;
+}
+.gigabutton-top {
+    margin-bottom: 128px
+}
+
+.gigabutton-short {
+    min-height: 128px!important;
+    line-height: 128px!important;
+    font-size: 6rem;
+}
+
+@media (max-width: 600px) {
+    .gigabutton {
+        font-size: 4rem;
+        font-weight: 1.2;
+        min-height: 128px!important;
+        line-height: 128px;
+    }
+    .gigabutton-top {
+        margin-bottom: 64px;
+        margin-top: 32px;
+    }
+}

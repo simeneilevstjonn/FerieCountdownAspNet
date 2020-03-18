@@ -1,0 +1,45 @@
+﻿@model CustomLocaleWizardViewModel
+@{
+    Layout = "_SetLocaleLayout";
+    ViewData["title"] = "Velg ditt sted";
+    string activityname = Model.IsWork switch
+    {
+        true => "jobb",
+        false => "skole"
+    };
+
+}
+
+<div>
+    <div id="days">
+        <p class="display-3 hide-mob">Går du på @activityname på <span id="day-pc">mandager</span>?</p>
+        <h2 class="hide-large">Går du på @activityname på <span id="day-mob">mandager</span>?</h2>
+        <div class="row m-5">
+            <button onclick="DaysButton(0)" class="btn w3-red col-12 col-sm-5 gigabutton gigabutton-short px-2" id="days-button-no">Nei</button>
+            <div class="col-sm-2 hide-mob">&nbsp;</div>
+            <div class="col-12 hide-large" style="height: 32px">&nbsp;</div>
+            <button onclick="DaysButton(1)" class="btn w3-blue col-12 col-sm-5 gigabutton gigabutton-short px-2" id="days-button-yes">Ja</button>
+        </div>
+        <div class="collapse card container p-5" id="timeselect">
+            <h2 class="hide-mob">Når slutter du på @activityname på <span id="day-question-pc">mandager</span>?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på <span id="day-question-mob">mandager</span>?</h3>
+            <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time">
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function DaysButton(state) {
+        if (state == 1) {
+            document.getElementById("days-button-no").style.opacity = 0.5;
+            document.getElementById("days-button-yes").style.opacity = 1;
+            $('#timeselect').collapse('show');
+        }
+        else if (state == 0) {
+            document.getElementById("days-button-no").style.opacity = 1;
+            document.getElementById("days-button-yes").style.opacity = 0.5;
+            $('#timeselect').collapse('hide');
+        }
+    }
+</script>
