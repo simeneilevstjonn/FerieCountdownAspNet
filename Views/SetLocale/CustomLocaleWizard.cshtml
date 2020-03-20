@@ -11,59 +11,67 @@
 }
 
 <div>
-    <div id="days">
-        @*<p class="display-3 hide-mob">Går du på @activityname på <span id="day-pc">mandager</span>?</p>
-        <h2 class="hide-large">Går du på @activityname på <span id="day-mob">mandager</span>?</h2>
-        <div class="row m-5">
-            <button onclick="DaysButton(0)" class="btn w3-red col-12 col-sm-5 gigabutton gigabutton-short px-2" id="days-button-no">Nei</button>
-            <div class="col-sm-2 hide-mob">&nbsp;</div>
-            <div class="col-12 hide-large" style="height: 32px">&nbsp;</div>
-            <button onclick="DaysButton(1)" class="btn w3-blue col-12 col-sm-5 gigabutton gigabutton-short px-2" id="days-button-yes">Ja</button>
-        </div>
-        <div class="collapse card container p-5" id="timeselect">
-            <h2 class="hide-mob">Når slutter du på @activityname på <span id="day-question-pc">mandager</span>?</h2>
-            <h3 class="hide-large">Når slutter du på @activityname på <span id="day-question-mob">mandager</span>?</h3>
-            <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time">
-        </div>*@
-
+    <div id="page-1">
         <p class="display-3 hide-mob">Hvilke dager går du på @activityname?</p>
         <h2 class="hide-large">Hvilke dager går du på @activityname?</h2>
         <div class="row m-5">
             <div class="col-12 col-sm-6 p-3">
-                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Mandag</button>
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-mon">Mandag</button>
             </div>
             <div class="col-12 col-sm-6 p-3">
-                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Tirsdag</button>
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-tue">Tirsdag</button>
             </div>
             <div class="col-12 col-sm-6 p-3">
-                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Onsdag</button>
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-wed">Onsdag</button>
             </div>
             <div class="col-12 col-sm-6 p-3">
-                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Torsdag</button>
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-thu">Torsdag</button>
             </div>
             <div class="hide-mob col-sm-3">&nbsp;</div>
             <div class="col-12 col-sm-6 p-3">
-                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Fredag</button>
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-fri">Fredag</button>
             </div>
+        </div>
+    </div>
+    <div id="page-2" style="display: none">
+        <div id="mon-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på mandager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på mandager?</h3>
+            <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-mon">
+        </div>
+        <div id="tue-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på tirsdager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på tirsdager?</h3>
+            <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-tue">
+        </div>
+        <div id="wed-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på onsdager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på onsdager?</h3>
+            <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-wed">
+        </div>
+        <div id="thu-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på torsdager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på torsdager?</h3>
+            <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-thu">
+        </div>
+        <div id="fri-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på fredager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på fredager?</h3>
+            <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-fri">
+        </div>
+    </div>
+    <div class="display-2 row px-3">
+        <div class="text-left col">
+            <button class="w3-white btn" title="Forrige" style="display: none" onclick="Previous()" id="prev"><i class="fas fa-arrow-left"></i> Forrige</button>
+        </div>
+        <div class="text-right col">
+            <button class="w3-white btn" title="Neste" onclick="Next()" id="next"><i class="fas fa-arrow-right"></i> Neste</button>
         </div>
     </div>
 </div>
 
 
 <script>
-    /*function DaysButton(state) {
-        if (state == 1) {
-            document.getElementById("days-button-no").style.opacity = 0.5;
-            document.getElementById("days-button-yes").style.opacity = 1;
-            $('#timeselect').collapse('show');
-        }
-        else if (state == 0) {
-            document.getElementById("days-button-no").style.opacity = 1;
-            document.getElementById("days-button-yes").style.opacity = 0.5;
-            $('#timeselect').collapse('hide');
-        }
-    }*/
-
     function ToogleCheckbox(box) {
         if (box.style.opacity == 0.5) {
             box.style.opacity = 1;
@@ -71,7 +79,68 @@
         else {
             box.style.opacity = 0.5;
         }
+    }
 
+    //Page cycling
+    let currentpage = 1;
+    function Next() {
+        nextpage = currentpage + 1;
+
+        //Page specific actions
+        PageSpecificActions(nextpage);
+
+        //Display previous-button
+        document.getElementById("prev").style.display = "initial";
+
+        //Go to next page
+        document.getElementById("page-" + currentpage).style.display = "none";
+        document.getElementById("page-" + nextpage).style.display = "block";
+
+        //Increment page counter
+        currentpage++;
+    }
+
+    function Previous() {
+        lastpage = currentpage - 1;
+
+        //Page specific actions
+        PageSpecificActions(lastpage);
+
+        //Display next-button
+        document.getElementById("next").style.display = "initial";
+
+        //Go to last page
+        document.getElementById("page-" + currentpage).style.display = "none";
+        document.getElementById("page-" + lastpage).style.display = "block";
+
+        //Decrement page counter
+        currentpage--;
+    }
+
+    //Page specific action
+    function PageSpecificActions(targetPage) {
+        switch (targetPage) {
+            case 1:
+                //Hide previous button
+                document.getElementById("prev").style.display = "none";
+                break;
+            case 2:
+                //Choose which date inputs to show
+
+                //Get an array with day buttons
+                let daybuttons = document.getElementsByClassName("daybutton");
+
+                //Loop through all buttons, decide which are pressed and enable their inputs.
+                for (let i = 0; i < daybuttons.length; i++) {
+                    if (daybuttons[i].style.opacity == 1) {
+                        document.getElementById(daybuttons[i].id.substr(6) + "-input").style.display = "block";
+                    }
+                    else {
+                        document.getElementById(daybuttons[i].id.substr(6) + "-input").style.display = "none";
+                    }
+                }
+                break;
+        }
     }
 
 </script>
