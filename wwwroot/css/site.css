@@ -81,6 +81,10 @@ body {
     color: #ccc;
 }
 
+.border-333 {
+    border: 1px solid #333;
+}
+
 .ic {
     color:inherit;
 }

@@ -12,7 +12,7 @@
 
 <div>
     <div id="days">
-        <p class="display-3 hide-mob">Går du på @activityname på <span id="day-pc">mandager</span>?</p>
+        @*<p class="display-3 hide-mob">Går du på @activityname på <span id="day-pc">mandager</span>?</p>
         <h2 class="hide-large">Går du på @activityname på <span id="day-mob">mandager</span>?</h2>
         <div class="row m-5">
             <button onclick="DaysButton(0)" class="btn w3-red col-12 col-sm-5 gigabutton gigabutton-short px-2" id="days-button-no">Nei</button>
@@ -24,13 +24,34 @@
             <h2 class="hide-mob">Når slutter du på @activityname på <span id="day-question-pc">mandager</span>?</h2>
             <h3 class="hide-large">Når slutter du på @activityname på <span id="day-question-mob">mandager</span>?</h3>
             <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time">
+        </div>*@
+
+        <p class="display-3 hide-mob">Hvilke dager går du på @activityname?</p>
+        <h2 class="hide-large">Hvilke dager går du på @activityname?</h2>
+        <div class="row m-5">
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Mandag</button>
+            </div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Tirsdag</button>
+            </div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Onsdag</button>
+            </div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Torsdag</button>
+            </div>
+            <div class="hide-mob col-sm-3">&nbsp;</div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2" style="opacity: 0.5" onclick="ToogleCheckbox(this)">Fredag</button>
+            </div>
         </div>
     </div>
 </div>
 
 
 <script>
-    function DaysButton(state) {
+    /*function DaysButton(state) {
         if (state == 1) {
             document.getElementById("days-button-no").style.opacity = 0.5;
             document.getElementById("days-button-yes").style.opacity = 1;
@@ -41,5 +62,16 @@
             document.getElementById("days-button-yes").style.opacity = 0.5;
             $('#timeselect').collapse('hide');
         }
+    }*/
+
+    function ToogleCheckbox(box) {
+        if (box.style.opacity == 0.5) {
+            box.style.opacity = 1;
+        }
+        else {
+            box.style.opacity = 0.5;
+        }
+
     }
+
 </script>
