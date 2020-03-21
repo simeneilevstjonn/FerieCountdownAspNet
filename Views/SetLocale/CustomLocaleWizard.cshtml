@@ -10,123 +10,130 @@
 
 }
 
-    <div>
-        <div id="page-1">
-            <!-- Day select buttons -->
-            <p class="display-3 hide-mob">Hvilke dager går du på @activityname?</p>
-            <h2 class="hide-large">Hvilke dager går du på @activityname?</h2>
-            <div class="row m-5">
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-mon">Mandag</button>
-                </div>
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-tue">Tirsdag</button>
-                </div>
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-wed">Onsdag</button>
-                </div>
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-thu">Torsdag</button>
-                </div>
-                <div class="hide-mob col-sm-3">&nbsp;</div>
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-fri">Fredag</button>
-                </div>
+<div>
+    <div id="page-1">
+        <!-- Day select buttons -->
+        <p class="display-3 hide-mob">Hvilke dager går du på @activityname?</p>
+        <h2 class="hide-large">Hvilke dager går du på @activityname?</h2>
+        <div class="row m-5">
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-mon">Mandag</button>
             </div>
-        </div>
-        <div id="page-2" style="display: none">
-            <!-- Day end time inputs -->
-            <div id="mon-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når slutter du på @activityname på mandager?</h2>
-                <h3 class="hide-large">Når slutter du på @activityname på mandager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-mon">
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-tue">Tirsdag</button>
             </div>
-            <div id="tue-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når slutter du på @activityname på tirsdager?</h2>
-                <h3 class="hide-large">Når slutter du på @activityname på tirsdager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-tue">
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-wed">Onsdag</button>
             </div>
-            <div id="wed-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når slutter du på @activityname på onsdager?</h2>
-                <h3 class="hide-large">Når slutter du på @activityname på onsdager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-wed">
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-thu">Torsdag</button>
             </div>
-            <div id="thu-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når slutter du på @activityname på torsdager?</h2>
-                <h3 class="hide-large">Når slutter du på @activityname på torsdager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-thu">
-            </div>
-            <div id="fri-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når slutter du på @activityname på fredager?</h2>
-                <h3 class="hide-large">Når slutter du på @activityname på fredager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-fri">
-            </div>
-        </div>
-        <div id="page-3" style="display: none">
-            <!-- Holiday select buttons -->
-            <p class="display-3 hide-mob">Hvilke av følgende ferier har du?</p>
-            <h2 class="hide-large">Hvilke av følgende ferier har du?</h2>
-            <div class="row m-5">
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-autumn">Høstferie</button>
-                </div>
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-christmas">Juleferie</button>
-                </div>
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-winter">Vinterferie</button>
-                </div>
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-easter">Påskeferie</button>
-                </div>
-                <div class="hide-mob col-sm-3">&nbsp;</div>
-                <div class="col-12 col-sm-6 p-3">
-                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5; font-size: 5rem" onclick="ToogleCheckbox(this)" id="check-summer">Sommerferie</button>
-                </div>
-            </div>
-        </div>
-        <div id="page-4" style="display: none">
-            <!-- Holiday datetime inputs -->
-            <div id="autumn-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når begynner din høstferie?</h2>
-                <h3 class="hide-large">Når begynner din høstferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-autumn">
-            </div>
-            <div id="christmas-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når begynner din juleferie?</h2>
-                <h3 class="hide-large">Når begynner din juleferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-christmas">
-            </div>
-            <div id="winter-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når begynner din vinterferie?</h2>
-                <h3 class="hide-large">Når begynner din vinterferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-winter">
-            </div>
-            <div id="easter-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når begynner din påskeferie?</h2>
-                <h3 class="hide-large">Når begynner din påskeferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-easter">
-            </div>
-            <div id="summer-input" style="display: none" class="my-5">
-                <h2 class="hide-mob">Når begynner din sommerferie?</h2>
-                <h3 class="hide-large">Når begynner din sommerferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-summer">
-            </div>
-        </div>
-
-        <!-- Next and previous buttons -->
-        <div class="display-2 row px-3">
-            <div class="text-left col">
-                <button class="w3-white btn" title="Forrige" style="display: none" onclick="Previous()" id="prev"><i class="fas fa-arrow-left"></i> Forrige</button>
-            </div>
-            <div class="text-right col">
-                <button class="w3-white btn" title="Neste" onclick="Next()" id="next"><i class="fas fa-arrow-right"></i> Neste</button>
+            <div class="hide-mob col-sm-3">&nbsp;</div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-fri">Fredag</button>
             </div>
         </div>
     </div>
+    <div id="page-2" style="display: none">
+        <!-- Day end time inputs -->
+        <div id="mon-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på mandager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på mandager?</h3>
+            <input type="text" class="timepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-mon">
+        </div>
+        <div id="tue-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på tirsdager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på tirsdager?</h3>
+            <input type="text" class="timepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-tue">
+        </div>
+        <div id="wed-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på onsdager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på onsdager?</h3>
+            <input type="text" class="timepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-wed">
+        </div>
+        <div id="thu-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på torsdager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på torsdager?</h3>
+            <input type="text" class="timepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-thu">
+        </div>
+        <div id="fri-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når slutter du på @activityname på fredager?</h2>
+            <h3 class="hide-large">Når slutter du på @activityname på fredager?</h3>
+            <input type="text" class="timepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-fri">
+        </div>
+    </div>
+    <div id="page-3" style="display: none">
+        <!-- Holiday select buttons -->
+        <p class="display-3 hide-mob">Hvilke av følgende ferier har du?</p>
+        <h2 class="hide-large">Hvilke av følgende ferier har du?</h2>
+        <div class="row m-5">
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-autumn">Høstferie</button>
+            </div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-christmas">Juleferie</button>
+            </div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-winter">Vinterferie</button>
+            </div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-easter">Påskeferie</button>
+            </div>
+            <div class="hide-mob col-sm-3">&nbsp;</div>
+            <div class="col-12 col-sm-6 p-3">
+                <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5; font-size: 5rem" onclick="ToogleCheckbox(this)" id="check-summer">Sommerferie</button>
+            </div>
+        </div>
+    </div>
+    <div id="page-4" style="display: none">
+        <!-- Holiday datetime inputs -->
+        <div id="autumn-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når begynner din høstferie?</h2>
+            <h3 class="hide-large">Når begynner din høstferie?</h3>
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-autumn">
+        </div>
+        <div id="christmas-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når begynner din juleferie?</h2>
+            <h3 class="hide-large">Når begynner din juleferie?</h3>
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-christmas">
+        </div>
+        <div id="winter-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når begynner din vinterferie?</h2>
+            <h3 class="hide-large">Når begynner din vinterferie?</h3>
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-winter">
+        </div>
+        <div id="easter-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når begynner din påskeferie?</h2>
+            <h3 class="hide-large">Når begynner din påskeferie?</h3>
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-easter">
+        </div>
+        <div id="summer-input" style="display: none" class="my-5">
+            <h2 class="hide-mob">Når begynner din sommerferie?</h2>
+            <h3 class="hide-large">Når begynner din sommerferie?</h3>
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-summer">
+        </div>
+    </div>
+
+    <!-- Next and previous buttons -->
+    <div class="display-2 row px-3">
+        <div class="text-left col">
+            <button class="w3-white btn" title="Forrige" style="display: none" onclick="Previous()" id="prev"><i class="fas fa-arrow-left"></i> Forrige</button>
+        </div>
+        <div class="text-right col">
+            <button class="w3-white btn" title="Neste" onclick="Next()" id="next"><i class="fas fa-arrow-right"></i> Neste</button>
+        </div>
+    </div>
+</div>
 
 
 <script>
+    //Initialization of inputs
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.timepicker');
+        var instances = M.Timepicker.init(elems, {twelveHour: false});
+      });
+
+    //Checkbox toggling
     function ToogleCheckbox(box) {
         if (box.style.opacity == 0.5) {
             box.style.opacity = 1;
