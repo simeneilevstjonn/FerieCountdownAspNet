@@ -1,0 +1,57 @@
+﻿@using FerieCountdown.Classes.Locale;
+@using FerieCountdown.Classes.Io;
+@{
+        ViewData["Title"] = "Velg ditt sted";
+        Layout = "_SetLocaleLayout";
+        List<SimpleMunicipality> municipalities = DbMaster.GetAllLocales();
+}
+
+<script>
+
+    function SetMunicipality(municipality) {
+        console.log("SetMunicipality() function called");
+        var newhtml = "<div class=\"form-group\"><label for=\"schSelect\">Skole</label><select class=\"form-control\" id=\"schSelect\"><option selected disabled>Vennligst velg...</option>";
+        switch (municipality) {
+            @foreach (SimpleMunicipality m in municipalities)
+            {
+            <text>case "@m.Name":</text>
+            foreach (SimpleLocale l in m.Schools)
+            {
+                <text>newhtml += '<option value="@l.LookupName">@l.Name</option>';</text>
+            }
+            <text>break;</text>
+            }
+        }
+        newhtml += "</select></div>";
+        document.getElementById("schoolselect").innerHTML = newhtml;
+    }
+
+    function SetLocale(locale) {
+        var now = new Date();
+        var exp = new Date(now.getFullYear() + 10, now.getMonth(), 1, 0, 0, 0, 0);
+        document.cookie = "locale=" + locale + "; expires=" + exp + "; path=/";
+    }
+
+</script>
+
+<div id="municipalityselect">
+    <div class="form-group">
+        <label for="munSelect">Kommune / Fylke</label>
+        <select class="form-control" id="munSelect" onchange="SetMunicipality(this.value)">
+            <option selected="" disabled="">Vennligst velg...</option>
+            @foreach (SimpleMunicipality m in municipalities)
+            {
+                <option value="@m.Name">@m.Name</option>
+            }
+        </select>
+    </div>
+</div>
+<div id="schoolselect"></div>
+
+<hr />
+<div class="text-right">
+    <a type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)" id="schoolsave" href="/">Lagre</a>
+</div>
+<hr/>
+<a asp-controller="SetLocale" asp-action="SchoolWizard" asp-area=""><h2>Eller sett egendefinerte tider</h2></a>
+
