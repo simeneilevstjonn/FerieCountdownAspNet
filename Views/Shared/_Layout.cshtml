@@ -14,7 +14,6 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://use.typekit.net/usk3mry.css">
-    <link rel="stylesheet" href="~/css/datetime.css" />
     <script src="https://kit.fontawesome.com/227f49c19f.js" crossorigin="anonymous"></script>
 
 
@@ -47,99 +46,98 @@
 </head>
 <body>
     <partial name="_CookieConsentPartial">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-333 box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color: #EEE"><img class="d-inline" style="height: 32px; width: auto;" src="https://static.feriecountdown.com/resources/logo.png" /><span class="not-medium">&nbsp;&nbsp;FerieCountdown</span></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
-                    <ul class="navbar-nav flex-grow-1 mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsHolidayCountdown"] == "true") {<Text>active</text>}}" href="#" id="holidayDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Ferier
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="holidayDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Autumn">Høstferie</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Christmas">Juleferie</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Winter">Vinterferie</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Easter">Påskeferie</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Summer">Sommerferie</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsSchooldayCountdown"] == "true") {<Text>active</text>}}" href="#" id="sdayCountdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Skoledag
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="sdayCountdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Dayend" id="dendlink">Skoledagens slutt</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Weekend">Helg</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsPersonalCelebration"] == "true") {<Text>active</text>}}" href="#" id="percebDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Personlige feringer
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="percebDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Birthday">Bursdag</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Confirmation">Konfirmasjon</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Wedding">Bryllup</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsOtherCountdown"] == "true") {<Text>active</text>}}" href="#" id="otherDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Andre nedtellinger
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="otherDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Christmaseve">Julaften</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Newyear">Nyttår</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Seventeenmay">17. Mai</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Halloween">Halloween</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-333 box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color: #EEE"><img class="d-inline" style="height: 32px; width: auto;" src="https://static.feriecountdown.com/resources/logo.png" /><span class="not-medium">&nbsp;&nbsp;FerieCountdown</span></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+                        <ul class="navbar-nav flex-grow-1 mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsHolidayCountdown"] == "true") {<Text>active</text>}}" href="#" id="holidayDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Ferier
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="holidayDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Autumn">Høstferie</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Christmas">Juleferie</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Winter">Vinterferie</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Easter">Påskeferie</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Summer">Sommerferie</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsSchooldayCountdown"] == "true") {<Text>active</text>}}" href="#" id="sdayCountdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Skoledag
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="sdayCountdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Dayend" id="dendlink">Skoledagens slutt</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Weekend">Helg</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsPersonalCelebration"] == "true") {<Text>active</text>}}" href="#" id="percebDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Personlige feringer
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="percebDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Birthday">Bursdag</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Confirmation">Konfirmasjon</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Wedding">Bryllup</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsOtherCountdown"] == "true") {<Text>active</text>}}" href="#" id="otherDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Andre nedtellinger
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="otherDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Christmaseve">Julaften</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Newyear">Nyttår</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Seventeenmay">17. Mai</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Halloween">Halloween</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
+            </nav>
+        </header>
+        <!--Alerts-->
+        @if (!String.IsNullOrEmpty((string)TempData["WarningAlert"]))
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: -16px">
+                <strong>Feil:</strong> @TempData["WarningAlert"].
+                <button type="button" class="close" data-dismiss="alert" aria-label="Skjul">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </nav>
-    </header>
-    <!--Alerts-->
-    @if (!String.IsNullOrEmpty((string)TempData["WarningAlert"]))
-    {
-        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: -16px">
-            <strong>Feil:</strong> @TempData["WarningAlert"].
-            <button type="button" class="close" data-dismiss="alert" aria-label="Skjul">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            TempData["WarningAlert"] = null;
+        }
+
+        <div>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
-        TempData["WarningAlert"] = null;
-    }
 
-    <div>
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="footer text-muted bg-333">
-        <div class="container bg-333 d-inline-block text-center">
-            <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; @DateTime.UtcNow.Year FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-controller="SetLocale" asp-area="" asp-action="Index">Endre sted</a>
-        </div>
-    </footer>
+        <footer class="footer text-muted bg-333">
+            <div class="container bg-333 d-inline-block text-center">
+                <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; @DateTime.UtcNow.Year FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-controller="SetLocale" asp-area="" asp-action="Index">Endre sted</a>
+            </div>
+        </footer>
 
 
-    <environment include="Development">
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    </environment>
-    <environment exclude="Development">
+        <environment include="Development">
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        </environment>
+        <environment exclude="Development">
 
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </environment>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/datetime.js"></script>
-    @RenderSection("Scripts", required: false)
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        </environment>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
 </body>
 </html>
