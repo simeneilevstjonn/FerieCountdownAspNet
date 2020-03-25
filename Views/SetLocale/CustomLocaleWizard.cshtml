@@ -90,27 +90,27 @@
         <div id="autumn-input" style="display: none" class="my-5">
             <h2 class="hide-mob">Når begynner din høstferie?</h2>
             <h3 class="hide-large">Når begynner din høstferie?</h3>
-            <input type="text" class="datepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-autumn">
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-autumn">
         </div>
         <div id="christmas-input" style="display: none" class="my-5">
             <h2 class="hide-mob">Når begynner din juleferie?</h2>
             <h3 class="hide-large">Når begynner din juleferie?</h3>
-            <input type="text" class="datepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-christmas">
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-christmas">
         </div>
         <div id="winter-input" style="display: none" class="my-5">
             <h2 class="hide-mob">Når begynner din vinterferie?</h2>
             <h3 class="hide-large">Når begynner din vinterferie?</h3>
-            <input type="text" class="datepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-winter">
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-winter">
         </div>
         <div id="easter-input" style="display: none" class="my-5">
             <h2 class="hide-mob">Når begynner din påskeferie?</h2>
             <h3 class="hide-large">Når begynner din påskeferie?</h3>
-            <input type="text" class="datepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-easter">
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-easter">
         </div>
         <div id="summer-input" style="display: none" class="my-5">
             <h2 class="hide-mob">Når begynner din sommerferie?</h2>
             <h3 class="hide-large">Når begynner din sommerferie?</h3>
-            <input type="text" class="datepicker form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-summer">
+            <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-summer">
         </div>
     </div>
 
@@ -128,15 +128,10 @@
 
 <script>
     //Initialization of inputs
-    document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.timepicker');
         var instances = M.Timepicker.init(elems, {twelveHour: false});
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.datepicker');
-        var instances = M.Datepicker.init(elems, {firstDay: 1, minDate: new Date()});
-    });
+      });
 
     //Checkbox toggling
     function ToogleCheckbox(box) {
