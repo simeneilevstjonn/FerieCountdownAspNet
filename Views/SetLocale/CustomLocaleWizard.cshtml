@@ -90,27 +90,47 @@
             <div id="autumn-input" style="display: none" class="my-5">
                 <h2 class="hide-mob">Når begynner din høstferie?</h2>
                 <h3 class="hide-large">Når begynner din høstferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-autumn">
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-autumn">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-autumn">
+                </div>
             </div>
             <div id="christmas-input" style="display: none" class="my-5">
                 <h2 class="hide-mob">Når begynner din juleferie?</h2>
                 <h3 class="hide-large">Når begynner din juleferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-christmas">
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-christmas">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-christmas">
+                </div>
             </div>
             <div id="winter-input" style="display: none" class="my-5">
                 <h2 class="hide-mob">Når begynner din vinterferie?</h2>
                 <h3 class="hide-large">Når begynner din vinterferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-winter">
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-winter">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-winter">
+                </div>
             </div>
             <div id="easter-input" style="display: none" class="my-5">
                 <h2 class="hide-mob">Når begynner din påskeferie?</h2>
                 <h3 class="hide-large">Når begynner din påskeferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-easter">
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-easter">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-easter">
+                </div>
             </div>
             <div id="summer-input" style="display: none" class="my-5">
                 <h2 class="hide-mob">Når begynner din sommerferie?</h2>
                 <h3 class="hide-large">Når begynner din sommerferie?</h3>
-                <input type="datetime-local" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-summer">
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-summer">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-summer">
+                </div>
             </div>
         </div>
 
@@ -148,8 +168,8 @@
         document.getElementById("prev").style.display = "initial";
 
         //Go to next page
-        document.getElementById("page-" + currentpage).style.display = "none";
-        document.getElementById("page-" + nextpage).style.display = "block";
+        document.getElementById(`page-${currentpage}`).style.display = "none";
+        document.getElementById(`page-${nextpage}`).style.display = "block";
 
         //Increment page counter
         currentpage++;
@@ -165,8 +185,8 @@
         document.getElementById("next").style.display = "initial";
 
         //Go to last page
-        document.getElementById("page-" + currentpage).style.display = "none";
-        document.getElementById("page-" + lastpage).style.display = "block";
+        document.getElementById(`page-${currentpage}`).style.display = "none";
+        document.getElementById(`page-${lastpage}`).style.display = "block";
 
         //Decrement page counter
         currentpage--;
