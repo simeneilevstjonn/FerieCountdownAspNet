@@ -15,6 +15,7 @@
             <!-- Day select buttons -->
             <p class="display-3 hide-mob">Hvilke dager går du på @activityname?</p>
             <h2 class="hide-large">Hvilke dager går du på @activityname?</h2>
+            <p class="text-danger" style="display:none; font-size:1.25rem;" id="noWorkDaySelectedError">Du må velge minst en arbeidsdag for å fortsette.</p>
             <div class="row m-5">
                 <div class="col-12 col-sm-6 p-3">
                     <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-mon">Mandag</button>
@@ -36,36 +37,52 @@
         </div>
         <div id="page-2" style="display: none">
             <!-- Day end time inputs -->
-            <div id="mon-input" style="display: none" class="my-5">
+            <form class="needs-validation dayend-time-form my-5" novalidate id="mon-input" style="display: none">
                 <h2 class="hide-mob">Når slutter du på @activityname på mandager?</h2>
                 <h3 class="hide-large">Når slutter du på @activityname på mandager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-mon">
-            </div>
-            <div id="tue-input" style="display: none" class="my-5">
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-mon" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+            <form class="needs-validation dayend-time-form my-5" novalidate id="tue-input" style="display: none">
                 <h2 class="hide-mob">Når slutter du på @activityname på tirsdager?</h2>
                 <h3 class="hide-large">Når slutter du på @activityname på tirsdager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-tue">
-            </div>
-            <div id="wed-input" style="display: none" class="my-5">
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-tue" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+            <form class="needs-validation dayend-time-form my-5" novalidate id="wed-input" style="display: none">
                 <h2 class="hide-mob">Når slutter du på @activityname på onsdager?</h2>
                 <h3 class="hide-large">Når slutter du på @activityname på onsdager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-wed">
-            </div>
-            <div id="thu-input" style="display: none" class="my-5">
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-wed" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+            <form class="needs-validation dayend-time-form my-5" novalidate id="thu-input" style="display: none">
                 <h2 class="hide-mob">Når slutter du på @activityname på torsdager?</h2>
                 <h3 class="hide-large">Når slutter du på @activityname på torsdager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-thu">
-            </div>
-            <div id="fri-input" style="display: none" class="my-5">
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-thu" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+            <form class="needs-validation dayend-time-form my-5" novalidate id="fri-input" style="display: none">
                 <h2 class="hide-mob">Når slutter du på @activityname på fredager?</h2>
                 <h3 class="hide-large">Når slutter du på @activityname på fredager?</h3>
-                <input type="time" class="form-control text-center mx-auto mt-3" style="font-size: 6rem" id="time-fri">
-            </div>
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-fri" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
         </div>
         <div id="page-3" style="display: none">
             <!-- Holiday select buttons -->
             <p class="display-3 hide-mob">Hvilke av følgende ferier har du?</p>
             <h2 class="hide-large">Hvilke av følgende ferier har du?</h2>
+            <p class="text-secondary" style="font-size:1.25rem;">Dersom du ikke har noen ferier, kan du trykke "neste".</p>
             <div class="row m-5">
                 <div class="col-12 col-sm-6 p-3">
                     <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-autumn">Høstferie</button>
@@ -87,53 +104,71 @@
         </div>
         <div id="page-4" style="display: none">
             <!-- Holiday datetime inputs -->
-            <div id="autumn-input" style="display: none" class="my-5">
+            <form id="autumn-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
                 <h2 class="hide-mob">Når begynner din høstferie?</h2>
                 <h3 class="hide-large">Når begynner din høstferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-autumn">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-autumn" required>
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
-                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-autumn">
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-autumn" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
                 </div>
-            </div>
-            <div id="christmas-input" style="display: none" class="my-5">
+            </form>
+            <form id="christmas-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
                 <h2 class="hide-mob">Når begynner din juleferie?</h2>
                 <h3 class="hide-large">Når begynner din juleferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-christmas">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-christmas" required>
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
-                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-christmas">
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-christmas" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
                 </div>
-            </div>
-            <div id="winter-input" style="display: none" class="my-5">
+            </form>
+            <form id="winter-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
                 <h2 class="hide-mob">Når begynner din vinterferie?</h2>
                 <h3 class="hide-large">Når begynner din vinterferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-winter">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-winter" required>
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
-                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-winter">
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-winter" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
                 </div>
-            </div>
-            <div id="easter-input" style="display: none" class="my-5">
+            </form>
+            <form id="easter-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
                 <h2 class="hide-mob">Når begynner din påskeferie?</h2>
                 <h3 class="hide-large">Når begynner din påskeferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-easter">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-easter" required>
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
-                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-easter">
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-easter" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
                 </div>
-            </div>
-            <div id="summer-input" style="display: none" class="my-5">
+            </form>
+            <form id="summer-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
                 <h2 class="hide-mob">Når begynner din sommerferie?</h2>
                 <h3 class="hide-large">Når begynner din sommerferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-summer">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-summer" required>
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
-                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-summer">
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-summer" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
-
+        <div id="page-5" style="display: none">
+            Page five
+        </div>
+        
         <!-- Next and previous buttons -->
         <div class="display-2 row px-3">
             <div class="text-left col">
@@ -162,7 +197,7 @@
         nextpage = currentpage + 1;
 
         //Page specific actions
-        PageSpecificActions(nextpage);
+        let psar = PageSpecificActions(nextpage);
 
         //Display previous-button
         document.getElementById("prev").style.display = "initial";
@@ -173,13 +208,17 @@
 
         //Increment page counter
         currentpage++;
+
+        if (psar == 1) {
+            return Next();
+        }
     }
 
     function Previous() {
         lastpage = currentpage - 1;
 
         //Page specific actions
-        PageSpecificActions(lastpage);
+        let psar2 = PageSpecificActions(lastpage);
 
         //Display next-button
         document.getElementById("next").style.display = "initial";
@@ -190,6 +229,10 @@
 
         //Decrement page counter
         currentpage--;
+
+        if (psar2 == 1) {
+            return Previous();
+        }
     }
 
     //Page specific actions
@@ -198,6 +241,10 @@
             case 1:
                 //Hide previous button
                 document.getElementById("prev").style.display = "none";
+
+                //Hide error
+                document.getElementById("noWorkDaySelectedError").style.display = "none";
+
                 break;
             case 2:
                 //Choose which time inputs to show
@@ -205,15 +252,45 @@
                 //Get an array with day buttons
                 let daybuttons = document.getElementsByClassName("daybutton");
 
+                //Create a boolean to store info about checked boxes
+                let boxSelected = false;
+
                 //Loop through all buttons, decide which are pressed and enable their inputs.
                 for (let i = 0; i < daybuttons.length; i++) {
                     if (daybuttons[i].style.opacity == 1) {
                         document.getElementById(daybuttons[i].id.substr(6) + "-input").style.display = "block";
+                        boxSelected = true;
                     }
                     else {
                         document.getElementById(daybuttons[i].id.substr(6) + "-input").style.display = "none";
                     }
                 }
+                //Check if buttons were not pressed
+                if (!boxSelected) {
+                    document.getElementById("noWorkDaySelectedError").style.display = "block";
+                    throw "noWorkDaySelectedError";
+                }
+                break;
+            case 3:
+                //Validate that all visible time inputs are good
+
+                //Gather an array with all forms
+                let forms = document.getElementsByClassName("dayend-time-form");
+                let validationfailed = false;
+                for (let i = 0; i < forms.length; i++) {
+                    if (forms[i].style.display == "block") {
+                        if (forms[i].checkValidity() === false) {
+                            validationfailed = true;
+                        }
+                        forms[i].classList.add('was-validated');
+                    }
+                }
+
+                //Throw an error if validation has failed
+                if (validationfailed) {
+                    throw "Time input validation failed";
+                }
+
                 break;
             case 4:
                 //Choose which datetime inputs to show
@@ -221,17 +298,48 @@
                 //Get an array with holiday buttons
                 let holidaybuttons = document.getElementsByClassName("holidaybutton");
 
+                //Create a boolean to store info about checked boxes
+                let boxSelected2 = false;
+
                 //Loop through all buttons, decide which are pressed and enable their inputs.
                 for (let i = 0; i < holidaybuttons.length; i++) {
                     if (holidaybuttons[i].style.opacity == 1) {
                         document.getElementById(holidaybuttons[i].id.substr(6) + "-input").style.display = "block";
+                        boxSelected2 = true;
                     }
                     else {
                         document.getElementById(holidaybuttons[i].id.substr(6) + "-input").style.display = "none";
                     }
                 }
+
+                //Check if buttons were not pressed
+                if (!boxSelected2) {
+                    return 1;
+                }
+
+                break;
+            case 5:
+                //Validate that all visible time inputs are good
+
+                //Gather an array with all forms
+                let forms2 = document.getElementsByClassName("holiday-time-form");
+                let validationfailed2 = false;
+                for (let i = 0; i < forms2.length; i++) {
+                    if (forms2[i].style.display == "block") {
+                        if (forms2[i].checkValidity() === false) {
+                            validationfailed2 = true;
+                        }
+                        forms2[i].classList.add('was-validated');
+                    }
+                }
+
+                //Throw an error if validation has failed
+                if (validationfailed2) {
+                    throw "Datetime input validation failed";
+                }
                 break;
         }
+        return 0;
     }
 
 </script>
