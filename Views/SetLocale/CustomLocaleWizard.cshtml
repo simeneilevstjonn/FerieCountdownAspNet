@@ -7,6 +7,11 @@
         true => "jobb",
         false => "skole"
     };
+    string dayname = Model.IsWork switch
+    {
+        true => "Arbeidsdager",
+        false => "Skoledager"
+    };
 
 }
 
@@ -108,7 +113,7 @@
                 <h2 class="hide-mob">Når begynner din høstferie?</h2>
                 <h3 class="hide-large">Når begynner din høstferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-autumn" required>
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-autumn" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
                     <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-autumn" required>
                     <div class="invalid-feedback" style="font-size:1.25rem;">
@@ -120,7 +125,7 @@
                 <h2 class="hide-mob">Når begynner din juleferie?</h2>
                 <h3 class="hide-large">Når begynner din juleferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-christmas" required>
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-christmas" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
                     <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-christmas" required>
                     <div class="invalid-feedback" style="font-size:1.25rem;">
@@ -132,7 +137,7 @@
                 <h2 class="hide-mob">Når begynner din vinterferie?</h2>
                 <h3 class="hide-large">Når begynner din vinterferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-winter" required>
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-winter" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
                     <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-winter" required>
                     <div class="invalid-feedback" style="font-size:1.25rem;">
@@ -144,7 +149,7 @@
                 <h2 class="hide-mob">Når begynner din påskeferie?</h2>
                 <h3 class="hide-large">Når begynner din påskeferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-easter" required>
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-easter" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
                     <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-easter" required>
                     <div class="invalid-feedback" style="font-size:1.25rem;">
@@ -156,7 +161,7 @@
                 <h2 class="hide-mob">Når begynner din sommerferie?</h2>
                 <h3 class="hide-large">Når begynner din sommerferie?</h3>
                 <div class="row">
-                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-summer" required>
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-summer" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
                     <div class="col-sm-1 hide-mob">&nbsp;</div>
                     <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-summer" required>
                     <div class="invalid-feedback" style="font-size:1.25rem;">
@@ -166,7 +171,17 @@
             </form>
         </div>
         <div id="page-5" style="display: none">
-            Page five
+            <h3>Vennligst sjekk om konfirgurasjonen er riktig.</h3>
+            <p class="text-secondary">
+                Du kan gå tilbake og endre nå.
+                <br />Du kan ikke endre den etter at du har lagret, da må du lage en ny.
+            </p>
+            <hr />
+            <h4>@dayname</h4>
+            <p id="dayend-config-summary"></p>
+            <br />
+            <h4>Ferier</h4>
+            <p id="holiday-config-summary"></p>
         </div>
         
         <!-- Next and previous buttons -->
@@ -175,6 +190,7 @@
                 <button class="w3-white btn" title="Forrige" style="display: none" onclick="Previous()" id="prev"><i class="fas fa-arrow-left"></i> Forrige</button>
             </div>
             <div class="text-right col">
+                <a type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)" id="save" style="display:none" href="/">Lagre</a>
                 <button class="w3-white btn" title="Neste" onclick="Next()" id="next"><i class="fas fa-arrow-right"></i> Neste</button>
             </div>
         </div>
@@ -337,9 +353,68 @@
                 if (validationfailed2) {
                     throw "Datetime input validation failed";
                 }
+
+                //Render info on configuration
+
+                //Define variables on the summary paragraphs
+                let daysum = document.getElementById("dayend-config-summary");
+                let holisum = document.getElementById("holiday-config-summary");
+                let daybuttons2 = document.getElementsByClassName("daybutton");
+                let holidaybuttons2 = document.getElementsByClassName("holidaybutton");
+
+                //Iterate through all day buttons and add those who are visible
+                for (let i = 0; i < daybuttons2.length; i++) {
+                    if (daybuttons2[i].style.opacity == 1) {
+                        daysum.innerHTML += dayAbbrevToNor(daybuttons2[i].id.substr(6)) + ":&nbsp;" + document.getElementById(`time-${daybuttons2[i].id.substr(6)}`).value + "<br>";
+                    }
+                }
+
+                //Iterate through all holiday buttons and add those who are visible
+                for (let i = 0; i < holidaybuttons2.length; i++) {
+                    if (holidaybuttons2[i].style.opacity == 1) {
+                        holisum.innerHTML += holidayShortToNor(holidaybuttons2[i].id.substr(6)) + ":&nbsp;";
+                        let holidate = new Date(document.getElementById(`date-${holidaybuttons2[i].id.substr(6)}`).value + "T" + document.getElementById(`time-${holidaybuttons2[i].id.substr(6)}`).value);
+                        holisum.innerHTML += holidate.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) + "<br>";
+                    }
+                }
+
+                //Hide next-button
+                document.getElementById("next").style.display = "none";
+                //Show save-button
+                document.getElementById("save").style.display = "initial";
                 break;
         }
         return 0;
+    }
+
+    function dayAbbrevToNor(abbrev) {
+        switch (abbrev) {
+            case "mon":
+                return "Mandag";
+            case "tue":
+                return "Tirsdag";
+            case "wed":
+                return "Onsdag";
+            case "thu":
+                return "Torsdag";
+            case "fri":
+                return "Fredag";
+        }
+    }
+
+    function holidayShortToNor(short) {
+        switch (short) {
+            case "autumn":
+                return "Høstferie";
+            case "christmas":
+                return "Juleferie";
+            case "winter":
+                return "Vinterferie";
+            case "easter":
+                return "Påskeferie";
+            case "summer":
+                return "Sommerferie";
+        }
     }
 
 </script>
