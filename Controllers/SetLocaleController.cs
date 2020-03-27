@@ -8,6 +8,7 @@ using FerieCountdown.Classes.Io;
 using FerieCountdown.Classes.Locale;
 using FerieCountdown.Classes.TimeHandler;
 using FerieCountdown.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -16,11 +17,14 @@ namespace FerieCountdown.Controllers
     public class SetLocaleController : Controller
     {
         public IActionResult Index() => View();
+        [Authorize]
         public IActionResult Work() => View("CustomLocaleWizard", new CustomLocaleWizardViewModel("work"));
         public IActionResult School() => View();
+        [Authorize]
         public IActionResult SchoolWizard() => View("CustomLocaleWizard", new CustomLocaleWizardViewModel("school"));
 
         [HttpPost]
+        [Authorize]
         public IActionResult UpdateUserLocale()
         {
             int IsWork = (string)Request.Form["IsWork"] switch
