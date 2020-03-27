@@ -412,7 +412,7 @@
     function submitForm() {
         // Set locale cookie
         var exp = new Date(new Date().getFullYear() + 10, new Date().getMonth(), 1, 0, 0, 0, 0);
-        if (@Model.IsWork) document.cookie = "locale=work; expires=" + exp + "; path=/";
+        if ("@Model.IsWork") document.cookie = "locale=work; expires=" + exp + "; path=/";
         else document.cookie = "locale=custom; expires=" + exp + "; path=/";
 
         //Submit the form
