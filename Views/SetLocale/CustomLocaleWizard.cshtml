@@ -190,12 +190,12 @@
                 <button class="w3-white btn" title="Forrige" style="display: none" onclick="Previous()" id="prev"><i class="fas fa-arrow-left"></i> Forrige</button>
             </div>
             <div class="text-right col">
-                <a type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)" id="save" style="display:none" href="/">Lagre</a>
+                <button type="button" class="btn btn-primary" onclick="submitForm()" id="save" style="display:none">Lagre</button>
                 <button class="w3-white btn" title="Neste" onclick="Next()" id="next"><i class="fas fa-arrow-right"></i> Neste</button>
             </div>
         </div>
     </div>
-
+    <form asp-controller="SetLocale" asp-action="SetUserLocale" asp-area="" id="form" class="d-none"></form>
 
 <script>
     function ToogleCheckbox(box) {
@@ -354,18 +354,30 @@
                     throw "Datetime input validation failed";
                 }
 
-                //Render info on configuration
+                //Render info on configuration and add data to form
 
-                //Define variables on the summary paragraphs
+                //Define variables
                 let daysum = document.getElementById("dayend-config-summary");
                 let holisum = document.getElementById("holiday-config-summary");
                 let daybuttons2 = document.getElementsByClassName("daybutton");
                 let holidaybuttons2 = document.getElementsByClassName("holidaybutton");
+                let form = document.getElementById("form");
 
-                //Iterate through all day buttons and add those who are visible
+                //Clear form content
+                form.innerHTML = "";
+
+                //Iterate through all day buttons
                 for (let i = 0; i < daybuttons2.length; i++) {
                     if (daybuttons2[i].style.opacity == 1) {
+                        //Add to summary
                         daysum.innerHTML += dayAbbrevToNor(daybuttons2[i].id.substr(6)) + ":&nbsp;" + document.getElementById(`time-${daybuttons2[i].id.substr(6)}`).value + "<br>";
+
+                        //Add to form
+                        form.innerHTML += `<input type="hidden" name="${daybuttons2[i].id.substr(6)}" value="${document.getElementById("time-" + daybuttons2[i].id.substr(6)).value}">`;
+                    }
+                    else {
+                        //Add 00:00 to form if day has not been enabled
+                        form.innerHTML += `<input type="hidden" name="${daybuttons2[i].id.substr(6)}" value="00:00">`;
                     }
                 }
 
@@ -375,8 +387,18 @@
                         holisum.innerHTML += holidayShortToNor(holidaybuttons2[i].id.substr(6)) + ":&nbsp;";
                         let holidate = new Date(document.getElementById(`date-${holidaybuttons2[i].id.substr(6)}`).value + "T" + document.getElementById(`time-${holidaybuttons2[i].id.substr(6)}`).value);
                         holisum.innerHTML += holidate.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) + "<br>";
+
+                        //Add to form
+                        form.innerHTML += `<input type="hidden" name="${holidaybuttons2[i].id.substr(6)}" value="${holidate.toISOString()}">`;
+                    }
+                    else {
+                        //Add Date(0) to form if holiday has not been enabled
+                        form.innerHTML += `<input type="hidden" name="${holidaybuttons2[i].id.substr(6)}" value="${new Date(0).toISOString()}">`;
                     }
                 }
+
+                //Form work settings
+                form.innerHTML += `<input type="hidden" name="isWork" value="@Convert.ToInt32(Model.IsWork)">`;
 
                 //Hide next-button
                 document.getElementById("next").style.display = "none";
@@ -385,6 +407,16 @@
                 break;
         }
         return 0;
+    }
+
+    function submitForm() {
+        // Set locale cookie
+        var exp = new Date(now.getFullYear() + 10, now.getMonth(), 1, 0, 0, 0, 0);
+        if (@Model.IsWork) document.cookie = "locale=work; expires=" + exp + "; path=/";
+        else document.cookie = "locale=custom; expires=" + exp + "; path=/";
+
+        //Submit the form
+        document.getElementById("form").submit();
     }
 
     function dayAbbrevToNor(abbrev) {

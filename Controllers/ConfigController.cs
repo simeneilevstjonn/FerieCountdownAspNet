@@ -291,53 +291,7 @@ namespace FerieCountdown.Controllers
             return Redirect("/Config/MyCountdowns");
         }
 
-        [HttpPost]
-        public IActionResult UpdateUserLocale()
-        {
-            int IsWork = (string)Request.Form["IsWork"] switch
-            {
-                "1" => 1,
-                _ => 0
-            };
-            CountdownLocaleData cld = new CountdownLocaleData
-            {
-                MondayEnd = new Time(Request.Form["mon"]),
-                TuesdayEnd = new Time(Request.Form["tue"]),
-                WednesdayEnd = new Time(Request.Form["wed"]),
-                ThursdayEnd = new Time(Request.Form["thu"]),
-                FridayEnd = new Time(Request.Form["fri"]),
-                AutumnHoliday = (string)Request.Form["autumn-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["autumn-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                },
-                ChristmasHoliday = (string)Request.Form["christmas-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["christmas-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                },
-                WinterHoliday = (string)Request.Form["winter-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["winter-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                },
-                EasterHoliday = (string)Request.Form["easter-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["easter-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                },
-                SummerHoliday = (string)Request.Form["summer-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["summer-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                }
-            };
-
-            DbMaster.SqlQuery(string.Format("DELETE FROM [dbo].[CustomLocales] WHERE UserId = N'{0}'; INSERT INTO [dbo].[CustomLocales] ([UserId], [Data], [IsWork]) VALUES (N'{0}', N'{1}', {2});", User.FindFirstValue(ClaimTypes.NameIdentifier), JsonConvert.SerializeObject(cld), IsWork));
-
-            if (Request.Query["redirecturi"].ToString() == null) return Redirect("/");
-            else return Redirect(Request.Form["RedirectUri"]);
-        }
+        
 
     }
 }
