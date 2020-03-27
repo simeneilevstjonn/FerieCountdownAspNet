@@ -7,7 +7,7 @@ namespace FerieCountdown.Models
 {
     public class CustomLocaleWizardViewModel
     {
-        public CustomLocaleWizardViewModel(string mode)
+        public CustomLocaleWizardViewModel(string mode, string redirectUrl)
         {
             IsWork = mode switch
             {
@@ -15,7 +15,9 @@ namespace FerieCountdown.Models
                 "work" => true,
                 _ => throw new ArgumentException()
             };
+            RedirectUrl = redirectUrl;
         }
         public bool IsWork = false;
+        public string RedirectUrl { get; set; }
     }
 }

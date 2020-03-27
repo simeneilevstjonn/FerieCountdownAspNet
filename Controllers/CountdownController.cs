@@ -55,6 +55,8 @@ namespace FerieCountdown.Controllers
             ViewData["UseLocaleOption"] = "true";
         }
 
+        private IActionResult SetLocale(string ReturnUrl) => Redirect($"/SetLocale?redirecturl={ReturnUrl}");
+
         //Define holiday countdowns
         public IActionResult Autumn(string id)
         {
@@ -82,8 +84,9 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Autumn", Request.Scheme, Request.Host);
-                return View("SetLocale");
+                /*ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Autumn", Request.Scheme, Request.Host);
+                return View("SetLocale");*/
+                return SetLocale("/Countdown/Autumn");
             }
             InitSharedVars(id);
 
@@ -122,8 +125,7 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Christmas", Request.Scheme, Request.Host);
-                return View("SetLocale");
+                return SetLocale("/Countdown/Christmas");
             }
             InitSharedVars(id);
 
@@ -161,8 +163,7 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Winter", Request.Scheme, Request.Host);
-                return View("SetLocale");
+                return SetLocale("/Countdown/Winter");
             }
             InitSharedVars(id);
 
@@ -200,8 +201,7 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Easter", Request.Scheme, Request.Host);
-                return View("SetLocale");
+                return SetLocale("/Countdown/Easter");
             }
             InitSharedVars(id);
 
@@ -239,8 +239,7 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Summer", Request.Scheme, Request.Host);
-                return View("SetLocale");
+                return SetLocale("/Countdown/Summer");
             }
             InitSharedVars(id);
 
@@ -281,8 +280,7 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Dayend", Request.Scheme, Request.Host);
-                return View("SetLocale");
+                return SetLocale("/Countdown/Dayend");
             }
 
             ViewData["Title"] = Locale.IsWork switch
@@ -358,8 +356,7 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Weekend", Request.Scheme, Request.Host);
-                return View("SetLocale");
+                return SetLocale("/Countdown/Weekend");
             }
             
 

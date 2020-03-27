@@ -12,7 +12,7 @@
         true => "Arbeidsdager",
         false => "Skoledager"
     };
-
+    string savelink = !string.IsNullOrEmpty(Model.RedirectUrl) ? Model.RedirectUrl : "/";
 }
 
     <div>
@@ -399,6 +399,9 @@
 
                 //Form work settings
                 form.innerHTML += `<input type="hidden" name="isWork" value="@Convert.ToInt32(Model.IsWork)">`;
+
+                //Add redirect url
+                form.innerHTML += `<input type="hidden" name="redirectUrl" value="@savelink">`;
 
                 //Hide next-button
                 document.getElementById("next").style.display = "none";

@@ -1,11 +1,12 @@
-﻿@using FerieCountdown.Classes.Locale;
+﻿@model SetLocaleViewModel
+@using FerieCountdown.Classes.Locale;
 @using FerieCountdown.Classes.Io;
 @{
-        ViewData["Title"] = "Velg ditt sted";
-        Layout = "_SetLocaleLayout";
-        List<SimpleMunicipality> municipalities = DbMaster.GetAllLocales();
+    ViewData["Title"] = "Velg ditt sted";
+    Layout = "_SetLocaleLayout";
+    List<SimpleMunicipality> municipalities = DbMaster.GetAllLocales();
+    string savelink = !string.IsNullOrEmpty(Model.RedirectUrl) ? Model.RedirectUrl : "/";
 }
-
 <script>
 
     function SetMunicipality(municipality) {
@@ -50,8 +51,8 @@
 
 <hr />
 <div class="text-right">
-    <a type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)" id="schoolsave" href="/">Lagre</a>
+    <a type="button" class="btn btn-primary" onclick="SetLocale(document.getElementById('schSelect').value)" id="schoolsave" href="@savelink">Lagre</a>
 </div>
-<hr/>
+<hr />
 <a asp-controller="SetLocale" asp-action="SchoolWizard" asp-area=""><h2>Eller sett egendefinerte tider</h2></a>
 

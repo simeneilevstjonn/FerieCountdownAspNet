@@ -16,12 +16,12 @@ namespace FerieCountdown.Controllers
 {
     public class SetLocaleController : Controller
     {
-        public IActionResult Index() => View();
+        public IActionResult Index() => View(new SetLocaleViewModel(Request.Query["redirecturl"]));
         [Authorize]
-        public IActionResult Work() => View("CustomLocaleWizard", new CustomLocaleWizardViewModel("work"));
-        public IActionResult School() => View();
+        public IActionResult Work() => View("CustomLocaleWizard", new CustomLocaleWizardViewModel("work", Request.Query["redirecturl"]));
+        public IActionResult School() => View(new SetLocaleViewModel(Request.Query["redirecturl"]));
         [Authorize]
-        public IActionResult SchoolWizard() => View("CustomLocaleWizard", new CustomLocaleWizardViewModel("school"));
+        public IActionResult SchoolWizard() => View("CustomLocaleWizard", new CustomLocaleWizardViewModel("school", Request.Query["redirecturl"]));
 
         [HttpPost]
         [Authorize]
@@ -48,7 +48,7 @@ namespace FerieCountdown.Controllers
 
             DbMaster.SqlQuery(string.Format("DELETE FROM [dbo].[CustomLocales] WHERE UserId = N'{0}'; INSERT INTO [dbo].[CustomLocales] ([UserId], [Data], [IsWork]) VALUES (N'{0}', N'{1}', {2});", User.FindFirstValue(ClaimTypes.NameIdentifier), JsonConvert.SerializeObject(cld), IsWork));
 
-            return Redirect("/");
+            return Redirect(Request.Form["redirectUrl"]);
         }
 
     }
