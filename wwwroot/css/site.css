@@ -563,7 +563,7 @@ body {
 
 @media (max-width: 600px) {
     .gigabutton {
-        font-size: 4rem;
+        font-size: 3rem;
         font-weight: 1.2;
         min-height: 128px!important;
         line-height: 128px;
