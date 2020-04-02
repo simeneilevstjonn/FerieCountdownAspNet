@@ -176,7 +176,18 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "birthday", date, bg.Path, $"Nedtelling til {nameproperty} bursdag", $"Gratulerer med dagen {name}", bg.Html, bg.Css, bg.UseCCC, true);
+            string countdownid;
+
+            try
+            {
+                countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "birthday", date, bg.Path, $"Nedtelling til {nameproperty} bursdag", $"Gratulerer med dagen {name}", bg.Html, bg.Css, bg.UseCCC, true);
+            }
+            catch (BadSqlException e)
+            {
+                //';', '\'', '*', '/', '-', '_', '"'
+                return CustomError("Ulovlig input. Tegnene ;, ', *, /, -, _ og \" kan ikke brukes.");
+            }
+
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -204,9 +215,17 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            //Get background
+            string countdownid;
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "confirmation", date, bg.Path, $"Nedtelling til {nameproperty} konfirmasjon", $"{nameproperty} konfirmasjon i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            try
+            {
+                countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "confirmation", date, bg.Path, $"Nedtelling til {nameproperty} konfirmasjon", $"{nameproperty} konfirmasjon i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            }
+            catch (BadSqlException e)
+            {
+                //';', '\'', '*', '/', '-', '_', '"'
+                return CustomError("Ulovlig input. Tegnene ;, ', *, /, -, _ og \" kan ikke brukes.");
+            }
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -241,8 +260,17 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
+            string countdownid;
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "wedding", date, bg.Path, $"Nedtelling til {name0} og {nameproperty1} bryllup.", $"{name0} og {nameproperty1} bryllup i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            try
+            {
+                countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "wedding", date, bg.Path, $"Nedtelling til {name0} og {nameproperty1} bryllup.", $"{name0} og {nameproperty1} bryllup i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            }
+            catch (BadSqlException e)
+            {
+                //';', '\'', '*', '/', '-', '_', '"'
+                return CustomError("Ulovlig input. Tegnene ;, ', *, /, -, _ og \" kan ikke brukes.");
+            }
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
