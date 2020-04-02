@@ -14,6 +14,7 @@ using FerieCountdown.Classes.Locale;
 using FerieCountdown.Classes.TimeHandler;
 using System.Globalization;
 using Newtonsoft.Json;
+using FerieCountdown.Classes.Exceptions;
 
 namespace FerieCountdown.Controllers
 {
@@ -274,7 +275,17 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), type, date, bg.Path, cdtext, endtext, bg.Html, bg.Css, bg.UseCCC, uselocal);
+            string countdownid;
+
+            try
+            {
+                countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), type, date, bg.Path, cdtext, endtext, bg.Html, bg.Css, bg.UseCCC, uselocal);
+            }
+            catch (BadSqlException e)
+            {
+                //';', '\'', '*', '/', '-', '_', '"'
+                return CustomError("Ulovlig input. Tegnene ;, ', *, /, -, _ og \" kan ikke brukes.");
+            }
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
