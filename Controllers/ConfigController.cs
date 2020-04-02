@@ -257,7 +257,7 @@ namespace FerieCountdown.Controllers
 
             //Retrieve form data
             string cdtext = Request.Form["cdtext"];
-            string endtext = Request.Form["cdtext"];
+            string endtext = Request.Form["endtext"];
             string type = (string)Request.Form["recursion"] switch
             {
                 "yearly" => "custom-reccurring",
