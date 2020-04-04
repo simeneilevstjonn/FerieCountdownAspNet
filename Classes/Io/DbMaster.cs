@@ -20,7 +20,7 @@ namespace FerieCountdown.Classes.Io
 
         public static string ValidateSql(string input)
         {
-            if (input.IndexOfAny(new char[] { ';', '\'', '*', '/', '-', '_' }) > -1) throw new BadSqlException(string.Format("Illegal user input: {0}", input));
+            if (input.IndexOfAny(new char[] { ';', '\'', '*', '/', '-', '_', '"' }) > -1) throw new BadSqlException(string.Format("Illegal user input: {0}", input));
             else return input;
         }
          

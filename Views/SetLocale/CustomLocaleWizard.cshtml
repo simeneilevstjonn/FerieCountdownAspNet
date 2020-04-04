@@ -1,0 +1,455 @@
+﻿@model CustomLocaleWizardViewModel
+@{
+    Layout = "_SetLocaleLayout";
+    ViewData["title"] = "Velg ditt sted";
+    string activityname = Model.IsWork switch
+    {
+        true => "jobb",
+        false => "skole"
+    };
+    string dayname = Model.IsWork switch
+    {
+        true => "Arbeidsdager",
+        false => "Skoledager"
+    };
+    string savelink = !string.IsNullOrEmpty(Model.RedirectUrl) ? Model.RedirectUrl : "/";
+}
+
+    <div class="px-3">
+        <div id="page-1">
+            <!-- Day select buttons -->
+            <p class="display-3 hide-mob">Hvilke dager går du på @activityname?</p>
+            <h2 class="hide-large">Hvilke dager går du på @activityname?</h2>
+            <p class="text-danger" style="display:none; font-size:1.25rem;" id="noWorkDaySelectedError">Du må velge minst en arbeidsdag for å fortsette.</p>
+            <div class="row m-5">
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-mon">Mandag</button>
+                </div>
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-tue">Tirsdag</button>
+                </div>
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-wed">Onsdag</button>
+                </div>
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-thu">Torsdag</button>
+                </div>
+                <div class="hide-mob col-sm-3">&nbsp;</div>
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 daybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-fri">Fredag</button>
+                </div>
+            </div>
+        </div>
+        <div id="page-2" style="display: none">
+            <!-- Day end time inputs -->
+            <form class="needs-validation dayend-time-form my-5" novalidate id="mon-input" style="display: none">
+                <h2 class="hide-mob">Når slutter du på @activityname på mandager?</h2>
+                <h3 class="hide-large">Når slutter du på @activityname på mandager?</h3>
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-mon" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+            <form class="needs-validation dayend-time-form my-5" novalidate id="tue-input" style="display: none">
+                <h2 class="hide-mob">Når slutter du på @activityname på tirsdager?</h2>
+                <h3 class="hide-large">Når slutter du på @activityname på tirsdager?</h3>
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-tue" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+            <form class="needs-validation dayend-time-form my-5" novalidate id="wed-input" style="display: none">
+                <h2 class="hide-mob">Når slutter du på @activityname på onsdager?</h2>
+                <h3 class="hide-large">Når slutter du på @activityname på onsdager?</h3>
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-wed" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+            <form class="needs-validation dayend-time-form my-5" novalidate id="thu-input" style="display: none">
+                <h2 class="hide-mob">Når slutter du på @activityname på torsdager?</h2>
+                <h3 class="hide-large">Når slutter du på @activityname på torsdager?</h3>
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-thu" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+            <form class="needs-validation dayend-time-form my-5" novalidate id="fri-input" style="display: none">
+                <h2 class="hide-mob">Når slutter du på @activityname på fredager?</h2>
+                <h3 class="hide-large">Når slutter du på @activityname på fredager?</h3>
+                <input type="time" class="form-control text-center mx-auto mt-3 dayend-time-input" style="font-size: 6rem" id="time-fri" required>
+                <div class="invalid-feedback" style="font-size:1.25rem;">
+                    Vennligst sett et klokkeslett
+                </div>
+            </form>
+        </div>
+        <div id="page-3" style="display: none">
+            <!-- Holiday select buttons -->
+            <p class="display-3 hide-mob">Hvilke av følgende ferier har du?</p>
+            <h2 class="hide-large">Hvilke av følgende ferier har du?</h2>
+            <p class="text-secondary" style="font-size:1.25rem;">Dersom du ikke har noen ferier, kan du trykke "neste".</p>
+            <div class="row m-5">
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-autumn">Høstferie</button>
+                </div>
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-christmas">Juleferie</button>
+                </div>
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-winter">Vinterferie</button>
+                </div>
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5" onclick="ToogleCheckbox(this)" id="check-easter">Påskeferie</button>
+                </div>
+                <div class="hide-mob col-sm-3">&nbsp;</div>
+                <div class="col-12 col-sm-6 p-3">
+                    <button class="btn w3-blue w-100 h-100 gigabutton gigabutton-short px-2 holidaybutton" style="opacity: 0.5; font-size: 5rem" onclick="ToogleCheckbox(this)" id="check-summer">Sommerferie</button>
+                </div>
+            </div>
+        </div>
+        <div id="page-4" style="display: none">
+            <!-- Holiday datetime inputs -->
+            <form id="autumn-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
+                <h2 class="hide-mob">Når begynner din høstferie?</h2>
+                <h3 class="hide-large">Når begynner din høstferie?</h3>
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-autumn" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-autumn" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
+                </div>
+            </form>
+            <form id="christmas-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
+                <h2 class="hide-mob">Når begynner din juleferie?</h2>
+                <h3 class="hide-large">Når begynner din juleferie?</h3>
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-christmas" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-christmas" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
+                </div>
+            </form>
+            <form id="winter-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
+                <h2 class="hide-mob">Når begynner din vinterferie?</h2>
+                <h3 class="hide-large">Når begynner din vinterferie?</h3>
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-winter" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-winter" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
+                </div>
+            </form>
+            <form id="easter-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
+                <h2 class="hide-mob">Når begynner din påskeferie?</h2>
+                <h3 class="hide-large">Når begynner din påskeferie?</h3>
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-easter" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-easter" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
+                </div>
+            </form>
+            <form id="summer-input" style="display: none" class="needs-validation holiday-time-form my-5" novalidate>
+                <h2 class="hide-mob">Når begynner din sommerferie?</h2>
+                <h3 class="hide-large">Når begynner din sommerferie?</h3>
+                <div class="row">
+                    <input type="date" class="form-control text-center mx-auto mt-3 col-12 col-sm-8" style="font-size: 5rem" id="date-summer" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)">
+                    <div class="col-sm-1 hide-mob">&nbsp;</div>
+                    <input type="time" class="form-control text-center mx-auto mt-3 col-12 col-sm-3" style="font-size: 5rem" id="time-summer" required>
+                    <div class="invalid-feedback" style="font-size:1.25rem;">
+                        Vennligst sett en tid
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="page-5" style="display: none">
+            <h3>Vennligst sjekk om konfirgurasjonen er riktig.</h3>
+            <p class="text-secondary">
+                Du kan gå tilbake og endre nå.
+                <br />Du kan ikke endre den etter at du har lagret, da må du lage en ny.
+            </p>
+            <hr />
+            <h4>@dayname</h4>
+            <p id="dayend-config-summary"></p>
+            <br />
+            <h4>Ferier</h4>
+            <p id="holiday-config-summary"></p>
+        </div>
+        
+        <!-- Next and previous buttons -->
+        <div class="display-2 row px-3">
+            <div class="text-left col">
+                <button class="w3-white btn" title="Forrige" style="display: none" onclick="Previous()" id="prev"><i class="fas fa-arrow-left"></i> Forrige</button>
+            </div>
+            <div class="text-right col">
+                <button type="button" class="btn btn-primary" onclick="submitForm()" id="save" style="display:none">Lagre</button>
+                <button class="w3-white btn" title="Neste" onclick="Next()" id="next"><i class="fas fa-arrow-right"></i> Neste</button>
+            </div>
+        </div>
+    </div>
+    <form asp-controller="SetLocale" asp-action="UpdateUserLocale" asp-area="" id="form" class="d-none"></form>
+
+<script>
+    function ToogleCheckbox(box) {
+        if (box.style.opacity == 0.5) {
+            box.style.opacity = 1;
+        }
+        else {
+            box.style.opacity = 0.5;
+        }
+    }
+
+    //Page cycling
+    let currentpage = 1;
+    function Next() {
+        nextpage = currentpage + 1;
+
+        //Page specific actions
+        let psar = PageSpecificActions(nextpage);
+
+        //Display previous-button
+        document.getElementById("prev").style.display = "initial";
+
+        //Go to next page
+        document.getElementById(`page-${currentpage}`).style.display = "none";
+        document.getElementById(`page-${nextpage}`).style.display = "block";
+
+        //Increment page counter
+        currentpage++;
+
+        if (psar == 1) {
+            return Next();
+        }
+    }
+
+    function Previous() {
+        lastpage = currentpage - 1;
+
+        //Page specific actions
+        let psar2 = PageSpecificActions(lastpage);
+
+        //Display next-button
+        document.getElementById("next").style.display = "initial";
+
+        //Go to last page
+        document.getElementById(`page-${currentpage}`).style.display = "none";
+        document.getElementById(`page-${lastpage}`).style.display = "block";
+
+        //Decrement page counter
+        currentpage--;
+
+        if (psar2 == 1) {
+            return Previous();
+        }
+    }
+
+    //Page specific actions
+    function PageSpecificActions(targetPage) {
+        switch (targetPage) {
+            case 1:
+                //Hide previous button
+                document.getElementById("prev").style.display = "none";
+
+                //Hide error
+                document.getElementById("noWorkDaySelectedError").style.display = "none";
+
+                break;
+            case 2:
+                //Choose which time inputs to show
+
+                //Get an array with day buttons
+                let daybuttons = document.getElementsByClassName("daybutton");
+
+                //Create a boolean to store info about checked boxes
+                let boxSelected = false;
+
+                //Loop through all buttons, decide which are pressed and enable their inputs.
+                for (let i = 0; i < daybuttons.length; i++) {
+                    if (daybuttons[i].style.opacity == 1) {
+                        document.getElementById(daybuttons[i].id.substr(6) + "-input").style.display = "block";
+                        boxSelected = true;
+                    }
+                    else {
+                        document.getElementById(daybuttons[i].id.substr(6) + "-input").style.display = "none";
+                    }
+                }
+                //Check if buttons were not pressed
+                if (!boxSelected) {
+                    document.getElementById("noWorkDaySelectedError").style.display = "block";
+                    throw "noWorkDaySelectedError";
+                }
+                break;
+            case 3:
+                //Validate that all visible time inputs are good
+
+                //Gather an array with all forms
+                let forms = document.getElementsByClassName("dayend-time-form");
+                let validationfailed = false;
+                for (let i = 0; i < forms.length; i++) {
+                    if (forms[i].style.display == "block") {
+                        if (forms[i].checkValidity() === false) {
+                            validationfailed = true;
+                        }
+                        forms[i].classList.add('was-validated');
+                    }
+                }
+
+                //Throw an error if validation has failed
+                if (validationfailed) {
+                    throw "Time input validation failed";
+                }
+
+                break;
+            case 4:
+                //Choose which datetime inputs to show
+
+                //Get an array with holiday buttons
+                let holidaybuttons = document.getElementsByClassName("holidaybutton");
+
+                //Create a boolean to store info about checked boxes
+                let boxSelected2 = false;
+
+                //Loop through all buttons, decide which are pressed and enable their inputs.
+                for (let i = 0; i < holidaybuttons.length; i++) {
+                    if (holidaybuttons[i].style.opacity == 1) {
+                        document.getElementById(holidaybuttons[i].id.substr(6) + "-input").style.display = "block";
+                        boxSelected2 = true;
+                    }
+                    else {
+                        document.getElementById(holidaybuttons[i].id.substr(6) + "-input").style.display = "none";
+                    }
+                }
+
+                //Check if buttons were not pressed
+                if (!boxSelected2) {
+                    return 1;
+                }
+
+                break;
+            case 5:
+                //Validate that all visible time inputs are good
+
+                //Gather an array with all forms
+                let forms2 = document.getElementsByClassName("holiday-time-form");
+                let validationfailed2 = false;
+                for (let i = 0; i < forms2.length; i++) {
+                    if (forms2[i].style.display == "block") {
+                        if (forms2[i].checkValidity() === false) {
+                            validationfailed2 = true;
+                        }
+                        forms2[i].classList.add('was-validated');
+                    }
+                }
+
+                //Throw an error if validation has failed
+                if (validationfailed2) {
+                    throw "Datetime input validation failed";
+                }
+
+                //Render info on configuration and add data to form
+
+                //Define variables
+                let daysum = document.getElementById("dayend-config-summary");
+                let holisum = document.getElementById("holiday-config-summary");
+                let daybuttons2 = document.getElementsByClassName("daybutton");
+                let holidaybuttons2 = document.getElementsByClassName("holidaybutton");
+                let form = document.getElementById("form");
+
+                //Clear form content
+                form.innerHTML = "";
+
+                //Iterate through all day buttons
+                for (let i = 0; i < daybuttons2.length; i++) {
+                    if (daybuttons2[i].style.opacity == 1) {
+                        //Add to summary
+                        daysum.innerHTML += dayAbbrevToNor(daybuttons2[i].id.substr(6)) + ":&nbsp;" + document.getElementById(`time-${daybuttons2[i].id.substr(6)}`).value + "<br>";
+
+                        //Add to form
+                        form.innerHTML += `<input type="hidden" name="${daybuttons2[i].id.substr(6)}" value="${document.getElementById("time-" + daybuttons2[i].id.substr(6)).value}">`;
+                    }
+                    else {
+                        //Add 00:00 to form if day has not been enabled
+                        form.innerHTML += `<input type="hidden" name="${daybuttons2[i].id.substr(6)}" value="00:00">`;
+                    }
+                }
+
+                //Iterate through all holiday buttons and add those who are visible
+                for (let i = 0; i < holidaybuttons2.length; i++) {
+                    if (holidaybuttons2[i].style.opacity == 1) {
+                        holisum.innerHTML += holidayShortToNor(holidaybuttons2[i].id.substr(6)) + ":&nbsp;";
+                        let holidate = new Date(document.getElementById(`date-${holidaybuttons2[i].id.substr(6)}`).value + "T" + document.getElementById(`time-${holidaybuttons2[i].id.substr(6)}`).value);
+                        holisum.innerHTML += holidate.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }) + "<br>";
+
+                        //Add to form
+                        form.innerHTML += `<input type="hidden" name="${holidaybuttons2[i].id.substr(6)}" value="${holidate.toISOString()}">`;
+                    }
+                    else {
+                        //Add Date(0) to form if holiday has not been enabled
+                        form.innerHTML += `<input type="hidden" name="${holidaybuttons2[i].id.substr(6)}" value="${new Date(0).toISOString()}">`;
+                    }
+                }
+
+                //Form work settings
+                form.innerHTML += `<input type="hidden" name="isWork" value="@Convert.ToInt32(Model.IsWork)">`;
+
+                //Add redirect url
+                form.innerHTML += `<input type="hidden" name="redirectUrl" value="@savelink">`;
+
+                //Hide next-button
+                document.getElementById("next").style.display = "none";
+                //Show save-button
+                document.getElementById("save").style.display = "initial";
+                break;
+        }
+        return 0;
+    }
+
+    function submitForm() {
+        // Set locale cookie
+        var exp = new Date(new Date().getFullYear() + 10, new Date().getMonth(), 1, 0, 0, 0, 0);
+        if ("@Model.IsWork") document.cookie = "locale=work; expires=" + exp + "; path=/";
+        else document.cookie = "locale=custom; expires=" + exp + "; path=/";
+
+        //Submit the form
+        document.getElementById("form").submit();
+    }
+
+    function dayAbbrevToNor(abbrev) {
+        switch (abbrev) {
+            case "mon":
+                return "Mandag";
+            case "tue":
+                return "Tirsdag";
+            case "wed":
+                return "Onsdag";
+            case "thu":
+                return "Torsdag";
+            case "fri":
+                return "Fredag";
+        }
+    }
+
+    function holidayShortToNor(short) {
+        switch (short) {
+            case "autumn":
+                return "Høstferie";
+            case "christmas":
+                return "Juleferie";
+            case "winter":
+                return "Vinterferie";
+            case "easter":
+                return "Påskeferie";
+            case "summer":
+                return "Sommerferie";
+        }
+    }
+
+</script>

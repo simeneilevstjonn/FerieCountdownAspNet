@@ -14,8 +14,9 @@
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://use.typekit.net/usk3mry.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
-    
+    <script src="https://kit.fontawesome.com/227f49c19f.js" crossorigin="anonymous"></script>
+
+
 
     <!--Meta tags-->
     <meta name="theme-color" content="#333333" />
@@ -114,6 +115,16 @@
             </div>
             TempData["WarningAlert"] = null;
         }
+        @if (!String.IsNullOrEmpty((string)TempData["SuccessAlert"]))
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: -16px">
+                @TempData["SuccessAlert"].
+                <button type="button" class="close" data-dismiss="alert" aria-label="Skjul">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            TempData["SuccessAlert"] = null;
+        }
 
         <div>
             <main role="main" class="pb-3">
@@ -123,7 +134,7 @@
 
         <footer class="footer text-muted bg-333">
             <div class="container bg-333 d-inline-block text-center">
-                <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; @DateTime.UtcNow.Year FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-action="SetLocale" asp-area="" asp-controller="Countdown">Endre sted</a>
+                <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; @DateTime.UtcNow.Year FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-controller="SetLocale" asp-area="" asp-action="Index">Endre sted</a>
             </div>
         </footer>
 

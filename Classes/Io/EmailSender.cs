@@ -22,6 +22,11 @@ namespace FerieCountdown.Classes.Io
                 Body = htmlMessage
             };
 
+            await SendEmailAsync(message);
+        }
+
+        public async Task SendEmailAsync(MailMessage message)
+        {
             SmtpClient client = new SmtpClient
             {
                 Host = "localhost",

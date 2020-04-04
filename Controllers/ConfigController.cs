@@ -14,6 +14,7 @@ using FerieCountdown.Classes.Locale;
 using FerieCountdown.Classes.TimeHandler;
 using System.Globalization;
 using Newtonsoft.Json;
+using FerieCountdown.Classes.Exceptions;
 
 namespace FerieCountdown.Controllers
 {
@@ -175,7 +176,18 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "birthday", date, bg.Path, $"Nedtelling til {nameproperty} bursdag", $"Gratulerer med dagen {name}", bg.Html, bg.Css, bg.UseCCC, true);
+            string countdownid;
+
+            try
+            {
+                countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "birthday", date, bg.Path, $"Nedtelling til {nameproperty} bursdag", $"Gratulerer med dagen {name}", bg.Html, bg.Css, bg.UseCCC, true);
+            }
+            catch (BadSqlException e)
+            {
+                //';', '\'', '*', '/', '-', '_', '"'
+                return CustomError("Ulovlig input. Tegnene ;, ', *, /, -, _ og \" kan ikke brukes.");
+            }
+
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -203,9 +215,17 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            //Get background
+            string countdownid;
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "confirmation", date, bg.Path, $"Nedtelling til {nameproperty} konfirmasjon", $"{nameproperty} konfirmasjon i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            try
+            {
+                countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "confirmation", date, bg.Path, $"Nedtelling til {nameproperty} konfirmasjon", $"{nameproperty} konfirmasjon i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            }
+            catch (BadSqlException e)
+            {
+                //';', '\'', '*', '/', '-', '_', '"'
+                return CustomError("Ulovlig input. Tegnene ;, ', *, /, -, _ og \" kan ikke brukes.");
+            }
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -240,8 +260,17 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
+            string countdownid;
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "wedding", date, bg.Path, $"Nedtelling til {name0} og {nameproperty1} bryllup.", $"{name0} og {nameproperty1} bryllup i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            try
+            {
+                countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), "wedding", date, bg.Path, $"Nedtelling til {name0} og {nameproperty1} bryllup.", $"{name0} og {nameproperty1} bryllup i dag", bg.Html, bg.Css, bg.UseCCC, true);
+            }
+            catch (BadSqlException e)
+            {
+                //';', '\'', '*', '/', '-', '_', '"'
+                return CustomError("Ulovlig input. Tegnene ;, ', *, /, -, _ og \" kan ikke brukes.");
+            }
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -257,7 +286,7 @@ namespace FerieCountdown.Controllers
 
             //Retrieve form data
             string cdtext = Request.Form["cdtext"];
-            string endtext = Request.Form["cdtext"];
+            string endtext = Request.Form["endtext"];
             string type = (string)Request.Form["recursion"] switch
             {
                 "yearly" => "custom-reccurring",
@@ -274,7 +303,17 @@ namespace FerieCountdown.Controllers
             //TODO implement a way to check if the provided background id is allowed in the selected countdown type
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 
-            string countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), type, date, bg.Path, cdtext, endtext, bg.Html, bg.Css, bg.UseCCC, uselocal);
+            string countdownid;
+
+            try
+            {
+                countdownid = CountdownSqlAgent.CreateCustomCountdown(User.FindFirstValue(ClaimTypes.NameIdentifier), type, date, bg.Path, cdtext, endtext, bg.Html, bg.Css, bg.UseCCC, uselocal);
+            }
+            catch (BadSqlException e)
+            {
+                //';', '\'', '*', '/', '-', '_', '"'
+                return CustomError("Ulovlig input. Tegnene ;, ', *, /, -, _ og \" kan ikke brukes.");
+            }
 
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
@@ -291,53 +330,7 @@ namespace FerieCountdown.Controllers
             return Redirect("/Config/MyCountdowns");
         }
 
-        [HttpPost]
-        public IActionResult UpdateUserLocale()
-        {
-            int IsWork = (string)Request.Form["IsWork"] switch
-            {
-                "1" => 1,
-                _ => 0
-            };
-            CountdownLocaleData cld = new CountdownLocaleData
-            {
-                MondayEnd = new Time(Request.Form["mon"]),
-                TuesdayEnd = new Time(Request.Form["tue"]),
-                WednesdayEnd = new Time(Request.Form["wed"]),
-                ThursdayEnd = new Time(Request.Form["thu"]),
-                FridayEnd = new Time(Request.Form["fri"]),
-                AutumnHoliday = (string)Request.Form["autumn-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["autumn-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                },
-                ChristmasHoliday = (string)Request.Form["christmas-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["christmas-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                },
-                WinterHoliday = (string)Request.Form["winter-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["winter-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                },
-                EasterHoliday = (string)Request.Form["easter-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["easter-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                },
-                SummerHoliday = (string)Request.Form["summer-on"] switch
-                {
-                    "on" => DateTime.Parse(Request.Form["summer-time"], null, DateTimeStyles.RoundtripKind),
-                    _ => new DateTime(0)
-                }
-            };
-
-            DbMaster.SqlQuery(string.Format("DELETE FROM [dbo].[CustomLocales] WHERE UserId = N'{0}'; INSERT INTO [dbo].[CustomLocales] ([UserId], [Data], [IsWork]) VALUES (N'{0}', N'{1}', {2});", User.FindFirstValue(ClaimTypes.NameIdentifier), JsonConvert.SerializeObject(cld), IsWork));
-
-            if (Request.Query["redirecturi"].ToString() == null) return Redirect("/");
-            else return Redirect(Request.Form["RedirectUri"]);
-        }
+        
 
     }
 }
