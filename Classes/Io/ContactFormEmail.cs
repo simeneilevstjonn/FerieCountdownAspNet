@@ -8,6 +8,10 @@ namespace FerieCountdown.Classes.Io
 {
     public class ContactFormEmail : EmailTemplate
     {
+        public ContactFormEmail()
+        {
+            ToEmail = new MailAddress("simen@feriecountdown.com", "Simen Eilevstjønn");
+        }
         public new string Body 
         {
             get => string.Format("<table> <tr> <td>Fra</td><td>{0}, {1}</td></tr><tr> <td>Sendt</td><td>{2}</td></tr><tr> <td colspan=\"2\"> Melding </td></tr><tr> <td colspan=\"2\">{3}</td></tr></table>", ReplyTo.DisplayName, ReplyTo.Address, DateTime.UtcNow.ToString("u"), Message);
