@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using FerieCountdown.Classes.Io;
+using System.Net.Mail;
 
 namespace FerieCountdown.Areas.Identity.Pages.Account.Manage
 {
@@ -98,17 +100,27 @@ namespace FerieCountdown.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                // Send a verification email
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                //Create a new instace of the emailSender
+
+                EmailSender sender = new EmailSender();
+
+                //Send the email
+                await sender.SendEmailAsync(new ConfirmAddressEmail
+                {
+                    ToEmail = new MailAddress(Input.NewEmail),
+                    ConfirmUrl = HtmlEncoder.Default.Encode(callbackUrl),
+                    UserCountryCode = Request.Headers["cf-ipcountry"],
+                    UserIP = Request.Headers["X-forwarded-for"]
+                });
+
+                StatusMessage = "Verifiseringsemail sendt. Vennligst sjekk dinn inboks.";
                 return RedirectToPage();
             }
 
             StatusMessage = "Your email is unchanged.";
-            return RedirectToPage();
+            return RedirectToPage();S
         }
 
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
