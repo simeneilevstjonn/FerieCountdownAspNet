@@ -23,36 +23,18 @@ namespace FerieCountdown.Controllers
             _logger = logger;
         }
 
-        private IActionResult CustomError(string message)
-        {
-            return View("CustomError", new CountdownErrorViewModel
-            {
-                Message = message
-            });
-        }
+        private IActionResult CustomError(string message) => View("CustomError", new CountdownErrorViewModel { Message = message });
 
         public IActionResult Index() => View();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        public IActionResult Privacy() => View();
 
-        public IActionResult Copyright()
-        {
-            return View();
-        }
+        public IActionResult Copyright() => View();
 
-        public IActionResult HowToIncludeSchool()
-        {
-            return View();
-        }
+        public IActionResult HowToIncludeSchool() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
         public IActionResult HttpError(int id)
         {
@@ -91,10 +73,7 @@ namespace FerieCountdown.Controllers
             return View(model);
         }
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
+        public IActionResult Contact() => View();
 
         [HttpPost]
         public async Task<IActionResult> SubmitContactFormAsync()

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace FerieCountdownWithAuth
 {
@@ -22,6 +23,8 @@ namespace FerieCountdownWithAuth
         }
 
         public IConfiguration Configuration { get; }
+
+        public static DbMaster _DbMaster;
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -43,8 +46,8 @@ namespace FerieCountdownWithAuth
             //Configure GRC secret
             IoMaster.GRCSecret = Environment.GetEnvironmentVariable("GOOGLE_RECAPTCHA_SECRET");
 
-            //Configure Conn string
-            DbMaster.ConnString = Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
+            //Configure DbMaster
+            _DbMaster = new DbMaster(Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING"));
 
             services.Configure<CookiePolicyOptions>(options =>
             {

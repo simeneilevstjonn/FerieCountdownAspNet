@@ -15,7 +15,7 @@ namespace FerieCountdown.Classes.Io
             MailMessage message = new MailMessage
             {
                 Subject = subject,
-                From = new MailAddress("noreply@feriecountdown.com"),
+                From = new MailAddress("noreply@feriecountdown.com", "FerieCountdown"),
                 To = { new MailAddress(email) },
                 IsBodyHtml = true,
                 BodyEncoding = System.Text.Encoding.UTF8,

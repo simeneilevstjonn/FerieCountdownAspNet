@@ -14,50 +14,47 @@ namespace FerieCountdown.Classes.Io
 {
 
     
-    public static class DbMaster
+    public class DbMaster
     {
-        public static string ConnString { get; set; }
+        public DbMaster(string ConenctionString)
+        {
+            //Initalize and open SQL connection
+            conn = new SqlConnection(ConenctionString);
+            conn.Open();
+        }
 
-        public static string ValidateSql(string input)
+        protected readonly SqlConnection conn;
+
+        public string ValidateSql(string input)
         {
             if (input.IndexOfAny(new char[] { ';', '\'', '*', '/', '-', '_', '"' }) > -1) throw new BadSqlException(string.Format("Illegal user input: {0}", input));
             else return input;
         }
          
-        public static int SqlQuery(string query)
+        public int SqlQuery(string query)
         {
-            SqlConnection conn = new SqlConnection(ConnString);
             //retrieve the SQL Server instance version
             SqlCommand cmd = new SqlCommand(query, conn);
-            //open connection
-            conn.Open();
             //execute the SQLCommand
             int ra = cmd.ExecuteNonQuery();
             cmd.Dispose();
             return ra;
         }
 
-        public static async Task<int> SqlQueryAsync(string query)
+        public async Task<int> SqlQueryAsync(string query)
         {
-            SqlConnection conn = new SqlConnection(ConnString);
             //retrieve the SQL Server instance version
             SqlCommand cmd = new SqlCommand(query, conn);
-            //open connection
-            conn.Open();
             //execute the SQLCommand
             return await cmd.ExecuteNonQueryAsync();
         }
 
-        public static bool CheckId(string id)
+        public bool CheckId(string id)
         {
-            SqlConnection conn = new SqlConnection(ConnString);
+
             //retrieve the SQL Server instance version
             string query = string.Format(@"select Id from [dbo].[CustomCountdowns] where Id = N'{0}';", id);
-
             SqlCommand cmd = new SqlCommand(query, conn);
-
-            //open connection
-            conn.Open();
 
             //execute the SQLCommand
             SqlDataReader dr = cmd.ExecuteReader();
@@ -67,7 +64,7 @@ namespace FerieCountdown.Classes.Io
             else return true;
         }
 
-        public static CountdownLocale GetUserLocale(HttpRequest Request)
+        public CountdownLocale GetUserLocale(HttpRequest Request)
         {
             return Request.Cookies["locale"] switch 
             {
@@ -77,7 +74,7 @@ namespace FerieCountdown.Classes.Io
             };
         }
 
-        public static CountdownLocale GetUserLocale(HttpRequest Request, string UserID)
+        public CountdownLocale GetUserLocale(HttpRequest Request, string UserID)
         {
             return Request.Cookies["locale"] switch
             {
@@ -90,7 +87,7 @@ namespace FerieCountdown.Classes.Io
         /*
          * Gets a countdown locale from a school lookup name
          * */
-        public static CountdownLocale GetLocale(string school)
+        public CountdownLocale GetLocale(string school)
         {
             CountdownLocale locale = new CountdownLocale
             {
@@ -100,15 +97,10 @@ namespace FerieCountdown.Classes.Io
             //Get locale from SQL
             try
             {
-                SqlConnection conn = new SqlConnection(ConnString);
+
                 //retrieve the SQL Server instance version
                 string query = string.Format(@"select * from [dbo].[DefaultLocales] where LookupName = N'{0}';", ValidateSql(school));
-
                 SqlCommand cmd = new SqlCommand(query, conn);
-
-                //open connection
-                conn.Open();
-
                 //execute the SQLCommand
                 SqlDataReader dr = cmd.ExecuteReader();
 
@@ -127,7 +119,7 @@ namespace FerieCountdown.Classes.Io
                 }
                 else throw new InvalidLocaleException(string.Format("Invalid default countdownlocale {0}", school));
                 dr.Close();
-                conn.Close();
+                
                 cmd.Dispose();
 
             }
@@ -137,28 +129,24 @@ namespace FerieCountdown.Classes.Io
                 Console.WriteLine("Exception: " + ex.Message);
                 locale.Data = JsonConvert.SerializeObject(ex);
             }
-
+            
             return locale;
         }
 
-        public static CountdownLocale GetCustomLocale(string UserId)
+        public CountdownLocale GetCustomLocale(string UserId)
         {
             CountdownLocale locale = new CountdownLocale
             {
                 Municipality = "Error"
             };
-
+            
             //Get locale from SQL
             try
             {
-                SqlConnection conn = new SqlConnection(ConnString);
                 //retrieve the SQL Server instance version
                 string query = string.Format(@"select * from [dbo].[Customlocales] where UserId = N'{0}';", UserId);
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-
-                //open connection
-                conn.Open();
 
                 //execute the SQLCommand
                 SqlDataReader dr = cmd.ExecuteReader();
@@ -176,9 +164,10 @@ namespace FerieCountdown.Classes.Io
                     }
                 }
                 else throw new InvalidLocaleException(string.Format("Invalid userid {0}", UserId));
+
                 dr.Close();
-                conn.Close();
                 cmd.Dispose();
+
 
             }
             catch (Exception ex)
@@ -192,20 +181,15 @@ namespace FerieCountdown.Classes.Io
         }
 
 
-        public static List<SimpleMunicipality> GetAllLocales()
+        public List<SimpleMunicipality> GetAllLocales()
         {
             List<SimpleMunicipality> ReturnList = new List<SimpleMunicipality>();
             //Get locale from SQL
-            /*try
-            {*/
-            SqlConnection conn = new SqlConnection(ConnString);
+
             //retrieve the SQL Server instance version
             string query = string.Format(@"select LookupName, School, Municipality from [dbo].[DefaultLocales] ORDER BY Municipality, School ASC;");
 
             SqlCommand cmd = new SqlCommand(query, conn);
-
-            //open connection
-            conn.Open();
 
             //execute the SQLCommand
             SqlDataReader dr = cmd.ExecuteReader();
@@ -246,19 +230,15 @@ namespace FerieCountdown.Classes.Io
         }
 
         //Custom countdown methods
-        public static CustomCountdown GetCustomCountdown(string id)
+        public CustomCountdown GetCustomCountdown(string id)
         {
-            // TODO fix this
             CustomCountdown returner = new CustomCountdown();
 
-            SqlConnection conn = new SqlConnection(ConnString);
+
             //retrieve the SQL Server instance version
             string query = string.Format(@"select Id, CountdownType, CountdownTime, CountdownText, CountdownEndText, BackgroundPath, UseCCCText, UseLocalTime, CssAppend, HtmlAppend, Owner from [dbo].[CustomCountdowns] where Id = N'{0}';", ValidateSql(id));
 
             SqlCommand cmd = new SqlCommand(query, conn);
-
-            //open connection
-            conn.Open();
 
             //execute the SQLCommand
             SqlDataReader dr = cmd.ExecuteReader();
@@ -297,16 +277,13 @@ namespace FerieCountdown.Classes.Io
             return returner;
         }
 
-        public static Dictionary<string, string> GetDictionaryFromSql(string sql)
+        public Dictionary<string, string> GetDictionaryFromSql(string sql)
         {
             Dictionary<string, string> ReturnList = new Dictionary<string, string>();
-            SqlConnection conn = new SqlConnection(ConnString);
+
             //retrieve the SQL Server instance version
 
             SqlCommand cmd = new SqlCommand(sql, conn);
-
-            //open connection
-            conn.Open();
 
             //execute the SQLCommand
             SqlDataReader dr = cmd.ExecuteReader();
@@ -324,17 +301,14 @@ namespace FerieCountdown.Classes.Io
             return ReturnList;
         }
 
-        public static async Task<List<CustomCountdown>> GetAllUserCountdownDataJsonAsync(string user)
+        public async Task<List<CustomCountdown>> GetAllUserCountdownDataJsonAsync(string user)
         {
-            SqlConnection conn = new SqlConnection(ConnString);
+
             //retrieve the SQL Server instance version
 
             string query = string.Format(@"select Id, CountdownType, CountdownTime, CountdownText, CountdownEndText, BackgroundPath, UseCCCText, UseLocalTime, CssAppend, HtmlAppend, Owner from [dbo].[CustomCountdowns] where Owner = N'{0}';", user);
 
             SqlCommand cmd = new SqlCommand(query, conn);
-
-            //open connection
-            conn.Open();
 
             //execute the SQLCommand
             SqlDataReader dr = await cmd.ExecuteReaderAsync();

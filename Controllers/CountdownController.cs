@@ -9,6 +9,7 @@ using FerieCountdown.Classes.Io;
 using FerieCountdown.Classes.Locale;
 using FerieCountdown.Classes.TimeHandler;
 using FerieCountdown.Models;
+using FerieCountdownWithAuth;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -69,10 +70,10 @@ namespace FerieCountdown.Controllers
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id)) 
                 {
-                    Locale = DbMaster.GetLocale(id);
+                    Locale = Startup._DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -84,8 +85,6 @@ namespace FerieCountdown.Controllers
             }
             catch (NullReferenceException)
             {
-                /*ViewData["FullUrl"] = string.Format("{0}://{1}/Countdown/Autumn", Request.Scheme, Request.Host);
-                return View("SetLocale");*/
                 return SetLocale("/Countdown/Autumn");
             }
             InitSharedVars(id);
@@ -110,10 +109,10 @@ namespace FerieCountdown.Controllers
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id))
                 {
-                    Locale = DbMaster.GetLocale(id);
+                    Locale = Startup._DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -148,10 +147,10 @@ namespace FerieCountdown.Controllers
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id))
                 {
-                    Locale = DbMaster.GetLocale(id);
+                    Locale = Startup._DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -186,10 +185,10 @@ namespace FerieCountdown.Controllers
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id))
                 {
-                    Locale = DbMaster.GetLocale(id);
+                    Locale = Startup._DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -224,10 +223,10 @@ namespace FerieCountdown.Controllers
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id))
                 {
-                    Locale = DbMaster.GetLocale(id);
+                    Locale = Startup._DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -258,20 +257,15 @@ namespace FerieCountdown.Controllers
             ViewData["IsSchooldayCountdown"] = "true";
             
             CountdownLocale Locale;
-           /* try
-            {*/
-                //Check if a locale override has been provided
-                if (!string.IsNullOrEmpty(id))
-                {
-                    Locale = DbMaster.GetLocale(id);
-                    ViewData["MetaDescription"] += " på " + Locale.School;
-                }
-                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
-            /*}
-            catch (Exception e)
+
+            //Check if a locale override has been provided
+            if (!string.IsNullOrEmpty(id))
             {
-                return Error(e.Message);
-            }*/
+                Locale = Startup._DbMaster.GetLocale(id);
+                ViewData["MetaDescription"] += " på " + Locale.School;
+            }
+            else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
             InitSharedVars(id);
             DateTime cdtime;
             try
@@ -339,10 +333,10 @@ namespace FerieCountdown.Controllers
                 //Check if a locale override has been provided
                 if (!string.IsNullOrEmpty(id))
                 {
-                    Locale = DbMaster.GetLocale(id);
+                    Locale = Startup._DbMaster.GetLocale(id);
                     ViewData["MetaDescription"] += " på " + Locale.School;
                 }
-                else Locale = DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             catch (Exception e)
             {
@@ -377,10 +371,9 @@ namespace FerieCountdown.Controllers
         //IActionresult() for custom countdown
         public IActionResult Custom(string id)
         {
-            //TODO add checking if user is allowed to view countdown
 
             if (string.IsNullOrEmpty(id)) return Redirect("/");
-            CustomCountdown countdowndata = DbMaster.GetCustomCountdown(id);
+            CustomCountdown countdowndata = Startup._DbMaster.GetCustomCountdown(id);
             ViewData["Title"] = countdowndata.CountdownText;
             if (countdowndata.CountdownType == "custom" || countdowndata.CountdownType == "custom-reccurring") ViewData["IsCustomCountdown"] = "true";
             else ViewData["IsPersonalCelebration"] = "true";
