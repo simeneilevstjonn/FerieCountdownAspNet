@@ -12,9 +12,9 @@ namespace FerieCountdown.Classes.Io
         public MailAddress ReplyTo { get; set; }
         public string Subject { get; set; }
         public string Heading { get; set; }
-        public string FromName { get; set; }
-        public string Body { get; set; }
-        public Dictionary<string, string> RightFooterData = new Dictionary<string, string>();
+        public virtual string FromName { get; set; }
+        public virtual string Body { get; set; }
+        public virtual Dictionary<string, string> RightFooterData { get; set; }
 
         public string EmailBody
         {
