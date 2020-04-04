@@ -48,7 +48,7 @@ namespace FerieCountdown.Classes.Io
                 From = new MailAddress("noreply@feriecountdown.com", e.FromName ?? "FerieCountdown"),
                 IsBodyHtml = true,
                 To = {e.ToEmail ?? throw new ArgumentNullException("Property ToEmail cannot be null.")},
-                ReplyToList = { e.ReplyTo)},
+                ReplyToList = { e.ReplyTo},
                 BodyEncoding = System.Text.Encoding.UTF8,
                 Body = e.EmailBody
             };
