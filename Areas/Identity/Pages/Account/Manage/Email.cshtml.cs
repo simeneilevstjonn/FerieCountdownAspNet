@@ -120,7 +120,7 @@ namespace FerieCountdown.Areas.Identity.Pages.Account.Manage
             }
 
             StatusMessage = "Your email is unchanged.";
-            return RedirectToPage();S
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
