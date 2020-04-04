@@ -8,10 +8,10 @@ namespace FerieCountdown.Classes.Io
 {
     public class EmailTemplate
     {
-        public MailAddress ToEmail { get; set; }
-        public MailAddress ReplyTo { get; set; }
-        public string Subject { get; set; }
-        public string Heading { get; set; }
+        public virtual MailAddress ToEmail { get; set; }
+        public virtual MailAddress ReplyTo { get; set; }
+        public virtual string Subject { get; set; }
+        public virtual string Heading { get; set; }
         public virtual string FromName { get; set; }
         public virtual string Body { get; set; }
         public virtual Dictionary<string, string> RightFooterData { get; set; }
@@ -48,7 +48,7 @@ namespace FerieCountdown.Classes.Io
                 From = new MailAddress("noreply@feriecountdown.com", e.FromName ?? "FerieCountdown"),
                 IsBodyHtml = true,
                 To = {e.ToEmail ?? throw new ArgumentNullException("Property ToEmail cannot be null.")},
-                ReplyToList = { e.ReplyTo },
+                ReplyToList = { e.ReplyTo)},
                 BodyEncoding = System.Text.Encoding.UTF8,
                 Body = e.EmailBody
             };
