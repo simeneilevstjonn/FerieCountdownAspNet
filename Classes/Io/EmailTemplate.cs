@@ -12,20 +12,24 @@ namespace FerieCountdown.Classes.Io
         public MailAddress ReplyTo { get; set; }
         public string Subject { get; set; }
         public string Heading { get; set; }
+        public string FromName { get; set; }
         public string Body { get; set; }
-        public Dictionary<string, string> RightFooterData { get; set; }
+        public Dictionary<string, string> RightFooterData = new Dictionary<string, string>();
 
         public string EmailBody
         {
             get
             {
                 string RawFooter = string.Empty;
-                bool notfirst = false;
-                foreach(KeyValuePair<string, string> kvp in RightFooterData)
+                if (RightFooterData.Count > 0)
                 {
-                    if (notfirst) RawFooter += " - ";
-                    else notfirst = true;
-                    RawFooter += $"{kvp.Key}: {kvp.Value}";
+                    bool notfirst = false;
+                    foreach (KeyValuePair<string, string> kvp in RightFooterData)
+                    {
+                        if (notfirst) RawFooter += " - ";
+                        else notfirst = true;
+                        RawFooter += $"{kvp.Key}: {kvp.Value}";
+                    }
                 }
 
                 return string.Format
@@ -41,7 +45,7 @@ namespace FerieCountdown.Classes.Io
             return new MailMessage
             {
                 Subject = e.Subject ?? e.Heading,
-                From = new MailAddress("noreply@feriecountdown.com"),
+                From = new MailAddress("noreply@feriecountdown.com", e.FromName ?? "FerieCountdown"),
                 IsBodyHtml = true,
                 To = {e.ToEmail ?? throw new ArgumentNullException("Property ToEmail cannot be null.")},
                 ReplyToList = { e.ReplyTo },
