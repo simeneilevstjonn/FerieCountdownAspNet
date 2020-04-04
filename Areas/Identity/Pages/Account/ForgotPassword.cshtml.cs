@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using FerieCountdown.Classes.Io;
+using System.Net.Mail;
 
 namespace FerieCountdown.Areas.Identity.Pages.Account
 {
@@ -56,10 +58,20 @@ namespace FerieCountdown.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Tilbakestill passord",
-                    $"Vennlist tilbakestill passordet ditt ved å <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>klikke her</a>.");
+                // Send a verification email
+
+                //Create a new instace of the emailSender
+
+                EmailSender sender = new EmailSender();
+                
+                //Send the email
+                await sender.SendEmailAsync(new ResetPasswordEmail
+                {
+                    ToEmail = new MailAddress(Input.Email),
+                    ConfirmUrl = HtmlEncoder.Default.Encode(callbackUrl),
+                    UserCountryCode = Request.Headers["cf-ipcountry"],
+                    UserIP = Request.Headers["X-forwarded-for"]
+                });
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
