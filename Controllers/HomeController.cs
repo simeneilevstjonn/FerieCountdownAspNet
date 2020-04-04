@@ -117,7 +117,7 @@ namespace FerieCountdown.Controllers
                 UserCountryCode = Request.Headers["cf-ipcountry"]
             });
 
-            TempData["SuccessAlert"] = "Din melding har blitt sendt.";
+            TempData["SuccessAlert"] = "Din melding har blitt sendt";
 
             return Redirect("/Home/Contact");
         }
