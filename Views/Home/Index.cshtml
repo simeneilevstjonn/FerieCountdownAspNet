@@ -32,40 +32,36 @@
                     </table>
                 </p>
             </div>
-
-            @*Custom countdowns*@
-            @if (SignInManager.IsSignedIn(User))
-            {
-                Dictionary<string, string> ccdData = Startup._DbMaster.GetDictionaryFromSql($"SELECT TOP (10) [Id], [CountdownText] FROM [dbo].[CustomCountdowns] WHERE [Owner] = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}' ORDER BY [CountdownTime] DESC;");
-                @if (ccdData.Count > 0)
-                {
-                    <div class="col col-sm-12 col-md-6 p-2">
-                        <div class="card p-2 h-100 mainpagecard">
-                            <h2>Neste egendefinerte nedtellinger</h2>
-                            @foreach (KeyValuePair<string, string> data in ccdData)
-                            {
-                                <a class="text-left" href="/Countdown/Custom/@data.Key">@data.Value</a>
-                            }
-                        </div>
-                    </div>
-                }
-            }
-
-            @*WNE ad*@
-            <div class="col col-sm-12 col-md-6 p-2">
-                <div class="card p-2 h-100 mainpagecard">
-                    <h2>Er du lei av lærere som bruker ukenumre?</h2>
-                    <img class="mx-auto w-50" src="https://static.feriecountdown.com/resources/wne-logo.png" />
-                    <br />
-                    <p>
-                        Last ned Week Number Extension for <a href="https://chrome.google.com/webstore/detail/week-number-extension/fclcmbgakeahonjplbpinljmghfgnfog">Chrome</a>
-                        eller <a href="https://addons.mozilla.org/en-US/firefox/addon/week-number-extension/">Firefox</a>.
-                    </p>
-                </div>
-            </div>
-
         </div>
+        @*Custom countdowns*@
+        @if (SignInManager.IsSignedIn(User))
+        {
+            Dictionary<string, string> ccdData = Startup._DbMaster.GetDictionaryFromSql($"SELECT TOP (10) [Id], [CountdownText] FROM [dbo].[CustomCountdowns] WHERE [Owner] = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}' ORDER BY [CountdownTime] DESC;");
+            @if (ccdData.Count > 0)
+            {
+                <div class="col col-sm-12 col-md-6 p-2">
+                    <div class="card p-2 h-100 mainpagecard">
+                        <h2>Neste egendefinerte nedtellinger</h2>
+                        @foreach (KeyValuePair<string, string> data in ccdData)
+                        {
+                            <a class="text-left" href="/Countdown/Custom/@data.Key">@data.Value</a>
+                        }
+                    </div>
+                </div>
+            }
+        }
 
+        @*WNE ad*@
+        <div class="col col-sm-12 col-md-6 p-2">
+            <div class="card p-2 h-100 mainpagecard">
+                <h2>Er du lei av lærere som bruker ukenumre?</h2>
+                <img class="mx-auto w-50" src="https://static.feriecountdown.com/resources/wne-logo.png" />
+                <br />
+                <p>
+                    Last ned Week Number Extension for <a href="https://chrome.google.com/webstore/detail/week-number-extension/fclcmbgakeahonjplbpinljmghfgnfog">Chrome</a>
+                    eller <a href="https://addons.mozilla.org/en-US/firefox/addon/week-number-extension/">Firefox</a>.
+                </p>
+            </div>
+        </div>
     </div>
-
 </div>
