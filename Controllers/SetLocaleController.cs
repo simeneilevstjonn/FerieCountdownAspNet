@@ -8,6 +8,7 @@ using FerieCountdown.Classes.Io;
 using FerieCountdown.Classes.Locale;
 using FerieCountdown.Classes.TimeHandler;
 using FerieCountdown.Models;
+using FerieCountdownWithAuth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -46,7 +47,7 @@ namespace FerieCountdown.Controllers
                 SummerHoliday = DateTime.Parse(Request.Form["summer"], null, DateTimeStyles.RoundtripKind)
             };
 
-            DbMaster.SqlQuery(string.Format("DELETE FROM [dbo].[CustomLocales] WHERE UserId = N'{0}'; INSERT INTO [dbo].[CustomLocales] ([UserId], [Data], [IsWork]) VALUES (N'{0}', N'{1}', {2});", User.FindFirstValue(ClaimTypes.NameIdentifier), JsonConvert.SerializeObject(cld), IsWork));
+            Startup._DbMaster.SqlQuery(string.Format("DELETE FROM [dbo].[CustomLocales] WHERE UserId = N'{0}'; INSERT INTO [dbo].[CustomLocales] ([UserId], [Data], [IsWork]) VALUES (N'{0}', N'{1}', {2});", User.FindFirstValue(ClaimTypes.NameIdentifier), JsonConvert.SerializeObject(cld), IsWork));
 
             return Redirect(Request.Form["redirectUrl"]);
         }

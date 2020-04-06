@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FerieCountdownWithAuth;
 
 namespace FerieCountdown.Classes.Countdowns
 {
@@ -15,10 +16,10 @@ namespace FerieCountdown.Classes.Countdowns
 
         public static UserCountdownCollections GetUserCountdowns(string userid)
         {
-            Dictionary<string, string> BirthdayCountdowns = DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{userid}' AND CountdownType = N'birthday';");
-            Dictionary<string, string> WeddingCountdowns = DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{userid}' AND CountdownType = N'wedding';");
-            Dictionary<string, string> ConfirmationCountdows = DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{userid}' AND CountdownType = N'Confirmation';");
-            Dictionary<string, string> CustomCountdown = DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{userid}' AND (CountdownType = N'custom' OR CountdownType = N'custom-reccurring');");
+            Dictionary<string, string> BirthdayCountdowns = Startup._DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{userid}' AND CountdownType = N'birthday';");
+            Dictionary<string, string> WeddingCountdowns = Startup._DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{userid}' AND CountdownType = N'wedding';");
+            Dictionary<string, string> ConfirmationCountdows = Startup._DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{userid}' AND CountdownType = N'Confirmation';");
+            Dictionary<string, string> CustomCountdown = Startup._DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{userid}' AND (CountdownType = N'custom' OR CountdownType = N'custom-reccurring');");
 
             return new UserCountdownCollections
             {
