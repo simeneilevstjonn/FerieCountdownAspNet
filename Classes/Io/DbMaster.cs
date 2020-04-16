@@ -59,6 +59,9 @@ namespace FerieCountdown.Classes.Io
             //execute the SQLCommand
             SqlDataReader dr = cmd.ExecuteReader();
 
+            //Close DataReader
+            dr.Close();
+
             //check if there are records
             if (dr.HasRows) return false;
             else return true;
