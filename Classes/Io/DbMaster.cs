@@ -59,14 +59,14 @@ namespace FerieCountdown.Classes.Io
             //execute the SQLCommand
             SqlDataReader dr = cmd.ExecuteReader();
 
-
+            cmd.Dispose();
 
             bool r = dr.HasRows;
 
             //Close DataReader
             dr.Close();
 
-            return r;
+            return !r;
         }
 
         public CountdownLocale GetUserLocale(HttpRequest Request)
