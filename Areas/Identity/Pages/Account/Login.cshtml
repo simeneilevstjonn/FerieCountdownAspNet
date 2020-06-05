@@ -5,6 +5,8 @@
     ViewData["Title"] = "Logg inn";
 }
 
+
+
 <h1>@ViewData["Title"]</h1>
 <div class="row">
     <div class="col-md-4">
@@ -41,9 +43,10 @@
                     <p>
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register deg</a>
                     </p>
-                    @* <p>
-                        <button type="submit" asp-page-handler="SendVerificationEmail" class="btn-link" style="padding:0px;margin:0px;border:0px">Resend email confirmation</button>
-                    </p>*@
+                    <p>
+                        <button type="submit" asp-page-handler="SendVerificationEmail" class="btn-link" style="padding:0px;margin:0px;border:0px;color:#000;text-decoration:none;background-color:#fff">Send e-postbekreftelse på nytt</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fas fa-question-circle" data-toggle="tooltip" data-placement="right" title="For å kunne logge inn må du ha bekreftet e-postaddressen din. Hvis du ikke fikk gjort det med den orginale e-posten, kan du få den sendt på ny."></i>
+                    </p>
                 </div>
             </form>
         </section>
@@ -89,5 +92,11 @@
 </div>
 
 @section Scripts {
+    <script>
+        //Init tooltips
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }
