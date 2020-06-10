@@ -78,16 +78,6 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsPersonalCelebration"] == "true") {<Text>active</text>}}" href="#" id="percebDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Personlige feringer
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="percebDropdown">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Birthday">Bursdag</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Confirmation">Konfirmasjon</a>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Wedding">Bryllup</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsOtherCountdown"] == "true") {<Text>active</text>}}" href="#" id="otherDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Andre nedtellinger
                                 </a>
