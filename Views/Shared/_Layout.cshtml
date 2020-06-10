@@ -88,6 +88,17 @@
                                     <a class="dropdown-item" asp-area="" asp-controller="Countdown" asp-action="Halloween">Halloween</a>
                                 </div>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle @{if ((string)ViewData["IsCustomCountdown"] == "true") {<Text>active</text>}}" href="#" id="customDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Egne nedtellinger
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="customDropdown">
+                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Brukerinnstillinger</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Custom">Lag nedtelling</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Mycountdowns">Mine nedtellinger</a>
+                                </div>
+                            </li>
+
                         </ul>
                         <partial name="_LoginPartial" />
                     </div>
