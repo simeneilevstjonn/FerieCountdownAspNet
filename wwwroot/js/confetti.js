@@ -1,9 +1,7 @@
-﻿for (var i = 0; i < 250; i++) {
-    create(i);
-}
+﻿
 
 function create(i) {
-    var width = Math.random() * 8;
+    var width = Math.random() * 13;
     var height = width * 0.4;
     var colourIdx = Math.ceil(Math.random() * 3);
     var colour = "red";

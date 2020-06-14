@@ -242,12 +242,20 @@ namespace FerieCountdown.Controllers
             }
             InitSharedVars(id);
 
+            //Add confetti effect
+            CountdownBackground bg = CountdownBackground.Backgrounds["beachboat"];
+
+            bg.Html = "<link rel=\"stylesheet\" href=\"/css/confetti.css\"><script src=\"/js/confetti.js\"></script><div class=\"confetti-wrapper\">";
+
+
+
             return View("Countdown", new CountdownViewModel
             {
                 CountdownTime = Locale.LocaleData.SummerHoliday,
                 CountdownText = "Nedtelling til Sommerferien",
                 CountdownEndText = "Sommerferie nå!",
-                Background = CountdownBackground.Backgrounds["beachboat"]
+                Background = bg,
+                ExtraStopJs = "for (var i=0; i < 250; i++){create(i);}"
             });
         }
 
