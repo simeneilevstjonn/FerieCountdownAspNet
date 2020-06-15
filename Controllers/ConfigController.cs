@@ -64,7 +64,7 @@ namespace FerieCountdown.Controllers
                 _ => false
             };
             string background = Request.Form["background"];
-            DateTime date = DateTime.Parse(Request.Form["time"] + "Z", null, DateTimeStyles.RoundtripKind);
+            DateTime date = DateTime.Parse(Request.Form["time"], null, DateTimeStyles.RoundtripKind);
 
             CountdownBackground bg = CountdownBackground.Backgrounds[background];
 

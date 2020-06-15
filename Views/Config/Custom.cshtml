@@ -6,7 +6,7 @@
 }
 
 <h1>@Model.Heading</h1>
-<form asp-area="" asp-controller="Config" asp-action="@Model.Action">
+<form asp-area="" asp-controller="Config" asp-action="@Model.Action" id="form">
     <br />
     <div class="form-group">
         <label for="cdtext">Nedtellingstekst</label>
@@ -18,18 +18,23 @@
     </div>
     <div class="row">
         <div class="form-group col">
-            <label for="time">Nedtellingstidspunkt</label>
-            <input type="datetime-local" class="form-control" id="time" name="time" value="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" min="@DateTime.UtcNow.ToString("u").Replace(' ', 'T').Substring(0, 16)" max="2038-01-19T03:14" required>
-            
+            <label for="time">Dato</label>
+            <input type="date" class="form-control" id="date" required min="@DateTime.UtcNow.ToString("u").Substring(0, 10)" />
+        </div>
+        <div class="form-group col">
+            <label for="time">Tidspunkt</label>
+            <input type="time" class="form-control" id="timeinput" required />
         </div>
         <div class="form-group col">
             <label for="timezone">Tidssone</label>
             <select class="form-control" required id="timezone" name="timezone">
-                <option value="utc" selected>UTC (Coordinated Universal Time)</option>
+                <option value="user" selected>Din lokaltid</option>
+                <option value="utc">UTC</option>
                 <option value="local">Brukerens lokaltid</option>
             </select>
         </div>
     </div>
+    <input type="hidden" id="time" name="time" />
     <div class="form-group">
         <label for="recursion">Gjentakelse</label>
         <select class="form-control" required id="recursion" name="recursion">
@@ -70,14 +75,44 @@
     <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
 
     <img id="imgpreview" class="img-fluid col-md-6" />
-    <button type="submit" class="btn btn-primary mb-2">Lagre</button>
+    
 </form>
+<button onclick="submitForm()" class="btn btn-primary mb-2">Lagre</button>
 
-<script src="https://www.google.com/recaptcha/api.js?render=6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0"></script>
-<script>
-    grecaptcha.ready(function () {
-        grecaptcha.execute('6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0', { action: 'createcustom' }).then(function (token) {
-            document.getElementById("g-recaptcha-response").value = token;
+@section scripts {
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6Ld59roUAAAAAED1YHj-tlIv0TfEsGamVXXOVBS0', { action: 'createcustom' }).then(function (token) {
+                document.getElementById("g-recaptcha-response").value = token;
+            });
         });
-    });
-</script>
+    </script>
+    <script>
+        function submitForm() {
+            //Validate the form
+            if (document.getElementById("form").reportValidity()) {
+                //Define variables for all inputs used by this function
+                var time = document.getElementById("time");
+                var date = document.getElementById("date");
+                var timeinput = document.getElementById("timeinput");
+                var timezone = document.getElementById("timezone");
+
+
+                //Set the time input value based on selected timezone
+                switch (timezone.value) {
+                    case "local":
+                    case "utc":
+                        time.value = `${date.value}T${timeinput.value}Z`;
+                        break;
+                    case "user":
+                        time.value = new Date(`${date.value}T${timeinput.value}`).toISOString();
+                        break;
+                }
+
+                //Submit the form
+                document.getElementById("form").submit();
+            }
+        }
+    </script>
+}
