@@ -6,6 +6,10 @@
 }
 
 <h1>@Model.Heading</h1>
+<hr />
+<h4>Forhåndsinnstillinger</h4>
+<button class="btn btn-secondary" onclick="setBirthdayPreset()">Bursdag</button>
+<hr />
 <form asp-area="" asp-controller="Config" asp-action="@Model.Action" id="form">
     <br />
     <div class="form-group">
@@ -28,7 +32,7 @@
         <div class="form-group col">
             <label for="timezone">Tidssone</label>
             <select class="form-control" required id="timezone" name="timezone">
-                <option value="user" selected>Din lokaltid</option>
+                <option value="user" selected>Din lokaltid (anbefales)</option>
                 <option value="utc">UTC</option>
                 <option value="local">Brukerens lokaltid</option>
             </select>
@@ -75,7 +79,7 @@
     <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
 
     <img id="imgpreview" class="img-fluid col-md-6" />
-    
+
 </form>
 <button onclick="submitForm()" class="btn btn-primary mb-2">Lagre</button>
 
@@ -113,6 +117,15 @@
                 //Submit the form
                 document.getElementById("form").submit();
             }
+        }
+
+        function setBirthdayPreset() {
+            document.getElementById("cdtext").value = "Nedtelling til [Navn]s bursdag";
+            document.getElementById("endtext").value = "Gratulerer med dagen [Navn]!";
+            document.getElementById("timezone").selectedIndex = 0;
+            document.getElementById("recursion").value = "yearly";
+            document.getElementById("bg-select").value = "birthdaycake";
+            PreviewImage("birthdaycake");
         }
     </script>
 }
