@@ -17,8 +17,15 @@ namespace FerieCountdown.Classes.Countdowns
             get { return _CountdownTime; }
             set
             {
-                if (CountdownType != "birthday" || CountdownType != "custom-recurring") _CountdownTime = TimeMaster.ValiDate(value);
-                else _CountdownTime = value;
+                _CountdownTime = CountdownType switch
+                {
+                    "birthday" => TimeMaster.ValiDate(value),
+                    "custom-recurring" => TimeMaster.ValiDate(value),
+                    "monthly" => TimeMaster.MonthlyRecuring(value),
+                    "weekly" => TimeMaster.WeeklyRecuring(value),
+                    _ => value
+                };
+
             } 
         }
         public string CountdownText { get; set; }

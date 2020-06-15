@@ -242,12 +242,26 @@ namespace FerieCountdown.Controllers
             }
             InitSharedVars(id);
 
+
+            /*
+             * Tempoarily disabled tropical background
+             * CountdownBackground bg = CountdownBackground.Backgrounds["beachboat"];
+             */
+
+            CountdownBackground bg = CountdownBackground.Backgrounds["housesbysea"];
+
+            //Add confetti effect
+            bg.Html = "<link rel=\"stylesheet\" href=\"/css/confetti.css\"><script src=\"/js/confetti.js\"></script><div class=\"confetti-wrapper\">";
+
+
+
             return View("Countdown", new CountdownViewModel
             {
                 CountdownTime = Locale.LocaleData.SummerHoliday,
                 CountdownText = "Nedtelling til Sommerferien",
                 CountdownEndText = "Sommerferie nå!",
-                Background = CountdownBackground.Backgrounds["beachboat"]
+                Background = bg,
+                ExtraStopJs = "for (var i=0; i < 250; i++){create(i);}"
             });
         }
 
@@ -375,8 +389,7 @@ namespace FerieCountdown.Controllers
             if (string.IsNullOrEmpty(id)) return Redirect("/");
             CustomCountdown countdowndata = Startup._DbMaster.GetCustomCountdown(id);
             ViewData["Title"] = countdowndata.CountdownText;
-            if (countdowndata.CountdownType == "custom" || countdowndata.CountdownType == "custom-reccurring") ViewData["IsCustomCountdown"] = "true";
-            else ViewData["IsPersonalCelebration"] = "true";
+            ViewData["IsCustomCountdown"] = "true";
             InitSharedVars();
 
             return View("Countdown", new CountdownViewModel

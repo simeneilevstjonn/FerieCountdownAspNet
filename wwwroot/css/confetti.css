@@ -1,0 +1,29 @@
+﻿body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.confetti-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    z-index: -1
+}
+
+[class|=confetti] {
+    position: absolute;
+}
+
+.red {
+    background-color: #E94A3F;
+}
+
+.yellow {
+    background-color: #FAA040;
+}
+
+.blue {
+    background-color: #5FC9F5;
+}

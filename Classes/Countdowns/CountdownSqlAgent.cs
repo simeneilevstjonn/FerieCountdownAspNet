@@ -21,7 +21,7 @@ namespace FerieCountdown.Classes.Countdowns
             string id = GenerateId();
 
             string query = string.Format("INSERT INTO [dbo].[CustomCountdowns] ([Id], [CountdownType], [CountdownTime], [CountdownText], [CountdownEndText], [BackgroundPath], [UseCCCText], [UseLocalTime], [CssAppend], [HtmlAppend], [Owner]) VALUES (N'{0}', N'{1}', N'{2}', N'{3}', N'{4}', N'{5}', {6}, {7}, N'{8}', N'{9}', N'{10}');",
-                id, Startup._DbMaster.ValidateSql(Type), Time.ToString("u").Replace(' ', 'T'), Startup._DbMaster.ValidateSql(Text), Startup._DbMaster.ValidateSql(FinishedText), Background, UseCcc, UseLocal, CSS, HTML, Owner);
+                id, Type, Time.ToString("u").Replace(' ', 'T'), Startup._DbMaster.ValidateSql(Text), Startup._DbMaster.ValidateSql(FinishedText), Background, UseCcc, UseLocal, CSS, HTML, Owner);
             //There is no Sql Validation on background, css, html or owner. Don't accept user input for these
 
             Startup._DbMaster.SqlQuery(query);
