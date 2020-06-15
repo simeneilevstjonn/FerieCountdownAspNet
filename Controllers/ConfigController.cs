@@ -56,6 +56,8 @@ namespace FerieCountdown.Controllers
             string type = (string)Request.Form["recursion"] switch
             {
                 "yearly" => "custom-reccurring",
+                "weekly" => "weekly",
+                "monthly" => "monthly",
                 _ => "custom"
             };
             bool uselocal = (string)Request.Form["timezone"] switch

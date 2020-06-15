@@ -19,6 +19,25 @@ namespace FerieCountdown.Classes.TimeHandler
             else return t;
         }
 
+        public static DateTime MonthlyRecuring(DateTime t)
+        {
+            while (t.AddDays(1) < DateTime.UtcNow)
+            {
+                t = t.AddMonths(1);
+            }
+            return t;
+        }
+
+        public static DateTime WeeklyRecuring(DateTime t)
+        {
+            while (t.AddDays(1) < DateTime.UtcNow)
+            {
+                t = t.AddDays(7);
+            }
+            return t;
+        }
+
+
         public static bool ValiDateBool(DateTime t)
         {
             if (t.AddDays(1) < DateTime.UtcNow) return false;
@@ -29,6 +48,7 @@ namespace FerieCountdown.Classes.TimeHandler
         {
             return t.AddYears(y - t.Year);
         }
+
 
         public static DateTime GenerateDayEndCountdown(Time t)
         { 
