@@ -242,9 +242,15 @@ namespace FerieCountdown.Controllers
             }
             InitSharedVars(id);
 
-            //Add confetti effect
-            CountdownBackground bg = CountdownBackground.Backgrounds["beachboat"];
 
+            /*
+             * Tempoarily disabled tropical background
+             * CountdownBackground bg = CountdownBackground.Backgrounds["beachboat"];
+             */
+
+            CountdownBackground bg = CountdownBackground.Backgrounds["housesbysea"];
+
+            //Add confetti effect
             bg.Html = "<link rel=\"stylesheet\" href=\"/css/confetti.css\"><script src=\"/js/confetti.js\"></script><div class=\"confetti-wrapper\">";
 
 
