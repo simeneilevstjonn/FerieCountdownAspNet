@@ -1,4 +1,5 @@
 ﻿using FerieCountdown.Classes.Countdowns;
+using FerieCountdownWithAuth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,11 @@ namespace FerieCountdown.Models
 {
     public class MyCountdownsViewModel
     {
-        public UserCountdownCollections Countdowns { get; set; }
+        public Dictionary<string, string> Countdowns { get; set; }
+
+        public MyCountdownsViewModel(string UserID)
+        {
+            Countdowns = Startup._DbMaster.GetDictionaryFromSql($"SELECT Id, CountdownText FROM dbo.CustomCountdowns WHERE Owner = N'{UserID}';");
+        }
     }
 }

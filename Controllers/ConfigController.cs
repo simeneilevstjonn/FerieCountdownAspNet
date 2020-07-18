@@ -85,7 +85,7 @@ namespace FerieCountdown.Controllers
             return Redirect($"/Countdown/Custom/{countdownid}");
         }
 
-        public IActionResult MyCountdowns() => View(new MyCountdownsViewModel { Countdowns = UserCountdownCollections.GetUserCountdowns(User.FindFirstValue(ClaimTypes.NameIdentifier)) });
+        public IActionResult MyCountdowns() => View(new MyCountdownsViewModel(User.FindFirstValue(ClaimTypes.NameIdentifier)));
 
 
         public IActionResult DeleteCountdown(string id)
