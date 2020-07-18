@@ -76,6 +76,7 @@ namespace FerieCountdown.Controllers
         public IActionResult Contact() => View();
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitContactFormAsync()
         {
             if (!IoMaster.VerifyRecaptcha(Request.Form["g-recaptcha-response"], Request.Headers["X-forwarded-for"], "contact")) return CustomError("reCAPTCHA validation failed");
