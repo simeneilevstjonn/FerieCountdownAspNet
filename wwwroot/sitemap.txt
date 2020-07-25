@@ -2,9 +2,6 @@
 https://www.feriecountdown.com/home/contact
 https://www.feriecountdown.com/home/copyright
 https://www.feriecountdown.com/home/privacy
-https://www.feriecountdown.com/config/birthday
-https://www.feriecountdown.com/config/wedding
-https://www.feriecountdown.com/config/confirmation
 https://www.feriecountdown.com/config/custom
 https://www.feriecountdown.com/countdown/newyear
 https://www.feriecountdown.com/countdown/christmaseve
