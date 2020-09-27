@@ -42,6 +42,7 @@ namespace FerieCountdown.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CreateCustom()
         {
             //Verify Google reCAPTCHA
@@ -88,9 +89,11 @@ namespace FerieCountdown.Controllers
         public IActionResult MyCountdowns() => View(new MyCountdownsViewModel(User.FindFirstValue(ClaimTypes.NameIdentifier)));
 
 
-        public IActionResult DeleteCountdown(string id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteCountdown()
         {
-            Startup._DbMaster.SqlQuery($"DELETE from dbo.CustomCountdowns WHERE Id = N'{Startup._DbMaster.ValidateSql(id)}' and Owner = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}'");
+            Startup._DbMaster.SqlQuery($"DELETE from dbo.CustomCountdowns WHERE Id = N'{Startup._DbMaster.ValidateSql(Request.Form["id"])}' and Owner = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}'");
 
             return Redirect("/Config/MyCountdowns");
         }

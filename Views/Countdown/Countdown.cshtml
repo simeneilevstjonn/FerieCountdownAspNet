@@ -95,7 +95,6 @@
         if (e.code === "KeyF") thf();
     });
 
-
     //Init our countdown using data from Model
     //Init the clock
 var clock;
@@ -160,7 +159,7 @@ var clock;
                     <a class="btn col" title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=@ViewData["BaseUrl"]&t=@ViewData["Title"]" target="_blank">
                         <img src="https://static.feriecountdown.com/resources/icon/facebook.svg" class="share-icon" />
                     </a>
-                    <a class="btn col" title="Twitter" href="https://twitter.com/compose/tweet?url=@ViewData["BaseUrl"]&text=@ViewData["Title"]&via=feriecd" target="_blank">
+                    <a class="btn col" title="Twitter" href="https://twitter.com/compose/tweet?url=@ViewData["BaseUrl"]&text=@ViewData["Title"]&via=feriecd" target="_blank" style="margin-top: 8px;">
                         <img src="https://static.feriecountdown.com/resources/icon/twitter.svg" class="share-icon" />
                     </a>
                     <a class="btn col" title="Reddit" href="https://www.reddit.com/submit?url=@ViewData["BaseUrl"]&title=@ViewData["Title"]" target="_blank">
@@ -177,7 +176,7 @@ var clock;
                         <a class="btn col" title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=@ViewData["BaseUrl"]/@ViewData["Locale"]&t=@ViewData["Title"]" target="_blank">
                             <img src="https://static.feriecountdown.com/resources/icon/facebook.svg" class="share-icon" />
                         </a>
-                        <a class="btn col" title="Twitter" href="https://twitter.com/compose/tweet?url=@ViewData["BaseUrl"]/@ViewData["Locale"]&text=@ViewData["Title"]&via=feriecd" target="_blank">
+                        <a class="btn col" title="Twitter" href="https://twitter.com/compose/tweet?url=@ViewData["BaseUrl"]/@ViewData["Locale"]&text=@ViewData["Title"]&via=feriecd" target="_blank" style="margin-top: 8px;">
                             <img src="https://static.feriecountdown.com/resources/icon/twitter.svg" class="share-icon" />
                         </a>
                         <a class="btn col" title="Reddit" href="https://www.reddit.com/submit?url=@ViewData["BaseUrl"]/@ViewData["Locale"]&title=@ViewData["Title"]" target="_blank">
@@ -227,3 +226,13 @@ var clock;
 <div class="clock" style="margin:2em;" id="clock"></div>
 <div id="done-container" class="valign" style="display: none;"><p id="done-text">@Model.CountdownEndText</p></div>
 @Html.Raw(Model.Background.Html)
+
+@section scripts {
+<script>
+    // Set share modal events
+    $('#shareModal').on('hidden.bs.modal', function (e) {
+        // Hide "Copied to clipboard"-text
+        document.getElementById('copiedText').innerHTML = null;
+    });
+</script>
+}

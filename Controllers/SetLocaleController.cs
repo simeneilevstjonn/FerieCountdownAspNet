@@ -26,6 +26,7 @@ namespace FerieCountdown.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateUserLocale()
         {
             int IsWork = (string)Request.Form["IsWork"] switch

@@ -35,7 +35,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
-                        <a class="btn btn-danger" href="/Config/DeleteCountdown/@i">Slett nedtelling</a>
+                        <form asp-controller="config" asp-area="" asp-action="DeleteCountdown">
+                            <input type="hidden" name="id" value="@i" />
+                            <button class="btn btn-danger">Slett nedtelling</button>
+                        </form>
                     </div>
                 </div>
             </div>
