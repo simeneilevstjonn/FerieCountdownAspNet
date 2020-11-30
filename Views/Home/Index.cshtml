@@ -33,6 +33,22 @@
 <div class="text-center">
     <h1 class="display-4 welcome-heading">Velkommen til FerieCountdown!</h1>
     <div class="row p-2 mx-2">
+
+        @* Birthday *@
+        @if (DateTime.UtcNow.Day == 1 && DateTime.UtcNow.Year == 2020 && DateTime.UtcNow.Month == 12) 
+        { 
+        <div class="col col-sm-12 col-md-6 p-2">
+            <div class="card p-2 h-100 mainpagecard">
+                <h2>I dag er nye FerieCountdown sin bursdag!</h2>
+                <br />
+                <p>
+                    Det er i dag nøyaktig ett år siden den nye versjonen av FerieCountdown, med innlogging, egne nedtellinger og mulighet for flere skoler ble gitt ut.
+                </p>
+                <img class="mx-auto w-50" src="https://static.feriecountdown.com/resources/decorations/birthdaycake.png" />
+            </div>
+        </div>
+        }
+
         @* Custom countdowns *@
         @if (SignInManager.IsSignedIn(User))
         {
