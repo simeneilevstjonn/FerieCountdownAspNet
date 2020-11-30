@@ -14,43 +14,6 @@
     <h1 class="display-4 welcome-heading">Velkommen til FerieCountdown!</h1>
     <div class="row p-2 mx-2">
 
-        @*Info section v1.3.0*@
-        @if (DateTime.UtcNow.Month < 8 && DateTime.UtcNow.Year == 2020)
-        {
-            <div class="col col-sm-12 col-md-6 p-2">
-                <div class="card p-2 h-100 mainpagecard">
-                    <h2>Endringer i skjemaer for egne nedtellinger.</h2>
-                    <p class="text-left">
-                        Skjema for bursdag, bryllup og konfirmasjon har blitt fjernet. Dersom du ønsker å telle ned til en av disse kan du bruke skjemaet for egendefinerte nedtellinger. Bursdag er tilgjengelig som en forhåndsinnstilling for å få riktige innstillinger.
-                    </p>
-                </div>
-            </div>
-
-        }
-        @if (DateTime.UtcNow.Month == 6 && DateTime.UtcNow.Day < 20)
-            {
-            <div class="col col-sm-12 col-md-6 p-2">
-                <div class="card p-2 h-100 mainpagecard">
-                    <h2>Sommerferie</h2>
-                    <p class="text-left">
-                        Fredag den 19. juni starter sommerferien i Sandnes Kommune. Mange tiendeklassinger avspasserer denne dagen.
-                        Dersom du ønsker å telle ned til torsdag i stedenfor fredag, kan du enten bruke
-                        <a asp-area="" asp-controller="Countdown" asp-action="Dayend">nedtelling til skoledagens slutt</a> eller
-                        <a asp-area="" asp-controller="SetLocale" asp-action="SchoolWizard">sette egne tider.</a>
-                    </p>
-                    <p class="text-left">
-                        Vær obs på at de fleste ikke slutter til normal tid på fredag. Dersom din skole har feil tid, er det fantastisk hvis du kan gi beskjed via vårt 
-                        <a asp-area="" asp-controller="Home" asp-action="Contact">kontaktskjema.</a>
-                    </p>
-                    <p class="text-left">
-                        Grunnet den pågående pandemien og reiserestriksjonene som følger den, har vi valgt å bytte bakgrunnsbilde på <a asp-area="" asp-controller="Countdown" asp-action="Summer">sommerferienedtellingen</a> til et som er tatt i Norge.
-                    </p>
-                </div>
-            </div>
-        }
-        
-
-
         @*Custom countdowns*@
         @if (SignInManager.IsSignedIn(User))
         {
