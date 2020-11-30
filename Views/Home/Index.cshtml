@@ -10,11 +10,30 @@
     ViewData["MetaDescription"] = "FerieCountdown er nettsiden som lar deg telle ned til ferier, helg, nyttår, bursdager og alt annet. Vi har live nedtelling med dager, timer, minutter og sekunder!";
 }
 
+<style>
+    body {
+        @if (DateTime.UtcNow.Month == 12)
+        {
+        <text>
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url(https://static.feriecountdown.com/resources/background/christmaslivingroom.jpg);
+        }
+        .welcome-heading {
+            color: #f0eddf;
+        }
+        .mainpagecard {
+            background-color: #f0eddf;
+        </text>
+        }
+    }
+</style>
+
 <div class="text-center">
     <h1 class="display-4 welcome-heading">Velkommen til FerieCountdown!</h1>
     <div class="row p-2 mx-2">
-
-        @*Custom countdowns*@
+        @* Custom countdowns *@
         @if (SignInManager.IsSignedIn(User))
         {
             Dictionary<string, string> ccdData = Startup._DbMaster.GetDictionaryFromSql($"SELECT TOP (10) [Id], [CountdownText] FROM [dbo].[CustomCountdowns] WHERE [Owner] = N'{User.FindFirstValue(ClaimTypes.NameIdentifier)}' ORDER BY [CountdownTime] DESC;");
@@ -32,7 +51,7 @@
             }
         }
 
-        @*WNE ad*@
+        @* WNE ad *@
         <div class="col col-sm-12 col-md-6 p-2">
             <div class="card p-2 h-100 mainpagecard">
                 <h2>Er du lei av lærere som bruker ukenumre?</h2>
