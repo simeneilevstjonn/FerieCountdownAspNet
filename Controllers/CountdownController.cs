@@ -268,13 +268,20 @@ namespace FerieCountdown.Controllers
             
             CountdownLocale Locale;
 
-            //Check if a locale override has been provided
-            if (!string.IsNullOrEmpty(id))
+            try
             {
-                Locale = Startup._DbMaster.GetLocale(id);
-                ViewData["MetaDescription"] += " på " + Locale.School;
+                //Check if a locale override has been provided
+                if (!string.IsNullOrEmpty(id))
+                {
+                    Locale = Startup._DbMaster.GetLocale(id);
+                    ViewData["MetaDescription"] += " på " + Locale.School;
+                }
+                else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
-            else Locale = Startup._DbMaster.GetUserLocale(Request, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
 
             InitSharedVars(id);
             DateTime cdtime;

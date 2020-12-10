@@ -109,6 +109,8 @@ namespace FerieCountdown.Classes.Io
                 //execute the SQLCommand
                 SqlDataReader dr = cmd.ExecuteReader();
 
+                bool missingRows = !dr.HasRows;
+
                 //check if there are records
                 if (dr.HasRows)
                 {
@@ -122,11 +124,19 @@ namespace FerieCountdown.Classes.Io
                         };
                     }
                 }
-                else throw new InvalidLocaleException(string.Format("Invalid default countdownlocale {0}", school));
-                dr.Close();
                 
+                dr.Close();
                 cmd.Dispose();
 
+                if (missingRows)
+                {
+                    throw new InvalidLocaleException(string.Format("Invalid default countdownlocale {0}", school));
+                }
+
+            }
+            catch (InvalidLocaleException e)
+            {
+                throw e;
             }
             catch (Exception ex)
             {
