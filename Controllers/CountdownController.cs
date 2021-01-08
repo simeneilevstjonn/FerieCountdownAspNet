@@ -63,7 +63,7 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Høstferien";
-            ViewData["MetaDescription"] = "Nedtelling til Høstferien";
+            ViewData["MetaDescription"] = "Live nedelling til høstferien. Tell ned med dager, timer, minutter og sekunder!";
             CountdownLocale Locale;
             try
             {
@@ -102,7 +102,7 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Juleferien";
-            ViewData["MetaDescription"] = "Nedtelling til Juleferien";
+            ViewData["MetaDescription"] = "Live nedelling til juleferien. Tell ned med dager, timer, minutter og sekunder!";
             CountdownLocale Locale;
             try
             {
@@ -140,7 +140,7 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Vinterferien";
-            ViewData["MetaDescription"] = "Nedtelling til Vinterferien";
+            ViewData["MetaDescription"] = "Live nedelling til vinterferien. Tell ned med dager, timer, minutter og sekunder!";
             CountdownLocale Locale;
             try
             {
@@ -178,7 +178,7 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Påskeferien";
-            ViewData["MetaDescription"] = "Nedtelling til Påskeferien";
+            ViewData["MetaDescription"] = "Live nedelling til påskeferien. Tell ned med dager, timer, minutter og sekunder!";
             CountdownLocale Locale;
             try
             {
@@ -216,7 +216,7 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsHolidayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Sommerferien";
-            ViewData["MetaDescription"] = "Nedtelling til Sommerferien";
+            ViewData["MetaDescription"] = "Live nedelling til sommerferien. Tell ned med dager, timer, minutter og sekunder!";
             CountdownLocale Locale;
             try
             {
@@ -265,7 +265,8 @@ namespace FerieCountdown.Controllers
         public IActionResult Dayend(string id)
         {
             ViewData["IsSchooldayCountdown"] = "true";
-            
+            ViewData["MetaDescription"] = "Live nedelling til skole eller arbeidsdagen slutter. Tell ned med dager, timer, minutter og sekunder!";
+
             CountdownLocale Locale;
 
             try
@@ -344,6 +345,8 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsSchooldayCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til helg";
+            ViewData["MetaDescription"] = "Live nedelling til helg. Tell ned med dager, timer, minutter og sekunder!";
+
             CountdownLocale Locale;
             try
             {
@@ -411,6 +414,8 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsOtherCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Nyttår";
+            ViewData["MetaDescription"] = "Live nedelling til nyttår. Tell ned med dager, timer, minutter og sekunder!";
+
             DateTime cdtime = TimeMaster.ValiDate(DateTime.Parse("2020-01-01T00:00:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind));
             InitSharedVars();
 
@@ -432,6 +437,8 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsOtherCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Halloween";
+            ViewData["MetaDescription"] = "Live nedelling til halloween. Tell ned med dager, timer, minutter og sekunder!";
+
             DateTime cdtime = TimeMaster.ValiDate(DateTime.Parse("2019-10-31T00:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind));
             InitSharedVars();
 
@@ -448,6 +455,8 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsOtherCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til 17. mai";
+            ViewData["MetaDescription"] = "Live nedelling til 17. mai. Tell ned med dager, timer, minutter og sekunder!";
+
             DateTime cdtime = TimeMaster.ValiDate(DateTime.Parse("2020-05-17T00:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind));
             InitSharedVars();
 
@@ -464,6 +473,8 @@ namespace FerieCountdown.Controllers
         {
             ViewData["IsOtherCountdown"] = "true";
             ViewData["Title"] = "Nedtelling til Julaften";
+            ViewData["MetaDescription"] = "Live nedelling til julaften. Tell ned med dager, timer, minutter og sekunder!";
+
             DateTime cdtime = TimeMaster.ValiDate(DateTime.Parse("2019-12-24T00:00Z", null, System.Globalization.DateTimeStyles.RoundtripKind));
             InitSharedVars();
 
