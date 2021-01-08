@@ -35,8 +35,8 @@ namespace FerieCountdown.Controllers
         {
             ViewData["FullUrl"] = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host, Request.Path);
             string path = Request.Path;
-            string cac = path.Substring(1);
-            string action = cac.Substring(cac.IndexOf('/') + 1);
+            string cac = path[1..];
+            string action = cac[(cac.IndexOf('/') + 1)..];
             ViewData["BaseUrl"] = string.Format("{0}://{1}/Countdown/{2}", Request.Scheme, Request.Host, action);
             ViewData["Locale"] = Request.Cookies["locale"];
         }
@@ -47,8 +47,8 @@ namespace FerieCountdown.Controllers
             {
                 ViewData["Locale"] = locale;
                 string path = Request.Path;
-                string cac = path.Substring(1);
-                string action = cac.Substring(cac.IndexOf('/') + 1);
+                string cac = path[1..];
+                string action = cac[(cac.IndexOf('/') + 1)..];
                 action = action.Substring(0, action.IndexOf('/'));
                 ViewData["BaseUrl"] = string.Format("{0}://{1}/Countdown/{2}", Request.Scheme, Request.Host, action);
             }
