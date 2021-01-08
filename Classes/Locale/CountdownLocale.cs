@@ -20,7 +20,7 @@ namespace FerieCountdown.Classes.Locale
             set
             {
                 // Parse JSON
-                JObject Data = JObject.Parse(value);
+                JArray Data = JArray.Parse(value);
 
                 // Initialize CohortData
                 CohortData = new List<RedTierData>();
@@ -32,19 +32,22 @@ namespace FerieCountdown.Classes.Locale
                     RedTierData rtd = new RedTierData();
 
                     // Check if Always exist within Cohort
-                    if (Data[i]["Always"] != null)
+                    try
                     {
-                        // Parse Always
-                        rtd.Always = new CountdownLocaleData
+                        if ((JObject)Data[i]["Always"] != null)
                         {
-                            MondayEnd = new Time((int)Data[i]["Always"]["MondayEnd"]["Hours"], (int)Data[i]["Always"]["MondayEnd"]["Minutes"]),
-                            TuesdayEnd = new Time((int)Data[i]["Always"]["TuesdayEnd"]["Hours"], (int)Data[i]["Always"]["TuesdayEnd"]["Minutes"]),
-                            WednesdayEnd = new Time((int)Data[i]["Always"]["WednesdayEnd"]["Hours"], (int)Data[i]["Always"]["WednesdayEnd"]["Minutes"]),
-                            ThursdayEnd = new Time((int)Data[i]["Always"]["ThursdayEnd"]["Hours"], (int)Data[i]["Always"]["ThursdayEnd"]["Minutes"]),
-                            FridayEnd = new Time((int)Data[i]["Always"]["FridayEnd"]["Hours"], (int)Data[i]["Always"]["FridayEnd"]["Minutes"]),
-                        };
+                            // Parse Always
+                            rtd.Always = new CountdownLocaleData
+                            {
+                                MondayEnd = new Time((int)Data[i]["Always"]["MondayEnd"]["Hours"], (int)Data[i]["Always"]["MondayEnd"]["Minutes"]),
+                                TuesdayEnd = new Time((int)Data[i]["Always"]["TuesdayEnd"]["Hours"], (int)Data[i]["Always"]["TuesdayEnd"]["Minutes"]),
+                                WednesdayEnd = new Time((int)Data[i]["Always"]["WednesdayEnd"]["Hours"], (int)Data[i]["Always"]["WednesdayEnd"]["Minutes"]),
+                                ThursdayEnd = new Time((int)Data[i]["Always"]["ThursdayEnd"]["Hours"], (int)Data[i]["Always"]["ThursdayEnd"]["Minutes"]),
+                                FridayEnd = new Time((int)Data[i]["Always"]["FridayEnd"]["Hours"], (int)Data[i]["Always"]["FridayEnd"]["Minutes"]),
+                            };
+                        }
                     }
-                    else
+                    catch
                     {
                         // Parse OddWeek and EvenWeek
                         rtd.OddWeek = new CountdownLocaleData
