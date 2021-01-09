@@ -57,6 +57,7 @@ namespace FerieCountdown.Controllers
         }
 
         private IActionResult SetLocale(string ReturnUrl) => Redirect($"/SetLocale?redirecturl={ReturnUrl}");
+        public IActionResult SetCohort(string ReturnUrl) => View("SetCohort", string.Format("{0}://{1}/{2}", Request.Scheme, Request.Host, ReturnUrl));
 
         //Define holiday countdowns
         public IActionResult Autumn(string id)
@@ -285,6 +286,28 @@ namespace FerieCountdown.Controllers
             }
 
             InitSharedVars(id);
+
+            // Check if locale is in red COVID tier
+            if (Locale.UseRedTier)
+            {
+                // Check if the cohort cookie is not set
+                if (string.IsNullOrEmpty(Request.Cookies["cohort"]))
+                {
+                    // Return setcohort page
+                    return SetCohort("/Countdown/Dayend");
+                }
+
+                // Attempt to parse to int and check that it is in range
+                if (!int.TryParse(Request.Cookies["cohort"], out int Cohort) || Cohort < 0 || Cohort > Locale.CohortData.Count)
+                {
+                    // Return setcohort page
+                    return SetCohort("/Countdown/Dayend");
+                }
+
+                // Set locale to the applicable one
+                Locale.LocaleData = Locale.CohortData[Cohort].GetApplicableLocale;
+            }
+
             DateTime cdtime;
             try
             {
@@ -363,6 +386,28 @@ namespace FerieCountdown.Controllers
                 return Error(e.Message);
             }
             InitSharedVars(id);
+
+            // Check if locale is in red COVID tier
+            if (Locale.UseRedTier)
+            {
+                // Check if the cohort cookie is not set
+                if (string.IsNullOrEmpty(Request.Cookies["cohort"]))
+                {
+                    // Return setcohort page
+                    return SetCohort("/Countdown/Dayend");
+                }
+
+                // Attempt to parse to int and check that it is in range
+                if (!int.TryParse(Request.Cookies["cohort"], out int Cohort) || Cohort < 0 || Cohort > Locale.CohortData.Count)
+                {
+                    // Return setcohort page
+                    return SetCohort("/Countdown/Dayend");
+                }
+
+                // Set locale to the applicable one
+                Locale.LocaleData = Locale.CohortData[Cohort].GetApplicableLocale;
+            }
+
             DateTime cdtime;
             try
             {
