@@ -15,13 +15,19 @@ function getCookie(cname) {
             return c.substring(name.length, c.length);
         }
     }
-    return "Ingen";
+    return null;
 }
 
-document.getElementById("localespan").innerHTML = getCookie("locale");
+document.getElementById("localespan").innerHTML = getCookie("locale") ?? "Ingen";
 if (document.getElementById("localespan").innerHTML == "custom") document.getElementById("localespan").innerHTML = "Egendefinert";
 else if (document.getElementById("localespan").innerHTML == "work") {
     document.getElementById("localespan").innerHTML = "Jobb";
     document.getElementById("sdayCountdown").innerHTML = "Arbeidsdag";
     document.getElementById("dendlink").innerHTML = "Arbeidsdagens slutt";
+}
+
+// Set cohort span
+document.getElementById("cohortspan").innerHTML = getCookie("cohort") ?? "Ingen";
+if (document.getElementById("cohortspan").innerHTML != "Ingen") {
+    document.getElementById("cohortspan").innerHTML = document.getElementById("cohortspan").innerHTML * 1 + 1;
 }
