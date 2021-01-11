@@ -13,6 +13,18 @@
 <div class="text-center">
     <h1 class="display-4 welcome-heading">Velkommen til FerieCountdown!</h1>
     <div class="row p-2 mx-2">
+        @* Red tier *@
+        <div class="col col-sm-12 col-md-6 p-2">
+            <div class="card p-2 h-100 mainpagecard">
+                <h2>Rødt nivå</h2>
+                <p class="text-left">
+                    Alle landets ungdomsskoler og videregående skoler drives i skrivende stund i rødt nivå. Det vil i mange tilfeller, si ulike oppmøte og avslutningstidspunkt. Derfor har FerieCountdown nå fått støtte for å telle ned til dagens slutt og helg, med tidspunkter som hører til de ulike kohortene. 
+                    Dette har foreløpig ingen innvirkning på nedtellinger til ferier, etter som at vi ikke forventer at tilltakene vil vare så lenge. I første omgang gjelder denne modusen kun for Lundehaugen Ungdomsskole, men kan utvides til andre skoler ved behov. Ta <a asp-area="" asp-controller="Home" asp-action="Contact">kontakt</a> for mer info om det.
+                    Du vil bli bedt om å velge kohort 1 eller 2 første gang du går inn på nedtellingen til skoledagens slutt eller helg, dersom du har valgt en skole med støtte for det. Du kan også endre kohort via linken i fotteksten.
+                </p>
+            </div>
+        </div>
+
         @* Custom countdowns *@
         @if (SignInManager.IsSignedIn(User))
         {
