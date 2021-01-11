@@ -10,84 +10,20 @@
     ViewData["MetaDescription"] = "FerieCountdown er nettsiden som lar deg telle ned til ferier, helg, nyttår, bursdager og alt annet. Vi har live nedtelling med dager, timer, minutter og sekunder!";
 }
 
-<style>
-    body {
-        @if (DateTime.UtcNow.Month == 12)
-        {
-        <text>
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        background-image: url(https://static.feriecountdown.com/resources/background/christmaslivingroom.jpg);
-        }
-        .welcome-heading {
-            color: #f0eddf;
-        }
-        .mainpagecard {
-            background-color: #f0eddf;
-        </text>
-        }
-    }
-</style>
-
 <div class="text-center">
     <h1 class="display-4 welcome-heading">Velkommen til FerieCountdown!</h1>
     <div class="row p-2 mx-2">
-
-        @* Birthday *@
-        @if (DateTime.UtcNow.Day == 1 && DateTime.UtcNow.Year == 2020 && DateTime.UtcNow.Month == 12)
-        {
-            <div class="col col-sm-12 col-md-6 p-2">
-                <div class="card p-2 h-100 mainpagecard">
-                    <h2>I dag er nye FerieCountdown sin bursdag!</h2>
-                    <br />
-                    <p>
-                        Det er i dag nøyaktig ett år siden den nye versjonen av FerieCountdown, med innlogging, egne nedtellinger og mulighet for flere skoler ble gitt ut.
-                    </p>
-                    <img class="mx-auto w-50" src="https://static.feriecountdown.com/resources/decorations/birthdaycake.png" />
-                </div>
+        @* Red tier *@
+        <div class="col col-sm-12 col-md-6 p-2">
+            <div class="card p-2 h-100 mainpagecard">
+                <h2>Rødt nivå</h2>
+                <p class="text-left">
+                    Alle landets ungdomsskoler og videregående skoler drives i skrivende stund i rødt nivå. Det vil i mange tilfeller, si ulike oppmøte og avslutningstidspunkt. Derfor har FerieCountdown nå fått støtte for å telle ned til dagens slutt og helg, med tidspunkter som hører til de ulike kohortene. 
+                    Dette har foreløpig ingen innvirkning på nedtellinger til ferier, etter som at vi ikke forventer at tilltakene vil vare så lenge. I første omgang gjelder denne modusen kun for Lundehaugen Ungdomsskole, men kan utvides til andre skoler ved behov. Ta <a asp-area="" asp-controller="Home" asp-action="Contact">kontakt</a> for mer info om det.
+                    Du vil bli bedt om å velge kohort 1 eller 2 første gang du går inn på nedtellingen til skoledagens slutt eller helg, dersom du har valgt en skole med støtte for det. Du kan også endre kohort via linken i fotteksten.
+                </p>
             </div>
-        }
-
-        @* Advent *@
-        @if (DateTime.UtcNow.Day < 24 && DateTime.UtcNow.Year == 2020 && DateTime.UtcNow.Month == 12)
-        {
-            <div class="col col-sm-12 col-md-6 p-2">
-                <div class="card p-2 h-100 mainpagecard">
-                    <h2>Advent</h2>
-                    <br />
-                    <p>
-                        Nå nærmer det seg jul med stormskritt. Det er nå
-                        @if (DateTime.UtcNow.Day == 23)
-                        {
-                            <span>mindre enn en hel dag</span>
-                        }
-                        else
-                        {
-                            <span>kun @(23 - DateTime.UtcNow.Day) hele dager </span>
-                        }
-                        igjen til julaften. Følg med på den fulle nedtellingen <a asp-area="" asp-controller="Countdown" asp-action="Christmaseve">her.</a> Men før julaften kommer jo selvfølgelig juleferien, den kan du telle ned til <a asp-area="" asp-controller="Countdown" asp-action="Christmas">her.</a>
-                    </p>
-                    <img class="mx-auto w-50" src="https://static.feriecountdown.com/resources/decorations/christmastree.svg" />
-                </div>
-            </div>
-        }
-
-        @* Christmas eve *@
-        @if (DateTime.UtcNow.Day == 24 && DateTime.UtcNow.Year == 2020 && DateTime.UtcNow.Month == 12)
-        {
-            <div class="col col-sm-12 col-md-6 p-2">
-                <div class="card p-2 h-100 mainpagecard">
-                    <h2>Julaften</h2>
-                    <br />
-                    <p>
-                        I dag er det julaften! FerieCountdown ønsker alle en riktig god jul!
-                    </p>
-                    <img class="mx-auto w-50" src="https://static.feriecountdown.com/resources/vector/secretlondon_red_present.svg" />
-                </div>
-            </div>
-        }
+        </div>
 
         @* Custom countdowns *@
         @if (SignInManager.IsSignedIn(User))

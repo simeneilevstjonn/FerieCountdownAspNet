@@ -104,7 +104,7 @@ namespace FerieCountdown.Classes.Io
             {
 
                 //retrieve the SQL Server instance version
-                string query = string.Format(@"select * from [dbo].[DefaultLocales] where LookupName = N'{0}';", ValidateSql(school));
+                string query = string.Format(@"select Municipality, School, Data, UseRedTier, RedTierData from [dbo].[DefaultLocales] where LookupName = N'{0}';", ValidateSql(school));
                 SqlCommand cmd = new SqlCommand(query, conn);
                 //execute the SQLCommand
                 SqlDataReader dr = cmd.ExecuteReader();
@@ -120,8 +120,11 @@ namespace FerieCountdown.Classes.Io
                         {
                             Municipality = dr.GetString(0),
                             School = dr.GetString(1),
-                            Data = dr.GetString(2)
+                            Data = dr.GetString(2),
+                            UseRedTier = dr.GetBoolean(3),
                         };
+
+                        if (dr.GetBoolean(3)) locale.RedTierData = dr.GetString(4);
                     }
                 }
                 

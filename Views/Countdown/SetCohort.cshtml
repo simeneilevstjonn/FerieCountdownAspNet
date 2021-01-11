@@ -1,0 +1,33 @@
+﻿@model String
+@{
+    Layout = "_Container";
+    ViewData["Title"] = "SetCohort";
+}
+
+<h1>Sett kohort</h1>
+<p>
+    Skolen du har valgt er i rødt nivå. For å se nedtellingen du ønsker, må du sette hvilken kohort du tilhører.
+</p>
+
+<div class="form-group">
+    <label for="cohortinpt" id="cohortinpt-label">Kohort</label>
+    <select class="form-control" id="cohortinpt" aria-labelledby="cohortinpt-label">
+        <option selected disabled>-</option>
+        <option>Kohort 1</option>
+        <option>Kohort 2</option>
+    </select> 
+</div>
+<div class="text-right">
+    <button type="button" class="btn btn-primary" onclick="SetCohort(document.getElementById('cohortinpt').selectedIndex - 1)">Lagre</button>
+</div>
+
+@section scripts {
+    <script>
+        function SetCohort(value) {
+            var now = new Date();
+            var exp = new Date(now.getFullYear() + 10, now.getMonth(), 1, 0, 0, 0, 0);
+            document.cookie = "cohort=" + value + "; expires=" + exp + "; path=/";
+            window.location = "@Model";
+        }
+    </script>
+}
