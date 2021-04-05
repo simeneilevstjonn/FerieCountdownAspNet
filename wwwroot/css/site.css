@@ -89,16 +89,10 @@ body {
     color:inherit;
 }
 
-.clock {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 #above-text {
     font-size: 64pt;
     text-align: center;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 }
 
 #done-container {
@@ -111,6 +105,13 @@ body {
 
 .share-icon {
     width: 75%
+}
+
+.clock {
+    width: min-content;
+    margin: auto;
+    margin-top: 2rem;
+    zoom: 2;
 }
 
 .hoverwhite:hover {
@@ -140,9 +141,6 @@ body {
     }
     #done-text {
         font-size: 32pt;
-    }
-    .clock {
-        transform: scale(0.8)!important;
     }
    .footer {
        line-height: initial;
