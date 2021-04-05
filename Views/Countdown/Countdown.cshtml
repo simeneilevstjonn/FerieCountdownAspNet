@@ -149,8 +149,7 @@ var clock;
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="shareModalTitle">Del</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -213,7 +212,7 @@ var clock;
 </div>
 <!--Button Row-->
 <div style="text-align:right; margin-right: 16px; margin-top: 16px" id="btnpanel">
-    <button title="Del" data-toggle="modal" data-target="#shareModal" class="btn ic hoverwhite">
+    <button title="Del" data-bs-toggle="modal" data-bs-target="#shareModal" class="btn ic hoverwhite">
         <i class="fas fa-share"></i>
     </button>
     <button title="Maksimer (f)" onclick="thf()" class="btn ic hoverwhite" id="thfbtn">
@@ -230,9 +229,9 @@ var clock;
 @section scripts {
 <script>
     // Set share modal events
-    $('#shareModal').on('hidden.bs.modal', function (e) {
+    document.getElementById("shareModal").addEventListener('hidden.bs.modal', function (e) {
         // Hide "Copied to clipboard"-text
         document.getElementById('copiedText').innerHTML = null;
-    });
+    });  
 </script>
 }
