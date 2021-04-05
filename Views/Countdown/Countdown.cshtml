@@ -1,23 +1,15 @@
 ﻿@model CountdownViewModel
-<script src="~/js/flipclock.js"></script>
-<link rel="stylesheet" href="~/css/flipclock.css" />
-<meta meta name="viewport" content="width=device-width, user-scalable=no" />
+<script src="https://cdn.jsdelivr.net/npm/flipclock/dist/flipclock.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flipclock/dist/flipclock.min.css">
 
 @{
-    //Get countdown difference
-    TimeSpan diff = Model.CountdownTime.Subtract(DateTime.UtcNow);
-    int diffsecs = (int)Math.Floor(diff.TotalSeconds);
+    //Get countdown time in ISO format
+    string ISODateString = Model.CountdownTime.ToString("u").Replace(' ', 'T');
 
-    //Define face variables
-    string scale = "2.5";
-    string face = "DailyCounter";
+    // Remove Z if local time is to be used
+    if (Model.UseLocalTime) ISODateString = ISODateString.Replace("Z", "");
 
-    //check if difference is less than one day
-    if (diffsecs < 24 * 60 * 60)
-    {
-        scale = "3.5";
-        face = "HourlyCounter";
-    }
+}
 }
 <style>
     /*Set background*/
@@ -40,107 +32,6 @@
 
     @Html.Raw(Model.Background.Css)
 </style>
-
-<script>
-
-    //define copy text function
-    function copyUrl() {
-        var copyText = document.getElementById("linkInput");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        document.getElementById("copiedText").innerHTML = "Link kopiert til utklipstavlen";
-    }
-
-    function switchLocaleShare() {
-        //Define DOM elements
-        var std = document.getElementById("stdsocial");
-        var loc = document.getElementById("locsocial");
-        var input = document.getElementById("linkInput");
-
-        //Define path things
-        var baseurl = "@ViewData["BaseUrl"]";
-        var locale = "@ViewData["Locale"]";
-
-        if (std.style.display != "none") {
-            std.style.display = "none";
-            loc.style.display = "flex";
-            input.value = baseurl + "/" + locale;
-        }
-        else {
-            std.style.display = "flex";
-            loc.style.display = "none";
-            input.value = baseurl;
-        }
-    }
-
-    //Toggle head/foot
-    function thf() {
-        if (document.getElementsByTagName("header")[0].style.display == "none") {
-            document.getElementsByTagName("header")[0].style.display = "initial";
-            document.getElementsByTagName("footer")[0].style.display = "initial";
-            document.getElementById("thficon").className = "fas fa-expand";
-            document.getElementById("thfbtn").title = "Maksimer (f)";
-        }
-        else {
-            document.getElementsByTagName("header")[0].style.display = "none";
-            document.getElementsByTagName("footer")[0].style.display = "none";
-            document.getElementById("thficon").className = "fas fa-compress";
-            document.getElementById("thfbtn").title = "Minimer (f)";
-        }
-    }
-
-    //Set key listener
-    document.addEventListener('keypress', (e) => {
-        if (e.code === "KeyF") thf();
-    });
-
-    //Init our countdown using data from Model
-    //Init the clock
-var clock;
-    $(document).ready(function () {
-    //Display a message when the countdown has finished
-    var diff = @diffsecs;
-    @{
-        if (Model.UseLocalTime)
-        {
-            <Text>
-                var now = new Date();
-                diff += now.getTimezoneOffset() * 60;
-            </Text>
-        }
-    }
-    if (diff <= 0) {
-        document.getElementById("above-text").style.display = "none";
-        document.getElementById("clock").style.display = "none";
-        document.getElementById("done-container").style.display = "initial";
-        @Html.Raw(Model.ExtraStopJs)
-    }
-
-    // Instantiate a coutdown FlipClock
-    clock = $('.clock').FlipClock(diff, {
-        clockFace: '@face',
-        countdown: true,
-        language: 'no',
-        responsiveScale: @scale,
-        stop: function() {
-            document.getElementById("above-text").style.display = "none";
-            document.getElementById("clock").style.display = "none";
-            document.getElementById("done-container").style.display = "initial";
-            @Html.Raw(Model.ExtraStopJs)
-        }
-    });
-
-    //set fullscreen if url parameter has been provided
-    var url = new URL(window.location);
-    if (url.searchParams.has("fullscreen")) {
-        thf()
-    };
-    if (url.searchParams.has("nobutton")) {
-        document.getElementById("btnpanel").style.display = "none";
-    };
-});
-</script>
 
 <!--Modals-->
 <!--Share-->
@@ -222,16 +113,120 @@ var clock;
 
 <!--Clock-->
 <p id="above-text">@Model.CountdownText</p>
-<div class="clock" style="margin:2em;" id="clock"></div>
+<div class="clock" id="clock"></div>
 <div id="done-container" class="valign" style="display: none;"><p id="done-text">@Model.CountdownEndText</p></div>
 @Html.Raw(Model.Background.Html)
 
 @section scripts {
-<script>
-    // Set share modal events
-    document.getElementById("shareModal").addEventListener('hidden.bs.modal', function (e) {
-        // Hide "Copied to clipboard"-text
-        document.getElementById('copiedText').innerHTML = null;
-    });  
-</script>
+    <script>
+
+        //define copy text function
+        function copyUrl() {
+            let copyText = document.getElementById("linkInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            document.getElementById("copiedText").innerHTML = "Link kopiert til utklipstavlen";
+        }
+
+        function switchLocaleShare() {
+            //Define DOM elements
+            let std = document.getElementById("stdsocial");
+            let loc = document.getElementById("locsocial");
+            let input = document.getElementById("linkInput");
+
+            //Define path things
+            let baseurl = "@ViewData["BaseUrl"]";
+            let locale = "@ViewData["Locale"]";
+
+            if (std.style.display != "none") {
+                std.style.display = "none";
+                loc.style.display = "flex";
+                input.value = baseurl + "/" + locale;
+            }
+            else {
+                std.style.display = "flex";
+                loc.style.display = "none";
+                input.value = baseurl;
+            }
+        }
+
+        //Toggle head/foot
+        function thf() {
+            if (document.getElementsByTagName("header")[0].style.display == "none") {
+                document.getElementsByTagName("header")[0].style.display = "initial";
+                document.getElementsByTagName("footer")[0].style.display = "initial";
+                document.getElementById("thficon").className = "fas fa-expand";
+                document.getElementById("thfbtn").title = "Maksimer (f)";
+            }
+            else {
+                document.getElementsByTagName("header")[0].style.display = "none";
+                document.getElementsByTagName("footer")[0].style.display = "none";
+                document.getElementById("thficon").className = "fas fa-compress";
+                document.getElementById("thfbtn").title = "Minimer (f)";
+            }
+        }
+
+        //Set key listener
+        document.addEventListener('keypress', (e) => {
+            if (e.code === "KeyF") thf();
+        });
+
+        let face = "DayCounter";
+        let diff = new Date("@ISODateString").getTime() / 1000 - new Date().getTime() / 1000;
+
+        // Check if difference is less than one day
+        if (diff < 60 * 60 * 24) {
+            face = "HourCounter";
+        }
+
+        if (diff <= 0) {
+            document.getElementById("above-text").style.display = "none";
+            document.getElementById("clock").style.display = "none";
+            document.getElementById("done-container").style.display = "initial";
+            @Html.Raw(Model.ExtraStopJs)
+        }
+
+        // Instantiate a coutdown FlipClock
+        let clock = new FlipClock(document.getElementById("clock"), new Date("@ISODateString"), {
+            face: face,
+            countdown: true,
+            language: 'norwegian'
+        });
+
+        // Make countdown stop at 0
+        clock.$timer.on('interval', function () {
+            var complete = true;
+            for (time of clock.$face.$value.$digits) {
+                for (digit of time) {
+                    if (Number.parseInt(digit, 10) > 0) {
+                        complete = false;
+                    }
+                }
+            }
+            if (complete) {
+                clock.stop();
+                document.getElementById("above-text").style.display = "none";
+                document.getElementById("clock").style.display = "none";
+                document.getElementById("done-container").style.display = "initial";
+                @Html.Raw(Model.ExtraStopJs)
+            }
+        });
+
+        //set fullscreen if url parameter has been provided
+        let url = new URL(window.location);
+        if (url.searchParams.has("fullscreen")) {
+            thf()
+        };
+        if (url.searchParams.has("nobutton")) {
+            document.getElementById("btnpanel").style.display = "none";
+        };
+    </script>
+    <script>
+        // Set share modal events
+        document.getElementById("shareModal").addEventListener('hidden.bs.modal', function (e) {
+            // Hide "Copied to clipboard"-text
+            document.getElementById('copiedText').innerHTML = null;
+        });
+    </script>
 }
