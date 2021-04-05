@@ -101,12 +101,32 @@ namespace FerieCountdown.Areas.Identity.Pages.Account
                 LoginProvider = info.LoginProvider;
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 {
-                    Input = new InputModel
+                    string Email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                    var user = new IdentityUser { UserName = Email, Email = Email };
+                    var addUserResult = await _userManager.CreateAsync(user);
+                    if (addUserResult.Succeeded)
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
+                        addUserResult = await _userManager.AddLoginAsync(user, info);
+                        if (addUserResult.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+
+                            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                            // Verify the email
+                            await _userManager.ConfirmEmailAsync(user, code);
+                            
+                            return LocalRedirect(returnUrl);
+                        }
+                    }
+                    foreach (var error in addUserResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return Redirect("/");
                 }
-                return Page();
+                else return Page();
             }
         }
 
