@@ -176,9 +176,9 @@
         let diff = new Date("@ISODateString").getTime() / 1000 - new Date().getTime() / 1000;
 
         // Check if difference is less than one day
-        if (diff < 60 * 60 * 24) {
+        /*if (diff < 60 * 60 * 24) {
             face = "HourCounter";
-        }
+        }*/
 
         if (diff <= 0) {
             document.getElementById("above-text").style.display = "none";
