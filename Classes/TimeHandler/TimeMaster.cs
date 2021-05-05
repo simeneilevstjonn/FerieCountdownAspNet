@@ -142,5 +142,17 @@ namespace FerieCountdown.Classes.TimeHandler
         }
 
         public static int GetDaysToDate(DateTime Date) => (int)Math.Ceiling((Date - DateTime.UtcNow).TotalDays);
+
+        public static int DayEnumToInt(DayOfWeek dayOfWeek) => dayOfWeek switch
+        {
+            DayOfWeek.Monday => 0,
+            DayOfWeek.Tuesday => 1,
+            DayOfWeek.Wednesday => 2,
+            DayOfWeek.Thursday => 3,
+            DayOfWeek.Friday => 4,
+            DayOfWeek.Saturday => 5,
+            DayOfWeek.Sunday => 6,
+            _ => throw new ArgumentException()
+        };
     }
 }
