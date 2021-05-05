@@ -1,0 +1,29 @@
+﻿@model LessonCounterViewModel
+@{
+    Layout = "_container";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- Row -->
+<div class="row">
+    @foreach ((string subject, int count) in Model.RemainingCountStrings)
+    {
+        <!-- Column -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+            <!-- Card -->
+            <div class="card p-3 text-center">
+                <h3>@subject</h3>
+                <span style="font-size: 72pt">@count</span>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Info -->
+<p>
+    Med forbehold om feil eller endringer. Telleren er ikke live og må derfor refreshes for å oppdateres. Den teller ikke med timer som har startet.
+</p>
+<p>
+    Foreløpig er dette kun tilgjengelig for 10F på Lundehaugen Ungdomsskole, men ta <a asp-area="" asp-controller="Home" asp-action="Contact">kontakt</a> hvis du ønsker dette for din klasse.
+</p>
