@@ -113,7 +113,8 @@ namespace FerieCountdown.Controllers
                         Subject.Science
                     }
                 },
-                LastDate = new DateTime(2021, 6, 17),
+                /*LastDate = new DateTime(2021, 6, 17),*/
+                LastDate = new DateTime(2021, 6, 2),
                 OverrideSchedule = new Dictionary<DateTime, List<Subject>>
                 {
                     {
