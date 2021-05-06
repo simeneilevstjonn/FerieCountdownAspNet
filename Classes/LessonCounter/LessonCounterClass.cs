@@ -52,7 +52,7 @@ namespace FerieCountdown.Classes.LessonCounter
                     foreach ((Subject subject, Time time) in Schedule.Zip(Times, (x, y) => new Tuple<Subject, Time>(x, y)).ToList())
                     {
                         // Check that the lesson has not already started
-                        if (time < new Time(DateTime.UtcNow.Hour, DateTime.UtcNow.Minute))
+                        if (time > new Time(DateTime.UtcNow.Hour, DateTime.UtcNow.Minute))
                         {
                             // Increment subject counter
                             Remaining[subject]++;
