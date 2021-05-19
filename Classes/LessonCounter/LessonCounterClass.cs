@@ -48,16 +48,20 @@ namespace FerieCountdown.Classes.LessonCounter
                         Schedule = OverrideSchedule[Today];
                     }
 
-                    // Iterate through each lesson on schedule
-                    foreach ((Subject subject, Time time) in Schedule.Zip(Times, (x, y) => new Tuple<Subject, Time>(x, y)).ToList())
+                    // Check if schedule is null
+                    if (Schedule != null)
                     {
-                        // Check that the lesson has not already started
-                        if (time > new Time(DateTime.UtcNow.Hour, DateTime.UtcNow.Minute))
+                        // Iterate through each lesson on schedule
+                        foreach ((Subject subject, Time time) in Schedule.Zip(Times, (x, y) => new Tuple<Subject, Time>(x, y)).ToList())
                         {
-                            // Increment subject counter
-                            Remaining[subject]++;
+                            // Check that the lesson has not already started
+                            if (time > new Time(DateTime.UtcNow.Hour, DateTime.UtcNow.Minute))
+                            {
+                                // Increment subject counter
+                                Remaining[subject]++;
+                            }
                         }
-                    }  
+                    }
                 }
 
                 // Iterate through the rest of the days before the last date
