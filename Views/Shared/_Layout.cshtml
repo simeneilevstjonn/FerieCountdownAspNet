@@ -91,10 +91,6 @@
                                     <a class="dropdown-item" asp-area="" asp-controller="Config" asp-action="Mycountdowns">Mine nedtellinger</a>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link @{if ((string)ViewData["IsLessonCounter"] == "true") {<Text>active</text>}}" role="button" asp-area="" asp-controller="Lessons" asp-action="Index">Resterende timer</a>
-                            </li>
-
                         </ul>
                         <partial name="_LoginPartial" />
                     </div>
@@ -129,7 +125,7 @@
 
         <footer class="footer text-muted bg-333">
             <div class="container bg-333 d-inline-block text-center">
-                <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; @DateTime.UtcNow.Year FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-controller="SetLocale" asp-area="" asp-action="Index">Endre sted</a> - Valgt kohort:  <span id="cohortspan"></span> - <a asp-controller="Countdown" asp-area="" asp-action="SetCohort">Endre kohort</a>
+                <a asp-area="" asp-controller="Home" asp-action="Copyright">&copy; @DateTime.UtcNow.Year FerieCountdown</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Personvernserklæring</a> - <a asp-area="" asp-controller="Home" asp-action="Contact">Kontakt oss</a> - Valgt sted:  <span id="localespan"></span> - <a asp-controller="SetLocale" asp-area="" asp-action="Index">Endre sted</a>
             </div>
         </footer>
 
